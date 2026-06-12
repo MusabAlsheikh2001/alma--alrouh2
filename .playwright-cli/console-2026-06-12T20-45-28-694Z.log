@@ -1,0 +1,84 @@
+[     721ms] [ERROR] JIT compilation failed for component class App2 {
+  logoUrl = LOGO_URL;
+  nayLogoUrl = NAY_LOGO_URL;
+  language = signal("en", ...ngDevMode ? [{ debugName: "language" }] : (
+    /* istanbul ignore next */
+    []
+  ));
+  donationOpen = signal(false, ...ngDevMode ? [{ debugName: "donationOpen" }] : (
+    /* istanbul ignore next */
+    []
+  ));
+  mobileNavOpen = signal(false, ...ngDevMode ? [{ debugName: "mobileNavOpen" }] : (
+    /* istanbul ignore next */
+    []
+  ));
+  selectedAmountIndex = signal(1, ...ngDevMode ? [{ debugName: "selectedAmountIndex" }] : (
+    /* istanbul ignore next */
+    []
+  ));
+  data = computed(() => copy[this.language()], ...ngDevMode ? [{ debugName: "data" }] : (
+    /* istanbul ignore next */
+    []
+  ));
+  isArabic = computed(() => this.language() === "ar", ...ngDevMode ? [{ debugName: "isArabic" }] : (
+    /* istanbul ignore next */
+    []
+  ));
+  pageDir = computed(() => this.isArabic() ? "rtl" : "ltr", ...ngDevMode ? [{ debugName: "pageDir" }] : (
+    /* istanbul ignore next */
+    []
+  ));
+  selectedAmount = computed(() => this.data().donation.amounts[this.selectedAmountIndex()], ...ngDevMode ? [{ debugName: "selectedAmount" }] : (
+    /* istanbul ignore next */
+    []
+  ));
+  donationMailto = computed(() => {
+    const subject = encodeURIComponent("Donation for Alma Alrouh");
+    const body = encodeURIComponent(`Hello Alma Alrouh,
+
+I would like to donate ${this.selectedAmount()} to support free mental health sessions. Please send verified payment details.
+
+Thank you.`);
+    return `mailto:almaalrouh1@gmail.com?subject=${subject}&body=${body}`;
+  }, ...ngDevMode ? [{ debugName: "donationMailto" }] : (
+    /* istanbul ignore next */
+    []
+  ));
+  toggleLanguage() {
+    this.language.update((lang) => lang === "en" ? "ar" : "en");
+    this.mobileNavOpen.set(false);
+  }
+  openDonation() {
+    this.donationOpen.set(true);
+    this.mobileNavOpen.set(false);
+  }
+  closeDonation() {
+    this.donationOpen.set(false);
+  }
+  toggleMobileNav() {
+    this.mobileNavOpen.update((open) => !open);
+  }
+  closeMobileNav() {
+    this.mobileNavOpen.set(false);
+  }
+  chooseAmount(index) {
+    this.selectedAmountIndex.set(index);
+  }
+} @ http://127.0.0.1:50626/@fs/Users/musab/Alma--Alrouh2/.angular/cache/21.2.15/alma-alrouh/vite/deps/chunk-BDOZY2YR.js?v=8b68b90c:5944
+[     722ms] [ERROR] Error: The component 'App2' needs to be compiled using the JIT compiler, but '@angular/compiler' is not available.
+
+JIT compilation is discouraged for production use-cases! Consider using AOT mode instead.
+Alternatively, the JIT compiler should be loaded by bootstrapping using '@angular/platform-browser-dynamic' or '@angular/platform-server',
+or manually provide the compiler with 'import "@angular/compiler";' before bootstrapping.
+    at getCompilerFacade (http://127.0.0.1:50626/@fs/Users/musab/Alma--Alrouh2/.angular/cache/21.2.15/alma-alrouh/vite/deps/chunk-BDOZY2YR.js?v=8b68b90c:5964:11)
+    at App2.get (http://127.0.0.1:50626/@fs/Users/musab/Alma--Alrouh2/.angular/cache/21.2.15/alma-alrouh/vite/deps/chunk-BDOZY2YR.js?v=8b68b90c:23399:26)
+    at getComponentDef (http://127.0.0.1:50626/@fs/Users/musab/Alma--Alrouh2/.angular/cache/21.2.15/alma-alrouh/vite/deps/chunk-BDOZY2YR.js?v=8b68b90c:3386:14)
+    at assertComponentDef (http://127.0.0.1:50626/@fs/Users/musab/Alma--Alrouh2/.angular/cache/21.2.15/alma-alrouh/vite/deps/chunk-BDOZY2YR.js?v=8b68b90c:9341:8)
+    at assertStandaloneComponentType (http://127.0.0.1:50626/@fs/Users/musab/Alma--Alrouh2/.angular/cache/21.2.15/alma-alrouh/vite/deps/chunk-BDOZY2YR.js?v=8b68b90c:9334:3)
+    at internalCreateApplication (http://127.0.0.1:50626/@fs/Users/musab/Alma--Alrouh2/.angular/cache/21.2.15/alma-alrouh/vite/deps/chunk-BDOZY2YR.js?v=8b68b90c:27551:7)
+    at bootstrapApplication (http://127.0.0.1:50626/@fs/Users/musab/Alma--Alrouh2/.angular/cache/21.2.15/alma-alrouh/vite/deps/@angular_platform-browser.js?v=8b68b90c:5625:10)
+    at http://127.0.0.1:50626/main.js:300:1 @ http://127.0.0.1:50626/main.js:299
+[   31663ms] [LOG] [vite] server connection lost. Polling for restart... @ http://127.0.0.1:50626/@vite/client:864
+[   52687ms] [LOG] Angular is running in development mode. @ http://127.0.0.1:50626/@fs/Users/musab/Alma--Alrouh2/.angular/cache/21.2.15/alma-alrouh/vite/deps/chunk-FVAP77I4.js?v=d75d3d11:16999
+[   53405ms] [WARNING] NG0913: An image with src https://nayalrouh.b-cdn.net/Alma%20Alrouh/alma_alrouh_logo_enhanced_transparent.png has intrinsic file dimensions much larger than its rendered size. This can negatively impact application loading performance. For more information about addressing or disabling this warning, see https://v21.angular.dev/errors/NG0913. Find more at https://v21.angular.dev/errors/NG0913 @ http://127.0.0.1:50626/@fs/Users/musab/Alma--Alrouh2/.angular/cache/21.2.15/alma-alrouh/vite/deps/chunk-FVAP77I4.js?v=d75d3d11:26264

@@ -1,0 +1,201 @@
+- generic [ref=e3]:
+  - banner "Primary navigation" [ref=e4]:
+    - link "Alma Alrouh home" [ref=e5] [cursor=pointer]:
+      - /url: "#top"
+      - img "Alma Alrouh logo" [ref=e6]
+      - generic [ref=e7]:
+        - strong [ref=e8]: Alma Alrouh
+        - generic [ref=e9]: Mental health for everyone
+    - navigation "Page sections" [ref=e10]:
+      - link "Mission" [ref=e11] [cursor=pointer]:
+        - /url: "#mission"
+      - link "Care" [ref=e12] [cursor=pointer]:
+        - /url: "#care"
+      - link "Volunteers" [ref=e13] [cursor=pointer]:
+        - /url: "#volunteers"
+      - link "Partners" [ref=e14] [cursor=pointer]:
+        - /url: "#makers"
+      - button "Donate" [ref=e15] [cursor=pointer]
+      - link "Contact" [ref=e16] [cursor=pointer]:
+        - /url: "#contact"
+    - generic [ref=e17]:
+      - button "EN العربية" [ref=e18] [cursor=pointer]:
+        - generic [ref=e19]: EN
+        - text: العربية
+      - button "Donate" [ref=e20] [cursor=pointer]:
+        - img [ref=e21]
+        - generic [ref=e23]: Donate
+  - main [ref=e24]:
+    - region "Free mental health care, carried by a community that listens." [ref=e25]:
+      - img "A calm support circle in a community mental health room" [ref=e26]
+      - generic [ref=e27]:
+        - paragraph [ref=e28]: Nonprofit mental health support
+        - heading "Free mental health care, carried by a community that listens." [level=1] [ref=e29]
+        - paragraph [ref=e30]: Alma Alrouh is a trauma-informed nonprofit initiative in Peshawar providing culturally sensitive support, awareness programs, and free mental health sessions through a growing network of 140+ volunteers, including psychologists and mental health professionals.
+        - generic "Primary actions" [ref=e31]:
+          - button "Fund free sessions" [ref=e32] [cursor=pointer]:
+            - img [ref=e33]
+            - text: Fund free sessions
+          - link "Explore the work" [ref=e39] [cursor=pointer]:
+            - /url: "#mission"
+            - img [ref=e40]
+            - text: Explore the work
+      - complementary "Alma Alrouh message" [ref=e42]:
+        - img [ref=e43]
+        - generic [ref=e46]: Breaking silence, one conversation at a time.
+    - region "Organization highlights" [ref=e47]:
+      - article [ref=e48]:
+        - strong [ref=e49]: 140+
+        - generic [ref=e50]: volunteers including psychologists and mental health professionals
+      - article [ref=e51]:
+        - strong [ref=e52]: Free
+        - generic [ref=e53]: mental health sessions for people who cannot afford private care
+      - article [ref=e54]:
+        - strong [ref=e55]: "2025"
+        - generic [ref=e56]: founded as a nonprofit mental health and wellbeing initiative
+      - article [ref=e57]:
+        - strong [ref=e58]: Peshawar
+        - generic [ref=e59]: headquarters in Khyber Pakhtunkhwa, Pakistan
+    - generic [ref=e60]:
+      - generic [ref=e61]:
+        - paragraph [ref=e62]: Public-profile research
+        - heading "A trauma-informed organization built around access, dignity, and resilience." [level=2] [ref=e63]
+      - generic [ref=e64]:
+        - paragraph [ref=e65]: Their LinkedIn profile describes Alma Alrouh as dedicated to healing, resilience, emotional empowerment, culturally sensitive support, awareness programs, and evidence-based mental wellness. Their public posts emphasize reducing shame, reaching students and families, and making support feel close enough to use.
+        - generic "Core services" [ref=e66]:
+          - article [ref=e67]:
+            - img [ref=e68]
+            - heading "Confidential support" [level=3] [ref=e71]
+            - paragraph [ref=e72]: Free consultation and guided sessions for stress, grief, trauma, anxiety, and emotional overwhelm.
+          - article [ref=e73]:
+            - img [ref=e74]
+            - heading "Awareness campaigns" [level=3] [ref=e77]
+            - paragraph [ref=e78]: Seminars, campus conversations, and community programs that normalize speaking about mental health.
+          - article [ref=e79]:
+            - img [ref=e80]
+            - heading "Evidence-led care" [level=3] [ref=e83]
+            - paragraph [ref=e84]: Psychologists and mental health professionals support the work with structured, culturally aware approaches.
+    - generic [ref=e85]:
+      - generic [ref=e86]:
+        - paragraph [ref=e87]: Care pathway
+        - heading "Simple access for people who need someone safe to talk to." [level=2] [ref=e88]
+      - generic "Care pathway" [ref=e89]:
+        - article [ref=e90]:
+          - generic [ref=e91]: "01"
+          - generic [ref=e92]:
+            - heading "Reach out" [level=3] [ref=e93]
+            - paragraph [ref=e94]: A person contacts Alma Alrouh through public channels and shares what support they need.
+          - img [ref=e95]
+        - article [ref=e97]:
+          - generic [ref=e98]: "02"
+          - generic [ref=e99]:
+            - heading "Match support" [level=3] [ref=e100]
+            - paragraph [ref=e101]: The team routes the request to a suitable volunteer or mental health professional.
+          - img [ref=e102]
+        - article [ref=e104]:
+          - generic [ref=e105]: "03"
+          - generic [ref=e106]:
+            - heading "Keep care free" [level=3] [ref=e107]
+            - paragraph [ref=e108]: Donations help cover coordination, outreach, volunteer support, and access work.
+          - img [ref=e109]
+    - generic [ref=e111]:
+      - generic [ref=e112]:
+        - paragraph [ref=e113]: Volunteer-led
+        - heading "Psychologists, counselors, students, and advocates moving in the same direction." [level=2] [ref=e114]
+        - paragraph [ref=e115]: Recent LinkedIn posts include calls for volunteer clinical psychologists with field experience, creativity, and a drive to build supportive community care. Instagram search results also reference schools, colleges, universities, seminars, mental health camps, and free consultations.
+      - generic [ref=e116]:
+        - img [ref=e117]
+        - generic [ref=e121]:
+          - generic [ref=e122]:
+            - term [ref=e123]: Specialties
+            - definition [ref=e124]: Mental health, awareness, wellbeing, psychological counseling
+          - generic [ref=e125]:
+            - term [ref=e126]: Public voice
+            - definition [ref=e127]: Hopeful, direct, stigma-fighting, grounded in small daily change
+          - generic [ref=e128]:
+            - term [ref=e129]: Community work
+            - definition [ref=e130]: Student outreach, TEDx partnership mentions, expos, seminars, and camps
+    - region "Mission statement" [ref=e131]:
+      - img [ref=e132]
+      - paragraph [ref=e135]: Real change begins when care is reachable, shame is interrupted, and people are met before the crisis becomes heavier.
+    - generic [ref=e136]:
+      - generic [ref=e137]:
+        - paragraph [ref=e138]: Why giving matters
+        - heading "Every donation protects the promise of free support." [level=2] [ref=e139]
+      - generic [ref=e140]:
+        - article [ref=e141]:
+          - generic [ref=e142]: "01"
+          - heading "Remove cost barriers" [level=3] [ref=e143]
+          - paragraph [ref=e144]: Help people receive care before private session costs push support out of reach.
+        - article [ref=e145]:
+          - generic [ref=e146]: "02"
+          - heading "Power outreach" [level=3] [ref=e147]
+          - paragraph [ref=e148]: Support campus work, awareness materials, and public conversations that reduce stigma.
+        - article [ref=e149]:
+          - generic [ref=e150]: "03"
+          - heading "Equip volunteers" [level=3] [ref=e151]
+          - paragraph [ref=e152]: Fund coordination, intake, training, referrals, and the quiet operations behind care.
+      - button "Fund free sessions" [ref=e153] [cursor=pointer]:
+        - img [ref=e154]
+        - text: Fund free sessions
+    - generic [ref=e156]:
+      - generic [ref=e157]:
+        - paragraph [ref=e158]: Behind Alma Alrouh
+        - img "Nay Alrouh logo" [ref=e159]
+        - heading "Alma Alrouh was created by Nay Alrouh." [level=2] [ref=e160]
+        - paragraph [ref=e161]: Nay Alrouh is the company behind Alma Alrouh, supporting the mission to make mental health care more reachable, visible, and human.
+      - generic [ref=e162]:
+        - article [ref=e163]:
+          - img [ref=e164]
+          - heading "Created by" [level=3] [ref=e168]
+          - paragraph [ref=e169]: Nay Alrouh built Alma Alrouh as a nonprofit mental health initiative.
+        - article [ref=e170]:
+          - img [ref=e171]
+          - heading "Free marketing" [level=3] [ref=e174]
+          - paragraph [ref=e175]: This website receives free marketing support so more people can discover the available sessions and volunteer work.
+        - article [ref=e176]:
+          - img [ref=e177]
+          - heading "Website by Veloura" [level=3] [ref=e179]
+          - paragraph [ref=e180]: This website was created by Veloura, a marketing company launching soon.
+    - region "Content is grounded in public public-profile details." [ref=e181]:
+      - generic [ref=e182]:
+        - paragraph [ref=e183]: Research notes
+        - heading "Content is grounded in public public-profile details." [level=2] [ref=e184]
+      - list [ref=e185]:
+        - listitem [ref=e186]:
+          - img [ref=e187]
+          - generic [ref=e189]: "LinkedIn: nonprofit organization, Peshawar headquarters, founded 2025, specialties, and trauma-informed description."
+        - listitem [ref=e190]:
+          - img [ref=e191]
+          - generic [ref=e193]: "LinkedIn updates: volunteer clinical psychologist call, community-building language, TEDx University of Agriculture Peshawar partnership post."
+        - listitem [ref=e194]:
+          - img [ref=e195]
+          - generic [ref=e197]: "Instagram search snippets: free mental health services, consultations, seminars, camps, and school/college/university outreach."
+    - generic [ref=e198]:
+      - generic [ref=e199]:
+        - paragraph [ref=e200]: Connect
+        - heading "Ask for sessions, volunteer, partner, or request verified donation details." [level=2] [ref=e201]
+        - paragraph [ref=e202]: Use Alma Alrouh public channels for session access, volunteer applications, partnerships, and payment verification.
+      - generic [ref=e203]:
+        - link "Instagram" [ref=e204] [cursor=pointer]:
+          - /url: https://www.instagram.com/alma.alrouh1/
+          - img [ref=e205]
+          - text: Instagram
+        - link "LinkedIn" [ref=e208] [cursor=pointer]:
+          - /url: https://www.linkedin.com/company/alma-alrouh-foundation/posts/?feedView=all
+          - img [ref=e209]
+          - text: LinkedIn
+        - link "almaalrouh1@gmail.com" [ref=e213] [cursor=pointer]:
+          - /url: mailto:almaalrouh1@gmail.com
+          - img [ref=e214]
+          - text: almaalrouh1@gmail.com
+        - link "+92 315 8747529" [ref=e217] [cursor=pointer]:
+          - /url: tel:+923158747529
+          - img [ref=e218]
+          - text: +92 315 8747529
+        - generic [ref=e220]:
+          - img [ref=e221]
+          - text: Peshawar, KP, Pakistan
+  - contentinfo [ref=e224]:
+    - generic [ref=e225]: Alma Alrouh Organization
+    - generic [ref=e226]: Bilingual nonprofit website built in Angular.

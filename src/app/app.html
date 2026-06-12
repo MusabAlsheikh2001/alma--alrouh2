@@ -1,0 +1,293 @@
+<div class="page-shell" [attr.dir]="pageDir()" [class.is-rtl]="isArabic()">
+  <header class="site-header" aria-label="Primary navigation">
+    <a class="brand" href="#top" (click)="closeMobileNav()" aria-label="Alma Alrouh home">
+      <img [src]="logoUrl" [alt]="data().logoAlt" />
+      <span>
+        <strong>Alma Alrouh</strong>
+        <small>{{ isArabic() ? 'الصحة النفسية للجميع' : 'Mental health for everyone' }}</small>
+      </span>
+    </a>
+
+    <nav class="nav-links" [class.open]="mobileNavOpen()" aria-label="Page sections">
+      <a href="#mission" (click)="closeMobileNav()">{{ data().nav[0] }}</a>
+      <a href="#care" (click)="closeMobileNav()">{{ data().nav[1] }}</a>
+      <a href="#volunteers" (click)="closeMobileNav()">{{ data().nav[2] }}</a>
+      <a href="#makers" (click)="closeMobileNav()">{{ data().nav[3] }}</a>
+      <button type="button" (click)="openDonation()">{{ data().nav[4] }}</button>
+      <a href="#contact" (click)="closeMobileNav()">{{ data().nav[5] }}</a>
+    </nav>
+
+    <div class="header-actions">
+      <button class="language-button" type="button" (click)="toggleLanguage()">
+        <span>{{ data().code }}</span>
+        {{ data().switchLabel }}
+      </button>
+      <button class="donate-button" type="button" (click)="openDonation()">
+        <svg lucideHeartHandshake aria-hidden="true"></svg>
+        <span>{{ data().donate }}</span>
+      </button>
+      <button
+        class="menu-button"
+        type="button"
+        (click)="toggleMobileNav()"
+        aria-label="Open navigation"
+        [attr.aria-expanded]="mobileNavOpen()"
+      >
+        <svg lucideMenu aria-hidden="true"></svg>
+      </button>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero" aria-labelledby="hero-title">
+      <img
+        class="hero-image"
+        src="assets/hero-support-circle.png"
+        alt="A calm support circle in a community mental health room"
+      />
+      <div class="hero-panel">
+        <p class="eyebrow">{{ data().heroEyebrow }}</p>
+        <h1 id="hero-title">{{ data().heroTitle }}</h1>
+        <p class="hero-copy">{{ data().heroCopy }}</p>
+        <div class="hero-actions" aria-label="Primary actions">
+          <button class="primary-action" type="button" (click)="openDonation()">
+            <svg lucideHandCoins aria-hidden="true"></svg>
+            {{ data().heroPrimary }}
+          </button>
+          <a class="secondary-action" href="#mission">
+            <svg lucideArrowDown aria-hidden="true"></svg>
+            {{ data().heroSecondary }}
+          </a>
+        </div>
+      </div>
+      <aside class="hero-note" aria-label="Alma Alrouh message">
+        <svg lucideMessageCircleHeart aria-hidden="true"></svg>
+        <span>{{ data().heroNote }}</span>
+      </aside>
+    </section>
+
+    <section class="stat-band" aria-label="Organization highlights">
+      @for (stat of data().stats; track stat[0]) {
+        <article>
+          <strong>{{ stat[0] }}</strong>
+          <span>{{ stat[1] }}</span>
+        </article>
+      }
+    </section>
+
+    <section class="section mission" id="mission">
+      <div class="section-kicker">
+        <p class="eyebrow">{{ data().missionEyebrow }}</p>
+        <h2>{{ data().missionTitle }}</h2>
+      </div>
+      <div class="section-body">
+        <p>{{ data().missionText }}</p>
+        <div class="pillars" aria-label="Core services">
+          @for (pillar of data().pillars; track pillar.title; let i = $index) {
+            <article>
+              @if (i === 0) {
+                <svg lucideShieldCheck aria-hidden="true"></svg>
+              } @else if (i === 1) {
+                <svg lucideMegaphone aria-hidden="true"></svg>
+              } @else {
+                <svg lucideBookOpenCheck aria-hidden="true"></svg>
+              }
+              <h3>{{ pillar.title }}</h3>
+              <p>{{ pillar.text }}</p>
+            </article>
+          }
+        </div>
+      </div>
+    </section>
+
+    <section class="care-section" id="care">
+      <div class="care-copy">
+        <p class="eyebrow">{{ data().careEyebrow }}</p>
+        <h2>{{ data().careTitle }}</h2>
+      </div>
+      <div class="care-steps" aria-label="Care pathway">
+        @for (step of data().careSteps; track step[0]; let i = $index) {
+          <article>
+            <span>0{{ i + 1 }}</span>
+            <div>
+              <h3>{{ step[0] }}</h3>
+              <p>{{ step[1] }}</p>
+            </div>
+            <svg lucideChevronRight aria-hidden="true"></svg>
+          </article>
+        }
+      </div>
+    </section>
+
+    <section class="section volunteers" id="volunteers">
+      <div class="volunteer-copy">
+        <p class="eyebrow">{{ data().volunteerEyebrow }}</p>
+        <h2>{{ data().volunteerTitle }}</h2>
+        <p>{{ data().volunteerText }}</p>
+      </div>
+      <div class="volunteer-panel">
+        <svg lucideUsersRound aria-hidden="true"></svg>
+        <dl>
+          @for (fact of data().volunteerFacts; track fact[0]) {
+            <div>
+              <dt>{{ fact[0] }}</dt>
+              <dd>{{ fact[1] }}</dd>
+            </div>
+          }
+        </dl>
+      </div>
+    </section>
+
+    <section class="quote-band" aria-label="Mission statement">
+      <svg lucideQuote aria-hidden="true"></svg>
+      <p>{{ data().quote }}</p>
+    </section>
+
+    <section class="section impact" id="donate">
+      <div class="section-kicker compact">
+        <p class="eyebrow">{{ data().impactEyebrow }}</p>
+        <h2>{{ data().impactTitle }}</h2>
+      </div>
+      <div class="impact-grid">
+        @for (card of data().impactCards; track card[0]; let i = $index) {
+          <article>
+            <span>0{{ i + 1 }}</span>
+            <h3>{{ card[0] }}</h3>
+            <p>{{ card[1] }}</p>
+          </article>
+        }
+      </div>
+      <button class="primary-action centered" type="button" (click)="openDonation()">
+        <svg lucideHeart aria-hidden="true"></svg>
+        {{ data().heroPrimary }}
+      </button>
+    </section>
+
+    <section class="makers-section" id="makers">
+      <div class="makers-lead">
+        <p class="eyebrow">{{ data().makersEyebrow }}</p>
+        <img [src]="nayLogoUrl" alt="Nay Alrouh logo" />
+        <h2>{{ data().makersTitle }}</h2>
+        <p>{{ data().makersText }}</p>
+      </div>
+      <div class="makers-grid">
+        @for (card of data().makersCards; track card[0]; let i = $index) {
+          <article [class.veloura-card]="i === 2">
+            @if (i === 0) {
+              <svg lucideBriefcaseBusiness aria-hidden="true"></svg>
+            } @else if (i === 1) {
+              <svg lucideMegaphone aria-hidden="true"></svg>
+            } @else {
+              <svg lucideHeartHandshake aria-hidden="true"></svg>
+            }
+            <h3>{{ card[0] }}</h3>
+            <p>{{ card[1] }}</p>
+          </article>
+        }
+      </div>
+    </section>
+
+    <section class="sources" aria-labelledby="sources-title">
+      <div>
+        <p class="eyebrow">{{ data().sourcesEyebrow }}</p>
+        <h2 id="sources-title">{{ data().sourcesTitle }}</h2>
+      </div>
+      <ul>
+        @for (source of data().sources; track source) {
+          <li>
+            <svg lucideCheck aria-hidden="true"></svg>
+            <span>{{ source }}</span>
+          </li>
+        }
+      </ul>
+    </section>
+
+    <section class="contact" id="contact">
+      <div class="contact-copy">
+        <p class="eyebrow">{{ data().contactEyebrow }}</p>
+        <h2>{{ data().contactTitle }}</h2>
+        <p>{{ data().contactText }}</p>
+      </div>
+      <div class="contact-actions">
+        <a href="https://www.instagram.com/alma.alrouh1/" target="_blank" rel="noreferrer">
+          <svg lucideAtSign aria-hidden="true"></svg>
+          Instagram
+        </a>
+        <a href="https://www.linkedin.com/company/alma-alrouh-foundation/posts/?feedView=all" target="_blank" rel="noreferrer">
+          <svg lucideBriefcaseBusiness aria-hidden="true"></svg>
+          LinkedIn
+        </a>
+        <a href="mailto:almaalrouh1@gmail.com">
+          <svg lucideMail aria-hidden="true"></svg>
+          almaalrouh1&#64;gmail.com
+        </a>
+        <a href="tel:+923158747529">
+          <svg lucidePhone aria-hidden="true"></svg>
+          +92 315 8747529
+        </a>
+        <span>
+          <svg lucideMapPin aria-hidden="true"></svg>
+          Peshawar, KP, Pakistan
+        </span>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <span>{{ data().footerLeft }}</span>
+    <span>{{ data().footerRight }}</span>
+  </footer>
+
+  @if (donationOpen()) {
+    <div class="donation-backdrop" (click)="closeDonation()"></div>
+    <section
+      class="donation-dialog"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="donation-title"
+    >
+      <button class="close-button" type="button" (click)="closeDonation()" [attr.aria-label]="data().donation.close">
+        <svg lucideX aria-hidden="true"></svg>
+      </button>
+      <div class="donation-layout">
+        <section class="donation-copy">
+          <img [src]="logoUrl" [alt]="data().logoAlt" />
+          <p class="eyebrow">{{ data().donation.eyebrow }}</p>
+          <h2 id="donation-title">{{ data().donation.title }}</h2>
+          <p>{{ data().donation.text }}</p>
+          <div class="selected-amount" aria-live="polite">
+            <span>{{ data().donation.selected }}</span>
+            <strong>{{ selectedAmount() }}</strong>
+          </div>
+        </section>
+        <form class="donation-form">
+          <fieldset>
+            <legend>{{ data().donation.choose }}</legend>
+            @for (amount of data().donation.amounts; track amount; let i = $index) {
+              <label>
+                <input
+                  type="radio"
+                  name="amount"
+                  [value]="amount"
+                  [checked]="selectedAmountIndex() === i"
+                  (change)="chooseAmount(i)"
+                />
+                <span>{{ amount }}</span>
+              </label>
+            }
+          </fieldset>
+          <div class="donation-links">
+            <a [href]="donationMailto()">
+              <svg lucideMailCheck aria-hidden="true"></svg>
+              {{ data().donation.email }}
+            </a>
+            <a href="https://www.instagram.com/alma.alrouh1/" target="_blank" rel="noreferrer">
+              <svg lucideSend aria-hidden="true"></svg>
+              {{ data().donation.instagram }}
+            </a>
+          </div>
+        </form>
+      </div>
+    </section>
+  }
+</div>
