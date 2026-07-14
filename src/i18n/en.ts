@@ -19,6 +19,7 @@ export const en: Translation = {
   nav: {
     home: 'Home',
     mission: 'Mission',
+    founder: 'Founder',
     care: 'Care',
     forms: 'Forms',
     volunteers: 'Volunteers',
@@ -30,7 +31,7 @@ export const en: Translation = {
   hero: {
     eyebrow: 'Free mental-health support · Peshawar',
     title: 'No one should carry it alone.',
-    copy: 'A safe first conversation can change everything. Alma Alrouh connects people with free, confidential, culturally sensitive mental-health support — without cost and without judgment.',
+    copy: 'A safe first conversation can change everything. Alma Alrouh connects people with free, confidential, culturally sensitive mental-health support without judgment.',
     primary: 'Request free support',
     secondary: 'Donate to keep care free',
     tertiary: 'Become a volunteer',
@@ -83,9 +84,10 @@ export const en: Translation = {
   },
 
   mission: {
-    eyebrow: '04: Our Mission',
+    eyebrow: 'Our Mission',
     title: 'Making mental-health support reachable, dignified, and human.',
     body: 'Alma Alrouh exists to make mental-health support accessible to people who may not be able to afford private care. Through free support, awareness campaigns, community initiatives, and culturally sensitive care, we help people speak earlier, seek help safely, and feel less alone.',
+    cta: 'See how support works',
     pillars: [
       {
         title: 'Confidential Support',
@@ -104,6 +106,18 @@ export const en: Translation = {
         text: 'We collaborate with schools, universities, nonprofit organizations, community groups, and other institutions to expand mental-health awareness, improve access to support, and reach more people in meaningful ways.',
       },
     ],
+  },
+
+  founder: {
+    eyebrow: 'Founder’s vision',
+    title: 'Dignity Should Never Be a Privilege',
+    quote: [
+      'I envision a future where asking for mental-health support is met with dignity rather than judgment—where cost, culture, distance, and stigma no longer force people into silence.',
+      'Alma Alrouh exists to help bring that future closer, one safe conversation, awareness campaign, community partnership, and act of care at a time.',
+    ],
+    name: 'Dr. Manar Altayyar',
+    role: 'Founder, Alma Alrouh',
+    imageAlt: 'Dr. Manar Altayyar, Founder of Alma Alrouh',
   },
 
   care: {
@@ -166,7 +180,6 @@ export const en: Translation = {
     quickLinksLabel: 'Explore',
     legalLinksLabel: 'Legal',
     connectLabel: 'Connect',
-    supported: 'Supported by Nay Alrouh',
     website: 'Website by Veloura',
     disclaimer: 'Not an emergency service. In a crisis, contact local emergency services.',
     rights: '© 2026 Alma Alrouh. A nonprofit mental-health initiative.',

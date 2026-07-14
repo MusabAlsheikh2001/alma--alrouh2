@@ -13,10 +13,10 @@
         <img
           [src]="logoUrl()"
           [attr.srcset]="logoSrcset()"
-          sizes="(max-width: 760px) 64px, (max-width: 1220px) 84px, 96px"
+          sizes="(max-width: 760px) 72px, (max-width: 1220px) 94px, 108px"
           [alt]="data().logoAlt"
-          width="96"
-          height="96"
+          width="108"
+          height="108"
           decoding="async"
         />
       </a>
@@ -25,6 +25,7 @@
         <a href="#top" [class.active]="activeSection() === ''">{{ data().nav.home }}</a>
         <a href="#forms" [class.active]="activeSection() === 'forms'">{{ data().nav.forms }}</a>
         <a href="#mission" [class.active]="activeSection() === 'mission'">{{ data().nav.mission }}</a>
+        <a href="#founder" [class.active]="activeSection() === 'founder'">{{ data().nav.founder }}</a>
         <a href="#care" [class.active]="activeSection() === 'care'">{{ data().nav.care }}</a>
         <a href="#programs" [class.active]="activeSection() === 'programs'">{{ data().nav.programs }}</a>
         <a href="#volunteers" [class.active]="activeSection() === 'volunteers'">{{ data().nav.volunteers }}</a>
@@ -100,6 +101,7 @@
         <a href="#top" (click)="closeMobileNav()">{{ data().nav.home }}</a>
         <a href="#forms" (click)="closeMobileNav()">{{ data().nav.forms }}</a>
         <a href="#mission" (click)="closeMobileNav()">{{ data().nav.mission }}</a>
+        <a href="#founder" (click)="closeMobileNav()">{{ data().nav.founder }}</a>
         <a href="#care" (click)="closeMobileNav()">{{ data().nav.care }}</a>
         <a href="#programs" (click)="closeMobileNav()">{{ data().nav.programs }}</a>
         <a href="#volunteers" (click)="closeMobileNav()">{{ data().nav.volunteers }}</a>
@@ -245,7 +247,7 @@
       <div class="mission-body" data-reveal style="--reveal-delay: 100ms">
         <p>{{ data().mission.body }}</p>
         <a class="text-link prominent" href="#care">
-          {{ data().nav.care }}
+          {{ data().mission.cta }}
           <app-icon name="arrow-up-right" aria-hidden="true"></app-icon>
         </a>
       </div>
@@ -260,6 +262,33 @@
       </div>
     </section>
 
+    <section id="founder" class="founder section-pad" aria-labelledby="founder-title">
+      <figure class="founder-media" data-reveal>
+        <img
+          [src]="founderImageUrl"
+          [alt]="data().founder.imageAlt"
+          width="920"
+          height="1150"
+          loading="lazy"
+          fetchpriority="low"
+          decoding="async"
+        />
+      </figure>
+      <div class="founder-copy" data-reveal style="--reveal-delay: 90ms">
+        <p class="eyebrow">{{ data().founder.eyebrow }}</p>
+        <h2 id="founder-title">{{ data().founder.title }}</h2>
+        <div class="founder-statement">
+          @for (paragraph of data().founder.quote; track paragraph) {
+            <p>{{ paragraph }}</p>
+          }
+        </div>
+        <p class="founder-signature">
+          <strong>{{ data().founder.name }}</strong>
+          <span>{{ data().founder.role }}</span>
+        </p>
+      </div>
+    </section>
+
     <section id="care" class="care section-pad" aria-labelledby="care-title">
       <div class="care-shell">
         <div class="section-heading" data-reveal>
@@ -270,7 +299,7 @@
         <ol class="care-steps">
           @for (step of data().care.steps; track step[0]; let i = $index) {
             <li data-reveal [style.--reveal-delay]="i * 80 + 'ms'">
-              <span class="step-number">{{ i + 1 }}</span>
+              <span class="step-number">0{{ i + 1 }}</span>
               <div>
                 <h3>{{ step[0] }}</h3>
                 <p>{{ step[1] }}</p>
@@ -499,6 +528,7 @@
       <nav class="footer-links" [attr.aria-label]="data().footer.quickLinksLabel">
         <span>{{ data().footer.quickLinksLabel }}</span>
         <a href="#mission">{{ data().nav.mission }}</a>
+        <a href="#founder">{{ data().nav.founder }}</a>
         <a href="#forms">{{ data().nav.forms }}</a>
         <a href="#care">{{ data().nav.care }}</a>
         <a href="#programs">{{ data().nav.programs }}</a>
@@ -527,7 +557,7 @@
     </div>
     <div class="footer-bottom">
       <span>{{ data().footer.rights }}</span>
-      <span>{{ data().footer.supported }} · {{ data().footer.website }}</span>
+      <a [href]="velouraUrl" target="_blank" rel="noreferrer">{{ data().footer.website }}</a>
     </div>
   </footer>
 

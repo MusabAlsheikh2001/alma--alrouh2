@@ -22,14 +22,19 @@ import type { FormItem } from '../i18n/types';
 // Responsive transparent PNGs generated from the supplied CDN logo source.
 const LOGO_SMALL_URL = 'assets/alma-alrouh-logo.png';
 const LOGO_MEDIUM_URL = 'assets/alma-alrouh-logo-1024.png';
-const LOGO_CLEAN_MEDIUM_URL = 'assets/alma-alrouh-logo-clean-1024.png';
+const LOGO_DARK_SMALL_URL = 'assets/alma-alrouh-logo-dark.png';
+const LOGO_DARK_MEDIUM_URL = 'assets/alma-alrouh-logo-dark-1024.png';
 const LOGO_SRCSET =
   LOGO_SMALL_URL + ' 256w, ' + LOGO_MEDIUM_URL + ' 1024w';
-const LOGO_CLEAN_SRCSET = LOGO_CLEAN_MEDIUM_URL + ' 1024w';
+const LOGO_DARK_SRCSET =
+  LOGO_DARK_SMALL_URL + ' 256w, ' + LOGO_DARK_MEDIUM_URL + ' 1024w';
+const FOUNDER_IMAGE_URL =
+  'https://nayalrouh.b-cdn.net/Team/WhatsApp%20Image%202026-06-16%20at%2023.08.21.jpeg';
 const EMAIL = 'almaalrouh1@gmail.com';
 const INSTAGRAM_URL = 'https://www.instagram.com/alma.alrouh1/';
 const LINKEDIN_URL =
   'https://www.linkedin.com/company/alma-alrouh-foundation/posts/?feedView=all';
+const VELOURA_URL = 'https://veloura-marketing.com/';
 const SUPPORT_FORM_URL = 'https://forms.gle/7hsbZn6zek9DKuN28';
 const VOLUNTEER_FORM_URL = 'https://forms.gle/DUXSJjyQ5ShBj4ew6';
 const DONATION_FORM_URL = 'https://forms.gle/RAEK81jqP23W5HTMA';
@@ -39,7 +44,7 @@ const THEME_STORAGE_KEY = 'alma-alrouh-theme';
 type Theme = 'light' | 'dark';
 type LegalSectionId = 'terms' | 'faqs' | 'privacy';
 
-const SECTION_IDS = ['forms', 'mission', 'care', 'programs', 'volunteers', 'contact', 'terms', 'faqs', 'privacy'];
+const SECTION_IDS = ['forms', 'mission', 'founder', 'care', 'programs', 'volunteers', 'contact', 'terms', 'faqs', 'privacy'];
 
 @Component({
   selector: 'app-root',
@@ -52,8 +57,10 @@ const SECTION_IDS = ['forms', 'mission', 'care', 'programs', 'volunteers', 'cont
   styleUrl: './app.css',
 })
 export class App implements OnDestroy {
+  protected readonly founderImageUrl = FOUNDER_IMAGE_URL;
   protected readonly instagramUrl = INSTAGRAM_URL;
   protected readonly linkedinUrl = LINKEDIN_URL;
+  protected readonly velouraUrl = VELOURA_URL;
   protected readonly supportFormUrl = SUPPORT_FORM_URL;
   protected readonly volunteerFormUrl = VOLUNTEER_FORM_URL;
   protected readonly donationFormUrl = DONATION_FORM_URL;
@@ -62,10 +69,10 @@ export class App implements OnDestroy {
   protected readonly language = signal<LanguageCode>(this.initialLanguage());
   protected readonly theme = signal<Theme>(this.initialTheme());
   protected readonly logoUrl = computed(() =>
-    this.theme() === 'dark' ? LOGO_CLEAN_MEDIUM_URL : LOGO_MEDIUM_URL,
+    this.theme() === 'dark' ? LOGO_DARK_MEDIUM_URL : LOGO_MEDIUM_URL,
   );
   protected readonly logoSrcset = computed(() =>
-    this.theme() === 'dark' ? LOGO_CLEAN_SRCSET : LOGO_SRCSET,
+    this.theme() === 'dark' ? LOGO_DARK_SRCSET : LOGO_SRCSET,
   );
   protected readonly scrolled = signal(false);
   protected readonly activeSection = signal('');

@@ -54,6 +54,7 @@ export interface Translation {
   nav: {
     home: string;
     mission: string;
+    founder: string;
     care: string;
     forms: string;
     volunteers: string;
@@ -92,7 +93,17 @@ export interface Translation {
     eyebrow: string;
     title: string;
     body: string;
+    cta: string;
     pillars: TitledCard[];
+  };
+
+  founder: {
+    eyebrow: string;
+    title: string;
+    quote: string[];
+    name: string;
+    role: string;
+    imageAlt: string;
   };
 
   care: {
@@ -131,7 +142,6 @@ export interface Translation {
     quickLinksLabel: string;
     legalLinksLabel: string;
     connectLabel: string;
-    supported: string;
     website: string;
     disclaimer: string;
     rights: string;
