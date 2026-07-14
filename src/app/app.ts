@@ -1,6 +1,7 @@
 import {
   Component,
   HostListener,
+  OnDestroy,
   computed,
   effect,
   signal,
@@ -21,13 +22,10 @@ import type { FormItem } from '../i18n/types';
 // Responsive transparent PNGs generated from the supplied CDN logo source.
 const LOGO_SMALL_URL = 'assets/alma-alrouh-logo.png';
 const LOGO_MEDIUM_URL = 'assets/alma-alrouh-logo-1024.png';
-const LOGO_LARGE_URL = 'assets/alma-alrouh-logo-4k.png';
 const LOGO_CLEAN_MEDIUM_URL = 'assets/alma-alrouh-logo-clean-1024.png';
 const LOGO_SRCSET =
-  LOGO_SMALL_URL + ' 256w, ' + LOGO_MEDIUM_URL + ' 1024w, ' + LOGO_LARGE_URL + ' 4096w';
+  LOGO_SMALL_URL + ' 256w, ' + LOGO_MEDIUM_URL + ' 1024w';
 const LOGO_CLEAN_SRCSET = LOGO_CLEAN_MEDIUM_URL + ' 1024w';
-const HERO_IMAGE_URL =
-  'https://nayalrouh.b-cdn.net/Alma%20Alrouh/alma_alrouh_hero_3840x1646.png';
 const EMAIL = 'almaalrouh1@gmail.com';
 const INSTAGRAM_URL = 'https://www.instagram.com/alma.alrouh1/';
 const LINKEDIN_URL =
@@ -53,8 +51,7 @@ const SECTION_IDS = ['forms', 'mission', 'care', 'programs', 'volunteers', 'cont
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
-export class App {
-  protected readonly heroImageUrl = HERO_IMAGE_URL;
+export class App implements OnDestroy {
   protected readonly instagramUrl = INSTAGRAM_URL;
   protected readonly linkedinUrl = LINKEDIN_URL;
   protected readonly supportFormUrl = SUPPORT_FORM_URL;
@@ -79,6 +76,7 @@ export class App {
   protected readonly data = computed(() => translations[this.language()]);
   protected readonly isRtl = computed(() => this.data().dir === 'rtl');
   protected readonly pageDir = computed(() => this.data().dir);
+  private scrollFrame = 0;
 
   // Real routes for visitor actions — no fake backend.
   protected readonly contactMailto = this.mailto(
@@ -124,7 +122,25 @@ export class App {
 
   @HostListener('window:scroll')
   protected onScroll(): void {
-    this.scrolled.set(window.scrollY > 24);
+    if (this.scrollFrame) return;
+    this.scrollFrame = window.requestAnimationFrame(() => {
+      this.scrollFrame = 0;
+      this.updateScrollState();
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (this.scrollFrame) {
+      window.cancelAnimationFrame(this.scrollFrame);
+    }
+  }
+
+  private updateScrollState(): void {
+    const isScrolled = window.scrollY > 24;
+    if (this.scrolled() !== isScrolled) {
+      this.scrolled.set(isScrolled);
+    }
+
     const probe = window.scrollY + 160;
     let current = '';
     for (const id of SECTION_IDS) {
@@ -133,7 +149,9 @@ export class App {
         current = id;
       }
     }
-    this.activeSection.set(current);
+    if (this.activeSection() !== current) {
+      this.activeSection.set(current);
+    }
   }
 
   protected setLanguage(lang: LanguageCode): void {

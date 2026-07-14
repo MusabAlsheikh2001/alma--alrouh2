@@ -17,6 +17,7 @@
           [alt]="data().logoAlt"
           width="96"
           height="96"
+          decoding="async"
         />
       </a>
 
@@ -121,17 +122,6 @@
     <span id="top" aria-hidden="true"></span>
 
     <section class="hero" aria-labelledby="hero-title">
-      <div class="hero-media">
-        <img
-          [src]="heroImageUrl"
-          [alt]="language() === 'ar' ? 'أخصائية دعم نفسي تستمع إلى امرأة في مساحة علاجية هادئة تابعة لألما الروح' : 'A mental-health support specialist listening to a woman in a calm Alma Alrouh care space'"
-          width="1600"
-          height="686"
-          fetchpriority="high"
-          decoding="async"
-        />
-      </div>
-
       <div class="hero-inner">
         <div class="hero-content">
           <img
@@ -142,6 +132,9 @@
             [alt]="data().logoAlt"
             width="280"
             height="280"
+            loading="eager"
+            fetchpriority="high"
+            decoding="async"
             data-reveal
           />
           <p class="hero-kicker" data-reveal>{{ data().hero.eyebrow }}</p>
@@ -496,6 +489,9 @@
             [alt]="data().logoAlt"
             width="144"
             height="144"
+            loading="lazy"
+            fetchpriority="low"
+            decoding="async"
           />
         </a>
         <p>{{ data().footer.mission }}</p>
