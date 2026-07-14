@@ -225,6 +225,8 @@ section[id],
 }
 
 .site-header {
+  --header-logo-size: 96px;
+
   position: fixed;
   inset: 0 0 auto;
   z-index: 80;
@@ -287,6 +289,11 @@ section[id],
   border-radius: 6px;
   object-fit: contain;
   background: transparent;
+}
+
+.site-header .brand img {
+  width: var(--header-logo-size);
+  height: var(--header-logo-size);
 }
 
 .brand-copy {
@@ -1838,6 +1845,10 @@ section[id],
 }
 
 @media (max-width: 1220px) {
+  .site-header {
+    --header-logo-size: 84px;
+  }
+
   .header-inner {
     grid-template-columns: minmax(96px, 1fr) auto minmax(150px, 1fr);
     gap: 18px;
@@ -1989,6 +2000,10 @@ section[id],
   :host {
     --header-height: 72px;
     --page-gutter: 18px;
+  }
+
+  .site-header {
+    --header-logo-size: 64px;
   }
 
   .section-pad {
