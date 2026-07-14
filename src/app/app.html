@@ -1,293 +1,532 @@
-<div class="page-shell" [attr.dir]="pageDir()" [class.is-rtl]="isArabic()">
-  <header class="site-header" aria-label="Primary navigation">
-    <a class="brand" href="#top" (click)="closeMobileNav()" aria-label="Alma Alrouh home">
-      <img [src]="logoUrl" [alt]="data().logoAlt" />
-      <span>
-        <strong>Alma Alrouh</strong>
-        <small>{{ isArabic() ? 'الصحة النفسية للجميع' : 'Mental health for everyone' }}</small>
-      </span>
-    </a>
+<div
+  class="page-shell"
+  [attr.dir]="pageDir()"
+  [class.is-rtl]="isRtl()"
+  [attr.data-lang]="language()"
+  [attr.data-theme]="theme()"
+>
+  <a class="skip-link" href="#main">{{ data().a11y.skipToContent }}</a>
 
-    <nav class="nav-links" [class.open]="mobileNavOpen()" aria-label="Page sections">
-      <a href="#mission" (click)="closeMobileNav()">{{ data().nav[0] }}</a>
-      <a href="#care" (click)="closeMobileNav()">{{ data().nav[1] }}</a>
-      <a href="#volunteers" (click)="closeMobileNav()">{{ data().nav[2] }}</a>
-      <a href="#makers" (click)="closeMobileNav()">{{ data().nav[3] }}</a>
-      <button type="button" (click)="openDonation()">{{ data().nav[4] }}</button>
-      <a href="#contact" (click)="closeMobileNav()">{{ data().nav[5] }}</a>
-    </nav>
+  <header class="site-header" [class.is-scrolled]="scrolled()">
+    <div class="header-inner">
+      <a class="brand" href="#top" (click)="closeMobileNav()" [attr.aria-label]="data().a11y.home">
+        <img
+          [src]="logoUrl()"
+          [attr.srcset]="logoSrcset()"
+          sizes="(max-width: 760px) 56px, (max-width: 1220px) 72px, 82px"
+          [alt]="data().logoAlt"
+          width="96"
+          height="96"
+        />
+      </a>
 
-    <div class="header-actions">
-      <button class="language-button" type="button" (click)="toggleLanguage()">
-        <span>{{ data().code }}</span>
-        {{ data().switchLabel }}
-      </button>
-      <button class="donate-button" type="button" (click)="openDonation()">
-        <svg lucideHeartHandshake aria-hidden="true"></svg>
-        <span>{{ data().donate }}</span>
-      </button>
-      <button
-        class="menu-button"
-        type="button"
-        (click)="toggleMobileNav()"
-        aria-label="Open navigation"
-        [attr.aria-expanded]="mobileNavOpen()"
-      >
-        <svg lucideMenu aria-hidden="true"></svg>
-      </button>
+      <nav class="desktop-nav" [attr.aria-label]="data().a11y.primaryNav">
+        <a href="#top" [class.active]="activeSection() === ''">{{ data().nav.home }}</a>
+        <a href="#forms" [class.active]="activeSection() === 'forms'">{{ data().nav.forms }}</a>
+        <a href="#mission" [class.active]="activeSection() === 'mission'">{{ data().nav.mission }}</a>
+        <a href="#care" [class.active]="activeSection() === 'care'">{{ data().nav.care }}</a>
+        <a href="#programs" [class.active]="activeSection() === 'programs'">{{ data().nav.programs }}</a>
+        <a href="#volunteers" [class.active]="activeSection() === 'volunteers'">{{ data().nav.volunteers }}</a>
+        <a href="#contact" [class.active]="activeSection() === 'contact'">{{ data().nav.contact }}</a>
+      </nav>
+
+      <div class="header-actions">
+        <a class="support-button" [href]="supportFormUrl" target="_blank" rel="noreferrer">
+          {{ data().hero.primary }}
+          <app-icon name="arrow-up-right" aria-hidden="true"></app-icon>
+        </a>
+
+        <div class="lang-switch" role="group" [attr.aria-label]="data().a11y.chooseLanguage">
+          @for (lang of languages; track lang) {
+            @if (language() !== lang) {
+              <button
+                class="language-choice"
+                type="button"
+                [attr.aria-label]="translationName(lang)"
+                (click)="setLanguage(lang)"
+              >
+                {{ languageCode(lang) }}
+              </button>
+            }
+          }
+        </div>
+
+        <button
+          class="icon-button"
+          type="button"
+          (click)="toggleTheme()"
+          [attr.aria-label]="language() === 'ar' ? 'تبديل المظهر' : 'Toggle color theme'"
+          [attr.title]="theme() === 'light' ? 'Dark mode' : 'Light mode'"
+        >
+          @if (theme() === 'light') {
+            <app-icon name="moon" aria-hidden="true"></app-icon>
+          } @else {
+            <app-icon name="sun" aria-hidden="true"></app-icon>
+          }
+        </button>
+
+        <a class="donate-button" [href]="donationFormUrl" target="_blank" rel="noreferrer">
+          {{ data().nav.donate }}
+          <app-icon name="heart" aria-hidden="true"></app-icon>
+        </a>
+
+        <button
+          class="menu-button"
+          type="button"
+          (click)="toggleMobileNav()"
+          [attr.aria-label]="data().a11y.openMenu"
+          [attr.aria-expanded]="mobileNavOpen()"
+        >
+          @if (mobileNavOpen()) {
+            <app-icon name="x" aria-hidden="true"></app-icon>
+          } @else {
+            <app-icon name="menu" aria-hidden="true"></app-icon>
+          }
+        </button>
+      </div>
     </div>
   </header>
 
-  <main id="top">
-    <section class="hero" aria-labelledby="hero-title">
-      <img
-        class="hero-image"
-        src="assets/hero-support-circle.png"
-        alt="A calm support circle in a community mental health room"
-      />
-      <div class="hero-panel">
-        <p class="eyebrow">{{ data().heroEyebrow }}</p>
-        <h1 id="hero-title">{{ data().heroTitle }}</h1>
-        <p class="hero-copy">{{ data().heroCopy }}</p>
-        <div class="hero-actions" aria-label="Primary actions">
-          <button class="primary-action" type="button" (click)="openDonation()">
-            <svg lucideHandCoins aria-hidden="true"></svg>
-            {{ data().heroPrimary }}
-          </button>
-          <a class="secondary-action" href="#mission">
-            <svg lucideArrowDown aria-hidden="true"></svg>
-            {{ data().heroSecondary }}
+  @if (langMenuOpen()) {
+    <button class="page-scrim lang-scrim" type="button" (click)="closeLangMenu()" tabindex="-1" aria-hidden="true"></button>
+  }
+
+  @if (mobileNavOpen()) {
+    <div class="mobile-nav-wrap">
+      <button class="page-scrim" type="button" (click)="closeMobileNav()" tabindex="-1" aria-hidden="true"></button>
+      <nav class="mobile-nav" [attr.aria-label]="data().a11y.primaryNav">
+        <span class="mobile-nav-kicker">Alma Alrouh</span>
+        <a href="#top" (click)="closeMobileNav()">{{ data().nav.home }}</a>
+        <a href="#forms" (click)="closeMobileNav()">{{ data().nav.forms }}</a>
+        <a href="#mission" (click)="closeMobileNav()">{{ data().nav.mission }}</a>
+        <a href="#care" (click)="closeMobileNav()">{{ data().nav.care }}</a>
+        <a href="#programs" (click)="closeMobileNav()">{{ data().nav.programs }}</a>
+        <a href="#volunteers" (click)="closeMobileNav()">{{ data().nav.volunteers }}</a>
+        <a href="#contact" (click)="closeMobileNav()">{{ data().nav.contact }}</a>
+        <div class="mobile-nav-actions">
+          <a class="button button-primary" [href]="supportFormUrl" target="_blank" rel="noreferrer" (click)="closeMobileNav()">
+            {{ data().hero.primary }}
+            <app-icon name="arrow-up-right" aria-hidden="true"></app-icon>
+          </a>
+          <a class="button button-dark" [href]="donationFormUrl" target="_blank" rel="noreferrer" (click)="closeMobileNav()">
+            {{ data().nav.donate }}
+            <app-icon name="heart" aria-hidden="true"></app-icon>
           </a>
         </div>
+      </nav>
+    </div>
+  }
+
+  <main id="main">
+    <span id="top" aria-hidden="true"></span>
+
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-media">
+        <img
+          [src]="heroImageUrl"
+          [alt]="language() === 'ar' ? 'أخصائية دعم نفسي تستمع إلى امرأة في مساحة علاجية هادئة تابعة لألما الروح' : 'A mental-health support specialist listening to a woman in a calm Alma Alrouh care space'"
+          width="1600"
+          height="686"
+          fetchpriority="high"
+          decoding="async"
+        />
       </div>
-      <aside class="hero-note" aria-label="Alma Alrouh message">
-        <svg lucideMessageCircleHeart aria-hidden="true"></svg>
-        <span>{{ data().heroNote }}</span>
-      </aside>
+
+      <div class="hero-inner">
+        <div class="hero-content">
+          <img
+            class="hero-logo"
+            [src]="logoUrl()"
+            [attr.srcset]="logoSrcset()"
+            sizes="(max-width: 760px) 168px, 280px"
+            [alt]="data().logoAlt"
+            width="280"
+            height="280"
+            data-reveal
+          />
+          <p class="hero-kicker" data-reveal>{{ data().hero.eyebrow }}</p>
+          <h1 id="hero-title" data-reveal style="--reveal-delay: 80ms">
+            {{ data().hero.title }}
+          </h1>
+          <p class="hero-intro" data-reveal style="--reveal-delay: 150ms">{{ data().hero.copy }}</p>
+          <div class="hero-actions" data-reveal style="--reveal-delay: 220ms">
+            <a class="button button-light" [href]="supportFormUrl" target="_blank" rel="noreferrer">
+              {{ data().hero.primary }}
+              <app-icon name="arrow-up-right" aria-hidden="true"></app-icon>
+            </a>
+            <a class="button button-glass" [href]="volunteerFormUrl" target="_blank" rel="noreferrer">
+              {{ data().hero.tertiary }}
+              <app-icon name="users-round" aria-hidden="true"></app-icon>
+            </a>
+          </div>
+
+          <ul class="hero-trust" [attr.aria-label]="data().hero.eyebrow">
+            @for (item of data().hero.trust; track item; let i = $index) {
+              <li data-reveal [style.--reveal-delay]="i * 70 + 280 + 'ms'">
+                @if (i === 0) { <app-icon name="shield-check" aria-hidden="true"></app-icon> }
+                @else if (i === 1) { <app-icon name="heart-pulse" aria-hidden="true"></app-icon> }
+                @else if (i === 2) { <app-icon name="users-round" aria-hidden="true"></app-icon> }
+                @else { <app-icon name="globe" aria-hidden="true"></app-icon> }
+                {{ item }}
+              </li>
+            }
+          </ul>
+        </div>
+      </div>
     </section>
 
-    <section class="stat-band" aria-label="Organization highlights">
-      @for (stat of data().stats; track stat[0]) {
-        <article>
-          <strong>{{ stat[0] }}</strong>
-          <span>{{ stat[1] }}</span>
-        </article>
-      }
-    </section>
-
-    <section class="section mission" id="mission">
-      <div class="section-kicker">
-        <p class="eyebrow">{{ data().missionEyebrow }}</p>
-        <h2>{{ data().missionTitle }}</h2>
+    <section id="forms" class="forms section-pad" aria-labelledby="forms-title">
+      <div class="forms-lead" data-reveal>
+        <p class="eyebrow">{{ data().forms.eyebrow }}</p>
+        <h2 id="forms-title">{{ data().forms.title }}</h2>
+        <p>{{ data().forms.intro }}</p>
       </div>
-      <div class="section-body">
-        <p>{{ data().missionText }}</p>
-        <div class="pillars" aria-label="Core services">
-          @for (pillar of data().pillars; track pillar.title; let i = $index) {
-            <article>
-              @if (i === 0) {
-                <svg lucideShieldCheck aria-hidden="true"></svg>
-              } @else if (i === 1) {
-                <svg lucideMegaphone aria-hidden="true"></svg>
-              } @else {
-                <svg lucideBookOpenCheck aria-hidden="true"></svg>
+      <div class="forms-grid">
+        @for (item of data().forms.items; track item.id; let i = $index) {
+          <a
+            class="form-card"
+            [href]="formHref(item.id)"
+            target="_blank"
+            rel="noreferrer"
+            data-reveal
+            [style.--reveal-delay]="i * 70 + 'ms'"
+          >
+            <span class="form-icon">
+              @switch (item.id) {
+                @case ('support') { <app-icon name="life-buoy" aria-hidden="true"></app-icon> }
+                @case ('volunteer') { <app-icon name="hand-heart" aria-hidden="true"></app-icon> }
+                @case ('donation') { <app-icon name="hand-coins" aria-hidden="true"></app-icon> }
+                @case ('partnership') { <app-icon name="handshake" aria-hidden="true"></app-icon> }
               }
-              <h3>{{ pillar.title }}</h3>
-              <p>{{ pillar.text }}</p>
+            </span>
+            <span class="card-index">0{{ i + 1 }}</span>
+            <strong>{{ item.title }}</strong>
+            <p>{{ item.text }}</p>
+            <span class="form-link">
+              {{ item.cta }}
+              <app-icon name="arrow-up-right" aria-hidden="true"></app-icon>
+            </span>
+          </a>
+        }
+      </div>
+    </section>
+
+    <section class="impact" aria-labelledby="stats-title">
+      <div class="impact-intro" data-reveal>
+        <p class="eyebrow">{{ data().stats.eyebrow }}</p>
+        <h2 id="stats-title">{{ data().stats.title }}</h2>
+        <p>{{ data().mission.body }}</p>
+        <ul class="impact-points" [attr.aria-label]="data().stats.eyebrow">
+          @for (item of data().hero.trust; track item; let i = $index) {
+            <li>
+              @if (i === 0) { <app-icon name="shield-check" aria-hidden="true"></app-icon> }
+              @else if (i === 1) { <app-icon name="heart-pulse" aria-hidden="true"></app-icon> }
+              @else if (i === 2) { <app-icon name="users-round" aria-hidden="true"></app-icon> }
+              @else { <app-icon name="globe" aria-hidden="true"></app-icon> }
+              {{ item }}
+            </li>
+          }
+        </ul>
+      </div>
+      <div class="impact-stats">
+        @for (stat of data().stats.items; track stat[1]; let i = $index) {
+          <article
+            class="impact-card"
+            [class.primary-stat]="i === 0"
+            [class.word-stat]="stat[0].length > 5"
+            data-reveal
+            [style.--reveal-delay]="i * 80 + 'ms'"
+          >
+            <span class="stat-number" [countUp]="stat[0]"></span>
+            <p>{{ stat[1] }}</p>
+          </article>
+        }
+      </div>
+    </section>
+
+    <section id="mission" class="mission section-pad" aria-labelledby="mission-title">
+      <div class="mission-lead" data-reveal>
+        <p class="eyebrow">{{ data().mission.eyebrow }}</p>
+        <h2 id="mission-title">{{ data().mission.title }}</h2>
+      </div>
+      <div class="mission-body" data-reveal style="--reveal-delay: 100ms">
+        <p>{{ data().mission.body }}</p>
+        <a class="text-link prominent" href="#care">
+          {{ data().nav.care }}
+          <app-icon name="arrow-up-right" aria-hidden="true"></app-icon>
+        </a>
+      </div>
+      <div class="pillar-grid">
+        @for (pillar of data().mission.pillars; track pillar.title; let i = $index) {
+          <article data-reveal [style.--reveal-delay]="i * 90 + 'ms'">
+            <span class="pillar-number">0{{ i + 1 }}</span>
+            <h3>{{ pillar.title }}</h3>
+            <p>{{ pillar.text }}</p>
+          </article>
+        }
+      </div>
+    </section>
+
+    <section id="care" class="care section-pad" aria-labelledby="care-title">
+      <div class="care-shell">
+        <div class="section-heading" data-reveal>
+          <p class="eyebrow">{{ data().care.eyebrow }}</p>
+          <h2 id="care-title">{{ data().care.title }}</h2>
+          <p class="section-intro">{{ data().care.intro }}</p>
+        </div>
+        <ol class="care-steps">
+          @for (step of data().care.steps; track step[0]; let i = $index) {
+            <li data-reveal [style.--reveal-delay]="i * 80 + 'ms'">
+              <span class="step-number">{{ i + 1 }}</span>
+              <div>
+                <h3>{{ step[0] }}</h3>
+                <p>{{ step[1] }}</p>
+              </div>
+            </li>
+          }
+        </ol>
+        <a class="button button-primary care-cta" [href]="supportFormUrl" target="_blank" rel="noreferrer" data-reveal>
+          {{ data().hero.primary }}
+          <app-icon name="arrow-up-right" aria-hidden="true"></app-icon>
+        </a>
+      </div>
+    </section>
+
+    <section id="programs" class="programs section-pad" aria-labelledby="programs-title">
+      <div class="section-heading programs-heading" data-reveal>
+        <p class="eyebrow">{{ data().programs.eyebrow }}</p>
+        <h2 id="programs-title">{{ data().programs.title }}</h2>
+      </div>
+      <div class="program-grid">
+        @for (program of data().programs.items; track program[0]; let i = $index) {
+          <article data-reveal [style.--reveal-delay]="i * 65 + 'ms'">
+            <span class="program-icon">
+              @switch (i) {
+                @case (0) { <app-icon name="message-circle-heart" aria-hidden="true"></app-icon> }
+                @case (1) { <app-icon name="megaphone" aria-hidden="true"></app-icon> }
+                @case (2) { <app-icon name="graduation-cap" aria-hidden="true"></app-icon> }
+                @case (3) { <app-icon name="tent" aria-hidden="true"></app-icon> }
+                @case (4) { <app-icon name="speech" aria-hidden="true"></app-icon> }
+                @default { <app-icon name="route" aria-hidden="true"></app-icon> }
+              }
+            </span>
+            <span class="card-index">0{{ i + 1 }}</span>
+            <h3>{{ program[0] }}</h3>
+            <p>{{ program[1] }}</p>
+          </article>
+        }
+      </div>
+    </section>
+
+    <section id="volunteers" class="volunteers" aria-labelledby="volunteers-title">
+      <div class="volunteer-copy" data-reveal>
+        <p class="eyebrow">{{ data().volunteers.eyebrow }}</p>
+        <h2 id="volunteers-title">{{ data().volunteers.title }}</h2>
+        <p>{{ data().volunteers.text }}</p>
+        <a class="button button-light" [href]="volunteerFormUrl" target="_blank" rel="noreferrer">
+          {{ data().hero.tertiary }}
+          <app-icon name="arrow-up-right" aria-hidden="true"></app-icon>
+        </a>
+      </div>
+      <div class="volunteer-network" data-reveal="scale" style="--reveal-delay: 100ms">
+        <span class="network-label">140+</span>
+        <p>{{ data().stats.items[0][1] }}</p>
+        <div class="role-cloud">
+          @for (role of data().volunteers.roles; track role) {
+            <span>{{ role }}</span>
+          }
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact" aria-labelledby="contact-title">
+      <div class="contact-copy" data-reveal>
+        <p class="eyebrow">{{ data().contact.eyebrow }}</p>
+        <h2 id="contact-title">{{ data().contact.title }}</h2>
+        <p>{{ data().contact.text }}</p>
+      </div>
+      <div class="contact-actions" data-reveal style="--reveal-delay: 100ms">
+        <a [href]="contactMailto">
+          <span class="contact-icon"><app-icon name="mail" aria-hidden="true"></app-icon></span>
+          <span><small>{{ language() === 'ar' ? 'البريد الإلكتروني' : 'Email' }}</small><strong>{{ data().contact.email }}</strong></span>
+          <app-icon name="arrow-up-right" aria-hidden="true"></app-icon>
+        </a>
+        <a [href]="'tel:' + data().contact.phone.replaceAll(' ', '')">
+          <span class="contact-icon"><app-icon name="phone" aria-hidden="true"></app-icon></span>
+          <span><small>{{ language() === 'ar' ? 'الهاتف' : 'Phone' }}</small><strong>{{ data().contact.phone }}</strong></span>
+          <app-icon name="arrow-up-right" aria-hidden="true"></app-icon>
+        </a>
+        <div class="location-row">
+          <span class="contact-icon"><app-icon name="map-pin" aria-hidden="true"></app-icon></span>
+          <span><small>{{ language() === 'ar' ? 'الموقع' : 'Location' }}</small><strong>{{ data().contact.location }}</strong></span>
+        </div>
+      </div>
+      <p class="safety-note">
+        <app-icon name="triangle-alert" aria-hidden="true"></app-icon>
+        {{ data().contact.safety }}
+      </p>
+    </section>
+
+    <section
+      id="terms"
+      class="legal-page section-pad"
+      [class.is-open]="isLegalOpen('terms')"
+      aria-labelledby="terms-title"
+    >
+      <button
+        class="legal-toggle"
+        type="button"
+        (click)="toggleLegal('terms')"
+        [attr.aria-expanded]="isLegalOpen('terms')"
+        aria-controls="terms-panel"
+        data-reveal
+      >
+        <span class="legal-toggle-spacer" aria-hidden="true"></span>
+        <span class="legal-header">
+          <span class="eyebrow">{{ data().legal.terms.eyebrow }}</span>
+          <span id="terms-title" class="legal-title">{{ data().legal.terms.title }}</span>
+          <span class="legal-intro">{{ data().legal.terms.intro }}</span>
+          <span class="legal-updated">{{ data().legal.terms.updated }}</span>
+        </span>
+        <span class="legal-toggle-icon" aria-hidden="true">
+          <app-icon name="chevron-right"></app-icon>
+        </span>
+      </button>
+      @if (isLegalOpen('terms')) {
+        <div id="terms-panel" class="legal-content">
+          @for (section of data().legal.terms.sections; track section.title; let i = $index) {
+            <article data-reveal [style.--reveal-delay]="i * 45 + 'ms'">
+              <h3>{{ section.title }}</h3>
+              <p>{{ section.body }}</p>
             </article>
           }
         </div>
-      </div>
+      }
     </section>
 
-    <section class="care-section" id="care">
-      <div class="care-copy">
-        <p class="eyebrow">{{ data().careEyebrow }}</p>
-        <h2>{{ data().careTitle }}</h2>
-      </div>
-      <div class="care-steps" aria-label="Care pathway">
-        @for (step of data().careSteps; track step[0]; let i = $index) {
-          <article>
-            <span>0{{ i + 1 }}</span>
-            <div>
-              <h3>{{ step[0] }}</h3>
-              <p>{{ step[1] }}</p>
-            </div>
-            <svg lucideChevronRight aria-hidden="true"></svg>
-          </article>
-        }
-      </div>
-    </section>
-
-    <section class="section volunteers" id="volunteers">
-      <div class="volunteer-copy">
-        <p class="eyebrow">{{ data().volunteerEyebrow }}</p>
-        <h2>{{ data().volunteerTitle }}</h2>
-        <p>{{ data().volunteerText }}</p>
-      </div>
-      <div class="volunteer-panel">
-        <svg lucideUsersRound aria-hidden="true"></svg>
-        <dl>
-          @for (fact of data().volunteerFacts; track fact[0]) {
-            <div>
-              <dt>{{ fact[0] }}</dt>
-              <dd>{{ fact[1] }}</dd>
-            </div>
-          }
-        </dl>
-      </div>
-    </section>
-
-    <section class="quote-band" aria-label="Mission statement">
-      <svg lucideQuote aria-hidden="true"></svg>
-      <p>{{ data().quote }}</p>
-    </section>
-
-    <section class="section impact" id="donate">
-      <div class="section-kicker compact">
-        <p class="eyebrow">{{ data().impactEyebrow }}</p>
-        <h2>{{ data().impactTitle }}</h2>
-      </div>
-      <div class="impact-grid">
-        @for (card of data().impactCards; track card[0]; let i = $index) {
-          <article>
-            <span>0{{ i + 1 }}</span>
-            <h3>{{ card[0] }}</h3>
-            <p>{{ card[1] }}</p>
-          </article>
-        }
-      </div>
-      <button class="primary-action centered" type="button" (click)="openDonation()">
-        <svg lucideHeart aria-hidden="true"></svg>
-        {{ data().heroPrimary }}
-      </button>
-    </section>
-
-    <section class="makers-section" id="makers">
-      <div class="makers-lead">
-        <p class="eyebrow">{{ data().makersEyebrow }}</p>
-        <img [src]="nayLogoUrl" alt="Nay Alrouh logo" />
-        <h2>{{ data().makersTitle }}</h2>
-        <p>{{ data().makersText }}</p>
-      </div>
-      <div class="makers-grid">
-        @for (card of data().makersCards; track card[0]; let i = $index) {
-          <article [class.veloura-card]="i === 2">
-            @if (i === 0) {
-              <svg lucideBriefcaseBusiness aria-hidden="true"></svg>
-            } @else if (i === 1) {
-              <svg lucideMegaphone aria-hidden="true"></svg>
-            } @else {
-              <svg lucideHeartHandshake aria-hidden="true"></svg>
-            }
-            <h3>{{ card[0] }}</h3>
-            <p>{{ card[1] }}</p>
-          </article>
-        }
-      </div>
-    </section>
-
-    <section class="sources" aria-labelledby="sources-title">
-      <div>
-        <p class="eyebrow">{{ data().sourcesEyebrow }}</p>
-        <h2 id="sources-title">{{ data().sourcesTitle }}</h2>
-      </div>
-      <ul>
-        @for (source of data().sources; track source) {
-          <li>
-            <svg lucideCheck aria-hidden="true"></svg>
-            <span>{{ source }}</span>
-          </li>
-        }
-      </ul>
-    </section>
-
-    <section class="contact" id="contact">
-      <div class="contact-copy">
-        <p class="eyebrow">{{ data().contactEyebrow }}</p>
-        <h2>{{ data().contactTitle }}</h2>
-        <p>{{ data().contactText }}</p>
-      </div>
-      <div class="contact-actions">
-        <a href="https://www.instagram.com/alma.alrouh1/" target="_blank" rel="noreferrer">
-          <svg lucideAtSign aria-hidden="true"></svg>
-          Instagram
-        </a>
-        <a href="https://www.linkedin.com/company/alma-alrouh-foundation/posts/?feedView=all" target="_blank" rel="noreferrer">
-          <svg lucideBriefcaseBusiness aria-hidden="true"></svg>
-          LinkedIn
-        </a>
-        <a href="mailto:almaalrouh1@gmail.com">
-          <svg lucideMail aria-hidden="true"></svg>
-          almaalrouh1&#64;gmail.com
-        </a>
-        <a href="tel:+923158747529">
-          <svg lucidePhone aria-hidden="true"></svg>
-          +92 315 8747529
-        </a>
-        <span>
-          <svg lucideMapPin aria-hidden="true"></svg>
-          Peshawar, KP, Pakistan
+    <section
+      id="faqs"
+      class="legal-page section-pad"
+      [class.is-open]="isLegalOpen('faqs')"
+      aria-labelledby="faqs-title"
+    >
+      <button
+        class="legal-toggle"
+        type="button"
+        (click)="toggleLegal('faqs')"
+        [attr.aria-expanded]="isLegalOpen('faqs')"
+        aria-controls="faqs-panel"
+        data-reveal
+      >
+        <span class="legal-toggle-spacer" aria-hidden="true"></span>
+        <span class="legal-header">
+          <span class="eyebrow">{{ data().legal.faqs.eyebrow }}</span>
+          <span id="faqs-title" class="legal-title">{{ data().legal.faqs.title }}</span>
+          <span class="legal-intro">{{ data().legal.faqs.intro }}</span>
+          <span class="legal-updated">{{ data().legal.faqs.updated }}</span>
         </span>
-      </div>
+        <span class="legal-toggle-icon" aria-hidden="true">
+          <app-icon name="chevron-right"></app-icon>
+        </span>
+      </button>
+      @if (isLegalOpen('faqs')) {
+        <div id="faqs-panel" class="legal-content faq-content">
+          @for (section of data().legal.faqs.sections; track section.title; let i = $index) {
+            <article data-reveal [style.--reveal-delay]="i * 45 + 'ms'">
+              <h3>{{ section.title }}</h3>
+              <p>{{ section.body }}</p>
+            </article>
+          }
+        </div>
+      }
+    </section>
+
+    <section
+      id="privacy"
+      class="legal-page section-pad"
+      [class.is-open]="isLegalOpen('privacy')"
+      aria-labelledby="privacy-title"
+    >
+      <button
+        class="legal-toggle"
+        type="button"
+        (click)="toggleLegal('privacy')"
+        [attr.aria-expanded]="isLegalOpen('privacy')"
+        aria-controls="privacy-panel"
+        data-reveal
+      >
+        <span class="legal-toggle-spacer" aria-hidden="true"></span>
+        <span class="legal-header">
+          <span class="eyebrow">{{ data().legal.privacy.eyebrow }}</span>
+          <span id="privacy-title" class="legal-title">{{ data().legal.privacy.title }}</span>
+          <span class="legal-intro">{{ data().legal.privacy.intro }}</span>
+          <span class="legal-updated">{{ data().legal.privacy.updated }}</span>
+        </span>
+        <span class="legal-toggle-icon" aria-hidden="true">
+          <app-icon name="chevron-right"></app-icon>
+        </span>
+      </button>
+      @if (isLegalOpen('privacy')) {
+        <div id="privacy-panel" class="legal-content">
+          @for (section of data().legal.privacy.sections; track section.title; let i = $index) {
+            <article data-reveal [style.--reveal-delay]="i * 45 + 'ms'">
+              <h3>{{ section.title }}</h3>
+              <p>{{ section.body }}</p>
+            </article>
+          }
+        </div>
+      }
     </section>
   </main>
 
   <footer class="site-footer">
-    <span>{{ data().footerLeft }}</span>
-    <span>{{ data().footerRight }}</span>
+    <div class="footer-main">
+      <div class="footer-brand">
+        <a class="brand brand-on-dark" href="#top">
+          <img
+            [src]="logoUrl()"
+            [attr.srcset]="logoSrcset()"
+            sizes="(max-width: 760px) 104px, 118px"
+            [alt]="data().logoAlt"
+            width="144"
+            height="144"
+          />
+        </a>
+        <p>{{ data().footer.mission }}</p>
+      </div>
+      <nav class="footer-links" [attr.aria-label]="data().footer.quickLinksLabel">
+        <span>{{ data().footer.quickLinksLabel }}</span>
+        <a href="#mission">{{ data().nav.mission }}</a>
+        <a href="#forms">{{ data().nav.forms }}</a>
+        <a href="#care">{{ data().nav.care }}</a>
+        <a href="#programs">{{ data().nav.programs }}</a>
+        <a href="#volunteers">{{ data().nav.volunteers }}</a>
+        <a href="#contact">{{ data().nav.contact }}</a>
+      </nav>
+      <nav class="footer-links" [attr.aria-label]="data().footer.legalLinksLabel">
+        <span>{{ data().footer.legalLinksLabel }}</span>
+        <a href="#terms" (click)="openLegal('terms')">{{ data().legal.terms.title }}</a>
+        <a href="#faqs" (click)="openLegal('faqs')">{{ data().legal.faqs.title }}</a>
+        <a href="#privacy" (click)="openLegal('privacy')">{{ data().legal.privacy.title }}</a>
+      </nav>
+      <div class="footer-links">
+        <span>{{ data().footer.connectLabel }}</span>
+        <a [href]="instagramUrl" target="_blank" rel="noreferrer">Instagram</a>
+        <a [href]="linkedinUrl" target="_blank" rel="noreferrer">LinkedIn</a>
+        <a [href]="contactMailto">{{ data().contact.email }}</a>
+      </div>
+      <div class="footer-cta">
+        <p>{{ data().hero.secondary }}</p>
+        <a class="button button-light" [href]="donationFormUrl" target="_blank" rel="noreferrer">
+          {{ data().nav.donate }}
+          <app-icon name="heart" aria-hidden="true"></app-icon>
+        </a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>{{ data().footer.rights }}</span>
+      <span>{{ data().footer.supported }} · {{ data().footer.website }}</span>
+    </div>
   </footer>
 
-  @if (donationOpen()) {
-    <div class="donation-backdrop" (click)="closeDonation()"></div>
-    <section
-      class="donation-dialog"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="donation-title"
-    >
-      <button class="close-button" type="button" (click)="closeDonation()" [attr.aria-label]="data().donation.close">
-        <svg lucideX aria-hidden="true"></svg>
-      </button>
-      <div class="donation-layout">
-        <section class="donation-copy">
-          <img [src]="logoUrl" [alt]="data().logoAlt" />
-          <p class="eyebrow">{{ data().donation.eyebrow }}</p>
-          <h2 id="donation-title">{{ data().donation.title }}</h2>
-          <p>{{ data().donation.text }}</p>
-          <div class="selected-amount" aria-live="polite">
-            <span>{{ data().donation.selected }}</span>
-            <strong>{{ selectedAmount() }}</strong>
-          </div>
-        </section>
-        <form class="donation-form">
-          <fieldset>
-            <legend>{{ data().donation.choose }}</legend>
-            @for (amount of data().donation.amounts; track amount; let i = $index) {
-              <label>
-                <input
-                  type="radio"
-                  name="amount"
-                  [value]="amount"
-                  [checked]="selectedAmountIndex() === i"
-                  (change)="chooseAmount(i)"
-                />
-                <span>{{ amount }}</span>
-              </label>
-            }
-          </fieldset>
-          <div class="donation-links">
-            <a [href]="donationMailto()">
-              <svg lucideMailCheck aria-hidden="true"></svg>
-              {{ data().donation.email }}
-            </a>
-            <a href="https://www.instagram.com/alma.alrouh1/" target="_blank" rel="noreferrer">
-              <svg lucideSend aria-hidden="true"></svg>
-              {{ data().donation.instagram }}
-            </a>
-          </div>
-        </form>
-      </div>
-    </section>
-  }
 </div>

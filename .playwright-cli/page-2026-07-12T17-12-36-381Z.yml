@@ -1,0 +1,243 @@
+- generic [ref=f6e3]:
+  - link "تخطَّ إلى المحتوى الرئيسي" [ref=f6e4] [cursor=pointer]:
+    - /url: "#main"
+  - banner [ref=f6e5]:
+    - generic [ref=f6e6]:
+      - link "ألما الروح — الرئيسية" [ref=f6e7] [cursor=pointer]:
+        - /url: "#top"
+        - img "شعار ألما الروح" [ref=f6e8]
+      - navigation "التنقل الرئيسي" [ref=f6e9]:
+        - link "الرئيسية" [ref=f6e10] [cursor=pointer]:
+          - /url: "#top"
+        - link "النماذج" [ref=f6e11] [cursor=pointer]:
+          - /url: "#forms"
+        - link "الرسالة" [ref=f6e12] [cursor=pointer]:
+          - /url: "#mission"
+        - link "الرعاية" [ref=f6e13] [cursor=pointer]:
+          - /url: "#care"
+        - link "البرامج" [ref=f6e14] [cursor=pointer]:
+          - /url: "#programs"
+        - link "المتطوعون" [ref=f6e15] [cursor=pointer]:
+          - /url: "#volunteers"
+        - link "تواصل" [ref=f6e16] [cursor=pointer]:
+          - /url: "#contact"
+      - generic [ref=f6e17]:
+        - group "اختر اللغة" [ref=f6e18]:
+          - button "English" [ref=f6e19] [cursor=pointer]: EN
+        - button "تبديل المظهر" [ref=f6e20] [cursor=pointer]
+  - main [ref=f6e24]:
+    - region [ref=f6e25]:
+      - generic [ref=f6e27]:
+        - paragraph [ref=f6e28]: دعم نفسي مجاني · بيشاور
+        - heading "لا ينبغي لأحد أن يحملها وحده." [level=1] [ref=f6e29]
+        - paragraph [ref=f6e30]: محادثة آمنة واحدة قد تغيّر كل شيء. تصل ألما الروح الناس بدعم نفسي مجاني وسري ومراعٍ للثقافة — بلا تكلفة وبلا أحكام.
+        - generic [ref=f6e31]:
+          - link "اطلب دعمًا مجانيًا" [ref=f6e32] [cursor=pointer]:
+            - /url: https://forms.gle/7hsbZn6zek9DKuN28
+          - link "كن متطوعًا" [ref=f6e37] [cursor=pointer]:
+            - /url: https://forms.gle/DUXSJjyQ5ShBj4ew6
+    - region [ref=f6e38]:
+      - generic [ref=f6e39]:
+        - paragraph [ref=f6e40]: وصول سريع
+        - heading "اختر النموذج المناسب وسنوجّه الطلب من هناك." [level=2] [ref=f6e41]
+        - paragraph [ref=f6e42]: استخدم النماذج المخصصة للدعم والتطوع والتبرع والشراكات حتى يصل كل طلب إلى الفريق المناسب بشكل أسرع.
+      - generic [ref=f6e43]:
+        - link "01 نموذج الدعم اطلب دعمًا نفسيًا مجانيًا بسرية وشارك فقط ما تشعر بالراحة لمشاركته. اطلب دعمًا مجانيًا" [ref=f6e44] [cursor=pointer]:
+          - /url: https://forms.gle/7hsbZn6zek9DKuN28
+          - generic [ref=f6e54]: "01"
+          - strong [ref=f6e55]: نموذج الدعم
+          - paragraph [ref=f6e56]: اطلب دعمًا نفسيًا مجانيًا بسرية وشارك فقط ما تشعر بالراحة لمشاركته.
+          - generic [ref=f6e57]: اطلب دعمًا مجانيًا
+        - link "02 نموذج التطوع انضم إلى شبكة المتطوعين كأخصائي نفسي أو مرشد أو طالب أو مناصر مجتمعي. كن متطوعًا" [ref=f6e62] [cursor=pointer]:
+          - /url: https://forms.gle/DUXSJjyQ5ShBj4ew6
+          - generic [ref=f6e70]: "02"
+          - strong [ref=f6e71]: نموذج التطوع
+          - paragraph [ref=f6e72]: انضم إلى شبكة المتطوعين كأخصائي نفسي أو مرشد أو طالب أو مناصر مجتمعي.
+          - generic [ref=f6e73]: كن متطوعًا
+        - link "03 نموذج التبرع ساهم في إبقاء الرعاية مجانية عبر دعم الجلسات والتوعية والتنسيق. تبرّع" [ref=f6e78] [cursor=pointer]:
+          - /url: https://forms.gle/RAEK81jqP23W5HTMA
+          - generic [ref=f6e87]: "03"
+          - strong [ref=f6e88]: نموذج التبرع
+          - paragraph [ref=f6e89]: ساهم في إبقاء الرعاية مجانية عبر دعم الجلسات والتوعية والتنسيق.
+          - generic [ref=f6e90]: تبرّع
+        - link "04 نموذج الشراكة ابدأ حوار شراكة مع مدرسة أو جامعة أو مؤسسة أو مبادرة مجتمعية. ابدأ شراكة" [ref=f6e95] [cursor=pointer]:
+          - /url: https://forms.gle/a95GzQrxXEXFumsP8
+          - generic [ref=f6e103]: "04"
+          - strong [ref=f6e104]: نموذج الشراكة
+          - paragraph [ref=f6e105]: ابدأ حوار شراكة مع مدرسة أو جامعة أو مؤسسة أو مبادرة مجتمعية.
+          - generic [ref=f6e106]: ابدأ شراكة
+    - region [ref=f6e111]:
+      - generic [ref=f6e112]:
+        - paragraph [ref=f6e113]: لمحة عن الأثر
+        - heading "أشخاص حقيقيون. رعاية حقيقية. بلا تكلفة." [level=2] [ref=f6e114]
+        - paragraph [ref=f6e115]: وُجدت ألما الروح لتجعل الدعم النفسي في متناول من قد لا يستطيعون الوصول إلى الرعاية الخاصة. عبر المتطوعين وأعمال التوعية والدعم الحسّاس للثقافة، تساعد المبادرة الناس على التحدّث مبكرًا وطلب المساعدة بأمان والشعور بأنهم ليسوا وحدهم.
+        - list "لمحة عن الأثر" [ref=f6e116]:
+          - listitem [ref=f6e117]: سري وآمن
+          - listitem [ref=f6e122]: مجاني دائمًا
+          - listitem [ref=f6e127]: يقوده المتطوعون
+          - listitem [ref=f6e133]: مراعٍ للثقافة
+      - generic [ref=f6e138]:
+        - article [ref=f6e139]:
+          - generic [ref=f6e140]: "+0"
+          - paragraph [ref=f6e141]: متطوعًا، من بينهم أخصائيون نفسيون ومهنيون في الصحة النفسية
+        - article [ref=f6e142]:
+          - generic [ref=f6e143]: مجانًا
+          - paragraph [ref=f6e144]: جلسات لمن لا يستطيعون تحمّل تكلفة الرعاية الخاصة
+        - article [ref=f6e145]:
+          - generic [ref=f6e146]: "0"
+          - paragraph [ref=f6e147]: تأسست كمبادرة غير ربحية للصحة النفسية والرفاه
+        - article [ref=f6e148]:
+          - generic [ref=f6e149]: بيشاور
+          - paragraph [ref=f6e150]: المقر في خيبر بختونخوا، باكستان
+    - region [ref=f6e151]:
+      - generic [ref=f6e152]:
+        - paragraph [ref=f6e153]: رسالتنا
+        - heading "نجعل الدعم النفسي قريبًا وكريمًا وإنسانيًا." [level=2] [ref=f6e154]
+      - generic [ref=f6e155]:
+        - paragraph [ref=f6e156]: وُجدت ألما الروح لتجعل الدعم النفسي في متناول من قد لا يستطيعون الوصول إلى الرعاية الخاصة. عبر المتطوعين وأعمال التوعية والدعم الحسّاس للثقافة، تساعد المبادرة الناس على التحدّث مبكرًا وطلب المساعدة بأمان والشعور بأنهم ليسوا وحدهم.
+        - link "الرعاية" [ref=f6e157] [cursor=pointer]:
+          - /url: "#care"
+      - generic [ref=f6e162]:
+        - article [ref=f6e163]:
+          - generic [ref=f6e164]: "01"
+          - heading "دعم سري" [level=3] [ref=f6e165]
+          - paragraph [ref=f6e166]: جلسات مجانية موجَّهة للتوتر والحزن والصدمات والقلق والضغط العاطفي — بعناية وخصوصية.
+        - article [ref=f6e167]:
+          - generic [ref=f6e168]: "02"
+          - heading "توعية تقلّل الوصمة" [level=3] [ref=f6e169]
+          - paragraph [ref=f6e170]: ندوات وحوارات جامعية وبرامج مجتمعية تجعل الحديث عن الصحة النفسية أمرًا طبيعيًا.
+        - article [ref=f6e171]:
+          - generic [ref=f6e172]: "03"
+          - heading "رعاية مراعية للثقافة" [level=3] [ref=f6e173]
+          - paragraph [ref=f6e174]: يدعم العملَ أخصائيون ومهنيون في الصحة النفسية بمقاربات منظمة وواعية بالصدمات ومراعية للسياق المحلي.
+    - region [ref=f6e175]:
+      - generic [ref=f6e176]:
+        - generic [ref=f6e177]:
+          - paragraph [ref=f6e178]: مسار الرعاية
+          - heading "كيف يعمل الدعم؟" [level=2] [ref=f6e179]
+          - paragraph [ref=f6e180]: لا استمارات تُقلق، ولا تكلفة تُثقل. التواصل هو الخطوة الأولى اللطيفة.
+        - list [ref=f6e181]:
+          - listitem [ref=f6e182]:
+            - generic [ref=f6e183]: "1"
+            - generic [ref=f6e184]:
+              - heading "تواصل" [level=3] [ref=f6e185]
+              - paragraph [ref=f6e186]: تواصل مع ألما الروح بسرية عبر إحدى القنوات العامة متى شعرت بالاستعداد.
+          - listitem [ref=f6e187]:
+            - generic [ref=f6e188]: "2"
+            - generic [ref=f6e189]:
+              - heading "شارك ما تحتاجه" [level=3] [ref=f6e190]
+              - paragraph [ref=f6e191]: أخبرنا بما تشعر بالراحة لمشاركته عن الدعم الذي تبحث عنه.
+          - listitem [ref=f6e192]:
+            - generic [ref=f6e193]: "3"
+            - generic [ref=f6e194]:
+              - heading "نوصلك بالمناسب" [level=3] [ref=f6e195]
+              - paragraph [ref=f6e196]: نوجّهك إلى متطوع أو مختص مناسب في الصحة النفسية.
+          - listitem [ref=f6e197]:
+            - generic [ref=f6e198]: "4"
+            - generic [ref=f6e199]:
+              - heading "تابع بأمان" [level=3] [ref=f6e200]
+              - paragraph [ref=f6e201]: استمر برعاية مجانية وسرية بالوتيرة التي تناسبك.
+        - link "اطلب دعمًا مجانيًا" [ref=f6e202] [cursor=pointer]:
+          - /url: https://forms.gle/7hsbZn6zek9DKuN28
+    - region [ref=f6e207]:
+      - generic [ref=f6e208]:
+        - paragraph [ref=f6e209]: ماذا نفعل
+        - heading "دعم يصل إلى حيث تكون الحاجة." [level=2] [ref=f6e210]
+      - generic [ref=f6e211]:
+        - article [ref=f6e212]:
+          - generic [ref=f6e218]: "01"
+          - heading "استشارات مجانية" [level=3] [ref=f6e219]
+          - paragraph [ref=f6e220]: جلسات موجَّهة ومحادثة أولى آمنة لكل من يتواصل معنا.
+        - article [ref=f6e221]:
+          - generic [ref=f6e227]: "02"
+          - heading "حملات توعية" [level=3] [ref=f6e228]
+          - paragraph [ref=f6e229]: حوارات ومواد عامة تقلّل الوصمة حول الصحة النفسية.
+        - article [ref=f6e230]:
+          - generic [ref=f6e236]: "03"
+          - heading "توعية جامعية" [level=3] [ref=f6e237]
+          - paragraph [ref=f6e238]: العمل مع المدارس والكليات والجامعات للوصول إلى الطلاب مبكرًا.
+        - article [ref=f6e239]:
+          - generic [ref=f6e246]: "04"
+          - heading "مخيمات للصحة النفسية" [level=3] [ref=f6e247]
+          - paragraph [ref=f6e248]: مخيمات مجتمعية تقرّب الدعم إلى حيث يعيش الناس.
+        - article [ref=f6e249]:
+          - generic [ref=f6e256]: "05"
+          - heading "حوارات مجتمعية" [level=3] [ref=f6e257]
+          - paragraph [ref=f6e258]: ندوات ولقاءات تجعل الحديث عن الصحة النفسية آمنًا.
+        - article [ref=f6e259]:
+          - generic [ref=f6e266]: "06"
+          - heading "الإحالة والتنسيق" [level=3] [ref=f6e267]
+          - paragraph [ref=f6e268]: ربط الناس بالمتطوع أو المختص أو الخطوة التالية المناسبة.
+    - region [ref=f6e269]:
+      - generic [ref=f6e270]:
+        - paragraph [ref=f6e271]: شبكة المتطوعين
+        - heading "شبكة مبنية على الحضور الحقيقي." [level=2] [ref=f6e272]
+        - paragraph [ref=f6e273]: "تحمل ألما الروح متطوعون يمنحون وقتهم وخبرتهم وتعاطفهم: أخصائيون نفسيون سريريون ذوو خبرة ميدانية، ومرشدون، وطلاب، ومناصرون يبنون رعاية مجتمعية داعمة."
+        - link "كن متطوعًا" [ref=f6e274] [cursor=pointer]:
+          - /url: https://forms.gle/DUXSJjyQ5ShBj4ew6
+      - generic [ref=f6e279]:
+        - generic [ref=f6e280]: 140+
+        - paragraph [ref=f6e281]: متطوعًا، من بينهم أخصائيون نفسيون ومهنيون في الصحة النفسية
+        - generic [ref=f6e282]:
+          - generic [ref=f6e283]: أخصائيون نفسيون
+          - generic [ref=f6e284]: مرشدون
+          - generic [ref=f6e285]: طلاب
+          - generic [ref=f6e286]: مناصرون
+          - generic [ref=f6e287]: مهنيون في الصحة النفسية
+          - generic [ref=f6e288]: متطوعون من المجتمع
+    - region [ref=f6e289]:
+      - generic [ref=f6e290]:
+        - paragraph [ref=f6e291]: تواصل
+        - heading "تحدث معنا. نحن هنا لنستمع." [level=2] [ref=f6e292]
+        - paragraph [ref=f6e293]: استخدم قنوات ألما الروح العامة للوصول للجلسات وطلبات التطوع والشراكات والتحقق من طرق الدفع.
+      - generic [ref=f6e294]:
+        - link "البريد الإلكتروني almaalrouh1@gmail.com" [ref=f6e295] [cursor=pointer]:
+          - /url: mailto:almaalrouh1@gmail.com?subject=Contact%20Alma%20Alrouh&body=Hello%20Alma%20Alrouh%2C%0A%0AI%20would%20like%20to%20get%20in%20touch.%0A%0AThank%20you.
+          - generic [ref=f6e301]:
+            - generic [ref=f6e302]: البريد الإلكتروني
+            - strong [ref=f6e303]: almaalrouh1@gmail.com
+        - link "الهاتف +92 315 8747529" [ref=f6e308] [cursor=pointer]:
+          - /url: tel:+923158747529
+          - generic [ref=f6e313]:
+            - generic [ref=f6e314]: الهاتف
+            - strong [ref=f6e315]: +92 315 8747529
+        - generic [ref=f6e326]:
+          - generic [ref=f6e327]: الموقع
+          - strong [ref=f6e328]: بيشاور، خيبر بختونخوا، باكستان
+      - paragraph [ref=f6e329]: إذا كان أحدهم في خطر مباشر، اتصل بخدمات الطوارئ المحلية أو توجّه إلى أقرب قسم طوارئ. قنوات ألما الروح العامة ليست خط استجابة للطوارئ.
+  - contentinfo [ref=f6e333]:
+    - generic [ref=f6e334]:
+      - generic [ref=f6e335]:
+        - link [ref=f6e336] [cursor=pointer]:
+          - /url: "#top"
+          - img "شعار ألما الروح" [ref=f6e337]
+          - strong [ref=f6e339]: Alma Alrouh
+        - paragraph [ref=f6e340]: مبادرة غير ربحية للصحة النفسية تجعل الدعم المجاني المراعي للثقافة قريبًا في بيشاور وما بعدها.
+      - navigation "استكشف" [ref=f6e341]:
+        - link "الرسالة" [ref=f6e343] [cursor=pointer]:
+          - /url: "#mission"
+        - link "النماذج" [ref=f6e344] [cursor=pointer]:
+          - /url: "#forms"
+        - link "الرعاية" [ref=f6e345] [cursor=pointer]:
+          - /url: "#care"
+        - link "البرامج" [ref=f6e346] [cursor=pointer]:
+          - /url: "#programs"
+        - link "المتطوعون" [ref=f6e347] [cursor=pointer]:
+          - /url: "#volunteers"
+        - link "تواصل" [ref=f6e348] [cursor=pointer]:
+          - /url: "#contact"
+      - generic [ref=f6e349]:
+        - generic [ref=f6e350]: تواصل
+        - link "Instagram" [ref=f6e351] [cursor=pointer]:
+          - /url: https://www.instagram.com/alma.alrouh1/
+        - link "LinkedIn" [ref=f6e352] [cursor=pointer]:
+          - /url: https://www.linkedin.com/company/alma-alrouh-foundation/posts/?feedView=all
+        - link "almaalrouh1@gmail.com" [ref=f6e353] [cursor=pointer]:
+          - /url: mailto:almaalrouh1@gmail.com?subject=Contact%20Alma%20Alrouh&body=Hello%20Alma%20Alrouh%2C%0A%0AI%20would%20like%20to%20get%20in%20touch.%0A%0AThank%20you.
+      - generic [ref=f6e354]:
+        - paragraph [ref=f6e355]: تبرّع لإبقاء الرعاية مجانية
+        - link "تبرّع" [ref=f6e356] [cursor=pointer]:
+          - /url: https://forms.gle/RAEK81jqP23W5HTMA
+    - generic [ref=f6e360]:
+      - generic [ref=f6e361]: © 2026 ألما الروح. مبادرة غير ربحية للصحة النفسية.
+      - generic [ref=f6e362]: بدعم من ناي الروح · الموقع بواسطة فيلورا

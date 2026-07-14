@@ -1,0 +1,243 @@
+- generic [ref=f12e3]:
+  - link "Skip to main content" [ref=f12e4] [cursor=pointer]:
+    - /url: "#main"
+  - banner [ref=f12e5]:
+    - generic [ref=f12e6]:
+      - link "Alma Alrouh — home" [ref=f12e7] [cursor=pointer]:
+        - /url: "#top"
+        - img "Alma Alrouh logo" [ref=f12e8]
+      - navigation "Primary" [ref=f12e9]:
+        - link "Home" [ref=f12e10] [cursor=pointer]:
+          - /url: "#top"
+        - link "Forms" [ref=f12e11] [cursor=pointer]:
+          - /url: "#forms"
+        - link "Mission" [ref=f12e12] [cursor=pointer]:
+          - /url: "#mission"
+        - link "Care" [ref=f12e13] [cursor=pointer]:
+          - /url: "#care"
+        - link "Programs" [ref=f12e14] [cursor=pointer]:
+          - /url: "#programs"
+        - link "Volunteers" [ref=f12e15] [cursor=pointer]:
+          - /url: "#volunteers"
+        - link "Contact" [ref=f12e16] [cursor=pointer]:
+          - /url: "#contact"
+      - generic [ref=f12e17]:
+        - group "Choose language" [ref=f12e18]:
+          - button "العربية" [ref=f12e19] [cursor=pointer]: AR
+        - button "Toggle color theme" [ref=f12e20] [cursor=pointer]
+  - main [ref=f12e24]:
+    - region [ref=f12e25]:
+      - generic [ref=f12e27]:
+        - img "Alma Alrouh logo" [ref=f12e28]
+        - paragraph [ref=f12e29]: Free mental-health support · Peshawar
+        - heading "No one should carry it alone." [level=1] [ref=f12e30]
+        - paragraph [ref=f12e31]: A safe first conversation can change everything. Alma Alrouh connects people with free, confidential, culturally sensitive mental-health support — without cost and without judgment.
+        - generic [ref=f12e32]:
+          - link "Request free support" [ref=f12e33] [cursor=pointer]:
+            - /url: https://forms.gle/7hsbZn6zek9DKuN28
+          - link "Become a volunteer" [ref=f12e38] [cursor=pointer]:
+            - /url: https://forms.gle/DUXSJjyQ5ShBj4ew6
+    - region [ref=f12e39]:
+      - generic [ref=f12e40]:
+        - paragraph [ref=f12e41]: Quick access
+        - heading "Choose the right form and we’ll route it from there." [level=2] [ref=f12e42]
+        - paragraph [ref=f12e43]: Use the dedicated forms for support, volunteering, donations, and partnerships so each request reaches the right team faster.
+      - generic [ref=f12e44]:
+        - link "01 Support form Request free mental-health support privately and share only what feels comfortable. Request free support" [ref=f12e45] [cursor=pointer]:
+          - /url: https://forms.gle/7hsbZn6zek9DKuN28
+          - generic [ref=f12e55]: "01"
+          - strong [ref=f12e56]: Support form
+          - paragraph [ref=f12e57]: Request free mental-health support privately and share only what feels comfortable.
+          - generic [ref=f12e58]: Request free support
+        - link "02 Volunteer form Join the volunteer network as a psychologist, counselor, student, or community advocate. Become a volunteer" [ref=f12e63] [cursor=pointer]:
+          - /url: https://forms.gle/DUXSJjyQ5ShBj4ew6
+          - generic [ref=f12e71]: "02"
+          - strong [ref=f12e72]: Volunteer form
+          - paragraph [ref=f12e73]: Join the volunteer network as a psychologist, counselor, student, or community advocate.
+          - generic [ref=f12e74]: Become a volunteer
+        - link "03 Donation form Help keep care free by supporting sessions, outreach, and coordination. Donate" [ref=f12e79] [cursor=pointer]:
+          - /url: https://forms.gle/RAEK81jqP23W5HTMA
+          - generic [ref=f12e88]: "03"
+          - strong [ref=f12e89]: Donation form
+          - paragraph [ref=f12e90]: Help keep care free by supporting sessions, outreach, and coordination.
+          - generic [ref=f12e91]: Donate
+        - link "04 Partnership form Start a school, campus, organization, or community partnership conversation. Start a partnership" [ref=f12e96] [cursor=pointer]:
+          - /url: https://forms.gle/a95GzQrxXEXFumsP8
+          - generic [ref=f12e104]: "04"
+          - strong [ref=f12e105]: Partnership form
+          - paragraph [ref=f12e106]: Start a school, campus, organization, or community partnership conversation.
+          - generic [ref=f12e107]: Start a partnership
+    - region [ref=f12e112]:
+      - generic [ref=f12e113]:
+        - paragraph [ref=f12e114]: Impact snapshot
+        - heading "Real people. Real care. No cost." [level=2] [ref=f12e115]
+        - paragraph [ref=f12e116]: Alma Alrouh exists to make mental-health support reachable for people who may not be able to access private care. Through volunteers, awareness work, and culturally sensitive support, the initiative helps people speak earlier, seek help safely, and feel less alone.
+        - list "Impact snapshot" [ref=f12e117]:
+          - listitem [ref=f12e118]: Confidential & safe
+          - listitem [ref=f12e123]: Always free
+          - listitem [ref=f12e128]: Volunteer-led
+          - listitem [ref=f12e134]: Culturally sensitive
+      - generic [ref=f12e139]:
+        - article [ref=f12e140]:
+          - generic [ref=f12e141]: 0+
+          - paragraph [ref=f12e142]: volunteers, including psychologists and mental-health professionals
+        - article [ref=f12e143]:
+          - generic [ref=f12e144]: Free
+          - paragraph [ref=f12e145]: sessions for people who cannot afford private care
+        - article [ref=f12e146]:
+          - generic [ref=f12e147]: "0"
+          - paragraph [ref=f12e148]: founded as a nonprofit mental-health and wellbeing initiative
+        - article [ref=f12e149]:
+          - generic [ref=f12e150]: Peshawar
+          - paragraph [ref=f12e151]: based in Khyber Pakhtunkhwa, Pakistan
+    - region [ref=f12e152]:
+      - generic [ref=f12e153]:
+        - paragraph [ref=f12e154]: Our mission
+        - heading "Making mental-health support reachable, dignified, and human." [level=2] [ref=f12e155]
+      - generic [ref=f12e156]:
+        - paragraph [ref=f12e157]: Alma Alrouh exists to make mental-health support reachable for people who may not be able to access private care. Through volunteers, awareness work, and culturally sensitive support, the initiative helps people speak earlier, seek help safely, and feel less alone.
+        - link "Care" [ref=f12e158] [cursor=pointer]:
+          - /url: "#care"
+      - generic [ref=f12e163]:
+        - article [ref=f12e164]:
+          - generic [ref=f12e165]: "01"
+          - heading "Confidential support" [level=3] [ref=f12e166]
+          - paragraph [ref=f12e167]: Free, guided sessions for stress, grief, trauma, anxiety, and emotional overwhelm — held with care and privacy.
+        - article [ref=f12e168]:
+          - generic [ref=f12e169]: "02"
+          - heading "Awareness that reduces shame" [level=3] [ref=f12e170]
+          - paragraph [ref=f12e171]: Seminars, campus conversations, and community programs that make talking about mental health feel normal.
+        - article [ref=f12e172]:
+          - generic [ref=f12e173]: "03"
+          - heading "Culturally sensitive care" [level=3] [ref=f12e174]
+          - paragraph [ref=f12e175]: Psychologists and mental-health professionals support the work with structured, trauma-informed, locally aware approaches.
+    - region [ref=f12e176]:
+      - generic [ref=f12e177]:
+        - generic [ref=f12e178]:
+          - paragraph [ref=f12e179]: Care pathway
+          - heading "How support works." [level=2] [ref=f12e180]
+          - paragraph [ref=f12e181]: No forms to fear, no cost to worry about. Reaching out is the first gentle step.
+        - list [ref=f12e182]:
+          - listitem [ref=f12e183]:
+            - generic [ref=f12e184]: "1"
+            - generic [ref=f12e185]:
+              - heading "Reach out" [level=3] [ref=f12e186]
+              - paragraph [ref=f12e187]: Contact Alma Alrouh privately through a public channel whenever you feel ready.
+          - listitem [ref=f12e188]:
+            - generic [ref=f12e189]: "2"
+            - generic [ref=f12e190]:
+              - heading "Share what you need" [level=3] [ref=f12e191]
+              - paragraph [ref=f12e192]: Tell us as much or as little as you feel comfortable with about the support you are looking for.
+          - listitem [ref=f12e193]:
+            - generic [ref=f12e194]: "3"
+            - generic [ref=f12e195]:
+              - heading "Get matched" [level=3] [ref=f12e196]
+              - paragraph [ref=f12e197]: We connect you with a suitable volunteer or mental-health professional.
+          - listitem [ref=f12e198]:
+            - generic [ref=f12e199]: "4"
+            - generic [ref=f12e200]:
+              - heading "Continue safely" [level=3] [ref=f12e201]
+              - paragraph [ref=f12e202]: Keep going with free, confidential guidance at a pace that feels right for you.
+        - link "Request free support" [ref=f12e203] [cursor=pointer]:
+          - /url: https://forms.gle/7hsbZn6zek9DKuN28
+    - region [ref=f12e208]:
+      - generic [ref=f12e209]:
+        - paragraph [ref=f12e210]: What we do
+        - heading "Support, wherever it is needed." [level=2] [ref=f12e211]
+      - generic [ref=f12e212]:
+        - article [ref=f12e213]:
+          - generic [ref=f12e219]: "01"
+          - heading "Free consultations" [level=3] [ref=f12e220]
+          - paragraph [ref=f12e221]: Guided sessions and a safe first conversation for those who reach out.
+        - article [ref=f12e222]:
+          - generic [ref=f12e228]: "02"
+          - heading "Awareness campaigns" [level=3] [ref=f12e229]
+          - paragraph [ref=f12e230]: Public conversations and materials that reduce stigma around mental health.
+        - article [ref=f12e231]:
+          - generic [ref=f12e237]: "03"
+          - heading "Campus outreach" [level=3] [ref=f12e238]
+          - paragraph [ref=f12e239]: Work with schools, colleges, and universities to reach students early.
+        - article [ref=f12e240]:
+          - generic [ref=f12e247]: "04"
+          - heading "Mental-health camps" [level=3] [ref=f12e248]
+          - paragraph [ref=f12e249]: Community camps that bring support closer to where people live.
+        - article [ref=f12e250]:
+          - generic [ref=f12e257]: "05"
+          - heading "Community conversations" [level=3] [ref=f12e258]
+          - paragraph [ref=f12e259]: Seminars and gatherings that make speaking about mental health feel safe.
+        - article [ref=f12e260]:
+          - generic [ref=f12e267]: "06"
+          - heading "Referrals & coordination" [level=3] [ref=f12e268]
+          - paragraph [ref=f12e269]: Connecting people to the right volunteer, professional, or next step.
+    - region [ref=f12e270]:
+      - generic [ref=f12e271]:
+        - paragraph [ref=f12e272]: Volunteer network
+        - heading "A network built on showing up." [level=2] [ref=f12e273]
+        - paragraph [ref=f12e274]: "Alma Alrouh is carried by volunteers who give their time, training, and compassion: clinical psychologists with field experience, counselors, students, and advocates building supportive community care."
+        - link "Become a volunteer" [ref=f12e275] [cursor=pointer]:
+          - /url: https://forms.gle/DUXSJjyQ5ShBj4ew6
+      - generic [ref=f12e280]:
+        - generic [ref=f12e281]: 140+
+        - paragraph [ref=f12e282]: volunteers, including psychologists and mental-health professionals
+        - generic [ref=f12e283]:
+          - generic [ref=f12e284]: Psychologists
+          - generic [ref=f12e285]: Counselors
+          - generic [ref=f12e286]: Students
+          - generic [ref=f12e287]: Advocates
+          - generic [ref=f12e288]: Mental-health professionals
+          - generic [ref=f12e289]: Community volunteers
+    - region [ref=f12e290]:
+      - generic [ref=f12e291]:
+        - paragraph [ref=f12e292]: Connect
+        - heading "Talk to us. We’re here to listen." [level=2] [ref=f12e293]
+        - paragraph [ref=f12e294]: Use Alma Alrouh’s public channels for session access, volunteer applications, partnerships, and payment verification.
+      - generic [ref=f12e295]:
+        - link "Email almaalrouh1@gmail.com" [ref=f12e296] [cursor=pointer]:
+          - /url: mailto:almaalrouh1@gmail.com?subject=Contact%20Alma%20Alrouh&body=Hello%20Alma%20Alrouh%2C%0A%0AI%20would%20like%20to%20get%20in%20touch.%0A%0AThank%20you.
+          - generic [ref=f12e302]:
+            - generic [ref=f12e303]: Email
+            - strong [ref=f12e304]: almaalrouh1@gmail.com
+        - link "Phone +92 315 8747529" [ref=f12e309] [cursor=pointer]:
+          - /url: tel:+923158747529
+          - generic [ref=f12e314]:
+            - generic [ref=f12e315]: Phone
+            - strong [ref=f12e316]: +92 315 8747529
+        - generic [ref=f12e327]:
+          - generic [ref=f12e328]: Location
+          - strong [ref=f12e329]: Peshawar, KP, Pakistan
+      - paragraph [ref=f12e330]: If someone is in immediate danger, contact local emergency services or go to the nearest emergency department. Alma Alrouh’s public channels are not an emergency response line.
+  - contentinfo [ref=f12e334]:
+    - generic [ref=f12e335]:
+      - generic [ref=f12e336]:
+        - link [ref=f12e337] [cursor=pointer]:
+          - /url: "#top"
+          - img "Alma Alrouh logo" [ref=f12e338]
+        - paragraph [ref=f12e339]: A nonprofit mental-health initiative making free, culturally sensitive support reachable in Peshawar and beyond.
+      - navigation "Explore" [ref=f12e340]:
+        - link "Mission" [ref=f12e342] [cursor=pointer]:
+          - /url: "#mission"
+        - link "Forms" [ref=f12e343] [cursor=pointer]:
+          - /url: "#forms"
+        - link "Care" [ref=f12e344] [cursor=pointer]:
+          - /url: "#care"
+        - link "Programs" [ref=f12e345] [cursor=pointer]:
+          - /url: "#programs"
+        - link "Volunteers" [ref=f12e346] [cursor=pointer]:
+          - /url: "#volunteers"
+        - link "Contact" [ref=f12e347] [cursor=pointer]:
+          - /url: "#contact"
+      - generic [ref=f12e348]:
+        - generic [ref=f12e349]: Connect
+        - link "Instagram" [ref=f12e350] [cursor=pointer]:
+          - /url: https://www.instagram.com/alma.alrouh1/
+        - link "LinkedIn" [ref=f12e351] [cursor=pointer]:
+          - /url: https://www.linkedin.com/company/alma-alrouh-foundation/posts/?feedView=all
+        - link "almaalrouh1@gmail.com" [ref=f12e352] [cursor=pointer]:
+          - /url: mailto:almaalrouh1@gmail.com?subject=Contact%20Alma%20Alrouh&body=Hello%20Alma%20Alrouh%2C%0A%0AI%20would%20like%20to%20get%20in%20touch.%0A%0AThank%20you.
+      - generic [ref=f12e353]:
+        - paragraph [ref=f12e354]: Donate to keep care free
+        - link "Donate" [ref=f12e355] [cursor=pointer]:
+          - /url: https://forms.gle/RAEK81jqP23W5HTMA
+    - generic [ref=f12e359]:
+      - generic [ref=f12e360]: © 2026 Alma Alrouh. A nonprofit mental-health initiative.
+      - generic [ref=f12e361]: Supported by Nay Alrouh · Website by Veloura

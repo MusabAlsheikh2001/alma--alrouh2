@@ -1,0 +1,18 @@
+{
+  "version": "0.0.1",
+  "autoPort": false,
+  "configurations": [
+    {
+      "name": "alma-alrouh",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["start", "--", "--port", "4300"],
+      "port": 4300
+    },
+    {
+      "name": "alma-prod",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "4310", "--directory", "dist/alma-alrouh/browser"],
+      "port": 4310
+    }
+  ]
+}
