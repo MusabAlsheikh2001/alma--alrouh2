@@ -1659,15 +1659,15 @@ section[id],
   background: rgba(188, 132, 11, 0.08);
   color: var(--alma-teal-dark);
   transition:
-    transform 0.25s var(--ease-out),
-    background-color 0.25s ease,
-    color 0.25s ease;
+    transform 0.38s var(--ease-out),
+    background-color 0.32s ease,
+    color 0.32s ease;
 }
 
 .legal-toggle-icon app-icon {
   width: 20px;
   height: 20px;
-  transition: transform 0.25s var(--ease-out);
+  transition: transform 0.38s var(--ease-out);
 }
 
 .legal-page.is-open .legal-toggle-icon {
@@ -1681,16 +1681,61 @@ section[id],
 
 .legal-content {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 12px;
-  margin-top: 14px;
-  padding: 14px;
-  border: 1px solid rgba(23, 64, 65, 0.12);
+  grid-template-rows: 0fr;
+  margin-top: 0;
+  padding: 0 14px;
+  overflow: hidden;
+  border: 1px solid transparent;
   border-radius: 8px;
   background:
     linear-gradient(135deg, rgba(23, 64, 65, 0.055), transparent 38%),
     linear-gradient(315deg, rgba(188, 132, 11, 0.08), transparent 44%),
     rgba(255, 255, 255, 0.45);
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-10px);
+  visibility: hidden;
+  transition:
+    grid-template-rows 0.68s cubic-bezier(0.22, 1, 0.36, 1),
+    margin-top 0.46s ease,
+    padding-top 0.46s ease,
+    padding-bottom 0.46s ease,
+    border-color 0.46s ease,
+    opacity 0.28s ease,
+    transform 0.46s var(--ease-out),
+    visibility 0s linear 0.68s;
+  will-change: grid-template-rows, opacity, transform;
+}
+
+.legal-page.is-open .legal-content {
+  grid-template-rows: 1fr;
+  margin-top: 14px;
+  padding: 14px;
+  border-color: rgba(23, 64, 65, 0.12);
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+  visibility: visible;
+  transition:
+    grid-template-rows 0.76s cubic-bezier(0.22, 1, 0.36, 1),
+    margin-top 0.5s ease,
+    padding-top 0.5s ease,
+    padding-bottom 0.5s ease,
+    border-color 0.5s ease,
+    opacity 0.34s ease 0.08s,
+    transform 0.5s var(--ease-out),
+    visibility 0s linear 0s;
+}
+
+.legal-content-inner {
+  min-height: 0;
+  overflow: hidden;
+}
+
+.legal-content-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
 }
 
 .legal-content article {
@@ -1741,10 +1786,13 @@ section[id],
 }
 
 .page-shell[data-theme="dark"] .legal-content {
-  border-color: rgba(255, 248, 235, 0.13);
   background:
     linear-gradient(135deg, rgba(188, 132, 11, 0.1), transparent 36%),
     rgba(255, 248, 235, 0.035);
+}
+
+.page-shell[data-theme="dark"] .legal-page.is-open .legal-content {
+  border-color: rgba(255, 248, 235, 0.13);
 }
 
 .page-shell[data-theme="dark"] .legal-content article {
@@ -1987,7 +2035,7 @@ section[id],
 
 @media (max-width: 900px) {
   .contact-actions,
-  .legal-content {
+  .legal-content-grid {
     grid-template-columns: 1fr;
   }
 
@@ -2340,6 +2388,10 @@ section[id],
   }
 
   .legal-content {
+    padding: 0 10px;
+  }
+
+  .legal-page.is-open .legal-content {
     padding: 10px;
   }
 

@@ -392,16 +392,18 @@
           <app-icon name="chevron-right"></app-icon>
         </span>
       </button>
-      @if (isLegalOpen('terms')) {
-        <div id="terms-panel" class="legal-content">
-          @for (section of data().legal.terms.sections; track section.title; let i = $index) {
-            <article data-reveal [style.--reveal-delay]="i * 45 + 'ms'">
-              <h3>{{ section.title }}</h3>
-              <p>{{ section.body }}</p>
-            </article>
-          }
+      <div id="terms-panel" class="legal-content" [attr.aria-hidden]="!isLegalOpen('terms')">
+        <div class="legal-content-inner">
+          <div class="legal-content-grid">
+            @for (section of data().legal.terms.sections; track section.title; let i = $index) {
+              <article data-reveal [style.--reveal-delay]="i * 45 + 'ms'">
+                <h3>{{ section.title }}</h3>
+                <p>{{ section.body }}</p>
+              </article>
+            }
+          </div>
         </div>
-      }
+      </div>
     </section>
 
     <section
@@ -429,16 +431,18 @@
           <app-icon name="chevron-right"></app-icon>
         </span>
       </button>
-      @if (isLegalOpen('faqs')) {
-        <div id="faqs-panel" class="legal-content faq-content">
-          @for (section of data().legal.faqs.sections; track section.title; let i = $index) {
-            <article data-reveal [style.--reveal-delay]="i * 45 + 'ms'">
-              <h3>{{ section.title }}</h3>
-              <p>{{ section.body }}</p>
-            </article>
-          }
+      <div id="faqs-panel" class="legal-content faq-content" [attr.aria-hidden]="!isLegalOpen('faqs')">
+        <div class="legal-content-inner">
+          <div class="legal-content-grid">
+            @for (section of data().legal.faqs.sections; track section.title; let i = $index) {
+              <article data-reveal [style.--reveal-delay]="i * 45 + 'ms'">
+                <h3>{{ section.title }}</h3>
+                <p>{{ section.body }}</p>
+              </article>
+            }
+          </div>
         </div>
-      }
+      </div>
     </section>
 
     <section
@@ -466,16 +470,18 @@
           <app-icon name="chevron-right"></app-icon>
         </span>
       </button>
-      @if (isLegalOpen('privacy')) {
-        <div id="privacy-panel" class="legal-content">
-          @for (section of data().legal.privacy.sections; track section.title; let i = $index) {
-            <article data-reveal [style.--reveal-delay]="i * 45 + 'ms'">
-              <h3>{{ section.title }}</h3>
-              <p>{{ section.body }}</p>
-            </article>
-          }
+      <div id="privacy-panel" class="legal-content" [attr.aria-hidden]="!isLegalOpen('privacy')">
+        <div class="legal-content-inner">
+          <div class="legal-content-grid">
+            @for (section of data().legal.privacy.sections; track section.title; let i = $index) {
+              <article data-reveal [style.--reveal-delay]="i * 45 + 'ms'">
+                <h3>{{ section.title }}</h3>
+                <p>{{ section.body }}</p>
+              </article>
+            }
+          </div>
         </div>
-      }
+      </div>
     </section>
   </main>
 
