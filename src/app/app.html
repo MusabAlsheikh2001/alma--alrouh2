@@ -10,27 +10,21 @@
   <header class="site-header" [class.is-scrolled]="scrolled()" [class.is-hidden]="headerHidden() && !mobileNavOpen()" [class.is-open]="mobileNavOpen()">
     <div class="scroll-progress" aria-hidden="true"></div>
     <div class="container header-in">
-      <a class="brand" routerLink="/" [attr.aria-label]="t().a11y.home">
-        <img
-          [src]="site.logoUrl()"
-          [attr.srcset]="site.logoSrcset()"
-          sizes="64px"
-          [alt]="t().logoAlt"
-          width="64"
-          height="64"
-          decoding="async"
-        />
-      </a>
+      <div class="header-start">
+        <a class="brand" routerLink="/" [attr.aria-label]="t().a11y.home">
+          <img
+            [src]="site.logoUrl()"
+            [attr.srcset]="site.logoSrcset()"
+            sizes="64px"
+            [alt]="t().logoAlt"
+            width="64"
+            height="64"
+            decoding="async"
+          />
+        </a>
 
-      <nav class="nav" [attr.aria-label]="t().a11y.primaryNav">
-        <a routerLink="/about" routerLinkActive="is-active">{{ t().nav.about }}</a>
-        <a routerLink="/programs" routerLinkActive="is-active">{{ t().nav.programs }}</a>
-        <a routerLink="/campaigns" routerLinkActive="is-active">{{ t().nav.campaigns }}</a>
-        <a routerLink="/get-involved" routerLinkActive="is-active">{{ t().nav.involved }}</a>
-        <a routerLink="/contact" routerLinkActive="is-active">{{ t().nav.contact }}</a>
-      </nav>
+        <span class="header-divider" aria-hidden="true"></span>
 
-      <div class="header-actions">
         <div class="lang-switch" role="group" [attr.aria-label]="t().a11y.chooseLanguage">
           @for (lang of site.languages; track lang) {
             @if (site.language() !== lang) {
@@ -58,7 +52,18 @@
             <app-icon name="sun" aria-hidden="true"></app-icon>
           }
         </button>
+      </div>
 
+      <nav class="nav" [attr.aria-label]="t().a11y.primaryNav">
+        <a routerLink="/" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }">{{ t().nav.home }}</a>
+        <a routerLink="/about" routerLinkActive="is-active">{{ t().nav.about }}</a>
+        <a routerLink="/programs" routerLinkActive="is-active">{{ t().nav.programs }}</a>
+        <a routerLink="/campaigns" routerLinkActive="is-active">{{ t().nav.campaigns }}</a>
+        <a routerLink="/get-involved" routerLinkActive="is-active">{{ t().nav.involved }}</a>
+        <a routerLink="/contact" routerLinkActive="is-active">{{ t().nav.contact }}</a>
+      </nav>
+
+      <div class="header-actions">
         <a class="btn btn--quiet header-donate" [href]="site.donationFormUrl" target="_blank" rel="noreferrer">
           <app-icon name="heart" aria-hidden="true"></app-icon>
           {{ t().nav.donate }}
