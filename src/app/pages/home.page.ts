@@ -1,15 +1,16 @@
 import { Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
-import { CountUp, Parallax, RevealOnScroll } from '../animations.directive';
+import { CountUp, RevealOnScroll, ScrollScene } from '../animations.directive';
 import { IconComponent } from '../icon.component';
-import { FIELD_CAMPAIGNS } from '../campaigns/campaigns.data';
+import { FIELD_CAMPAIGNS, ONLINE_SESSIONS } from '../campaigns/campaigns.data';
 import { formatDate } from '../campaigns/format';
 import { Site } from '../site.service';
+import { VolunteerNetworkComponent } from './volunteer-network.component';
 
 @Component({
   selector: 'app-home-page',
-  imports: [CountUp, IconComponent, Parallax, RevealOnScroll, RouterLink],
+  imports: [CountUp, IconComponent, RevealOnScroll, RouterLink, ScrollScene, VolunteerNetworkComponent],
   template: `
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-glow" aria-hidden="true"></div>
@@ -40,34 +41,27 @@ import { Site } from '../site.service';
           </ul>
         </div>
 
-        <div class="hero-visual">
-          <figure class="hero-photo" [parallax]="0.06">
-            <img
-              [src]="site.heroImageUrl"
-              [alt]="t().tagline"
-              width="1717"
-              height="916"
-              fetchpriority="high"
-              decoding="async"
-            />
-          </figure>
-          <div class="hero-badge" aria-hidden="true">
-            <span class="hero-badge-icon"><app-icon name="heart" aria-hidden="true"></app-icon></span>
-            <span>
-              <strong>{{ t().stats.items[1][0] }}</strong>
-              <small>{{ t().stats.items[1][1] }}</small>
-            </span>
-          </div>
+        <div class="hero-network">
+          <app-volunteer-network />
+          <p class="hero-network-legend">
+            <span class="legend-dots" aria-hidden="true"><i></i><i></i></span>
+            {{ t().home.networkLegend }}
+          </p>
         </div>
       </div>
+      <p class="scroll-hint" aria-hidden="true"><span></span>{{ t().home.scrollHint }}</p>
     </section>
 
-    <section class="board statement" aria-labelledby="mission-title">
-      <div class="container statement-in">
-        <h2 id="mission-title" class="statement-text" data-reveal>{{ t().mission.title }}</h2>
-        <div class="statement-side" data-reveal style="--i: 2">
-          <p class="lead">{{ t().mission.body }}</p>
-          <a class="btn btn--gold" routerLink="/about">
+    <section class="board lit" scrollScene aria-labelledby="mission-title">
+      <div class="lit-stage">
+        <div class="container">
+          <h2 id="mission-title" class="lit-kicker">{{ t().mission.title }}</h2>
+          <p class="lit-text" [style.--n]="missionWords().length">
+            @for (word of missionWords(); track $index) {
+              <span [style.--i]="$index" [class.is-key]="isKey(word)">{{ word }}</span>{{ ' ' }}
+            }
+          </p>
+          <a class="btn btn--gold lit-cta" routerLink="/about">
             {{ t().pages.aboutLink }}
             <app-icon class="arrow" name="arrow-right" aria-hidden="true"></app-icon>
           </a>
@@ -75,19 +69,120 @@ import { Site } from '../site.service';
       </div>
     </section>
 
-    <section class="section" aria-labelledby="stats-title">
+    <section class="section numbers" aria-labelledby="numbers-title">
       <div class="container">
-        <div class="head" data-reveal>
-          <h2 id="stats-title">{{ t().stats.title }}</h2>
+        <div class="head head--split" data-reveal>
+          <h2 id="numbers-title">{{ t().home.numbersTitle }}</h2>
+          <p class="lead">{{ t().home.numbersLead }}</p>
         </div>
-        <dl class="figures">
-          @for (stat of t().stats.items; track stat[1]; let i = $index) {
-            <div data-reveal [style.--i]="i">
-              <dt [countUp]="stat[0]"></dt>
-              <dd>{{ stat[1] }}</dd>
+
+        <ul class="bento">
+          <li class="bento-tile bento-tile--volunteers" data-reveal>
+            <div class="bento-figure">
+              <strong [countUp]="'140+'"></strong>
+              <span>{{ t().home.volunteers }}</span>
             </div>
+            <div class="dot-matrix" aria-hidden="true">
+              @for (d of volunteerDots; track $index) {
+                <i [style.--d]="$index"></i>
+              }
+            </div>
+          </li>
+
+          <li class="bento-tile bento-tile--campaigns" data-reveal style="--i: 1">
+            <a routerLink="/campaigns" class="bento-link">
+              <div class="bento-figure">
+                <strong [countUp]="field.length + ''"></strong>
+                <span>{{ t().home.campaigns }}</span>
+              </div>
+              <div class="photo-stack" aria-hidden="true">
+                @for (c of field.slice(0, 3); track c.id; let i = $index) {
+                  <img [src]="c.media[0].src + '-sm.webp'" alt="" [style.--k]="i" loading="lazy" decoding="async" />
+                }
+              </div>
+            </a>
+          </li>
+
+          <li class="bento-tile bento-tile--sessions" data-reveal style="--i: 2">
+            <a routerLink="/campaigns" fragment="sessions-title" class="bento-link">
+              <div class="bento-figure">
+                <strong [countUp]="sessions.length + ''"></strong>
+                <span>{{ t().home.sessions }}</span>
+              </div>
+              <div class="session-line" aria-hidden="true">
+                @for (s of sessionMarks; track s.date; let i = $index) {
+                  <i [style.--x]="s.x" [style.--d]="i"></i>
+                }
+                @for (m of months(); track m.label) {
+                  <b [style.--x]="m.x">{{ m.label }}</b>
+                }
+              </div>
+            </a>
+          </li>
+
+          <li class="bento-tile bento-tile--themes" data-reveal style="--i: 1">
+            <div class="bento-figure">
+              <strong [countUp]="t().home.themes.length + ''"></strong>
+              <span>{{ t().home.themesLabel }}</span>
+            </div>
+            <ul class="theme-chips">
+              @for (theme of t().home.themes; track theme; let i = $index) {
+                <li [style.--d]="i">{{ theme }}</li>
+              }
+            </ul>
+          </li>
+
+          <li class="bento-tile bento-tile--format" data-reveal style="--i: 2">
+            <span class="bento-small">{{ t().home.sessionFormat }}</span>
+            <div class="format-bar" aria-hidden="true">
+              <i class="format-learning"></i><i class="format-questions"></i>
+            </div>
+            <dl class="format-legend">
+              <div><dt>25–30 {{ t().home.minutes }}</dt><dd>{{ t().home.learning }}</dd></div>
+              <div><dt>10–15 {{ t().home.minutes }}</dt><dd>{{ t().home.questions }}</dd></div>
+            </dl>
+          </li>
+
+          <li class="bento-tile bento-tile--free" data-reveal>
+            <strong class="bento-word">{{ t().home.free }}</strong>
+            <span>{{ t().home.freeText }}</span>
+          </li>
+
+          <li class="bento-tile bento-tile--founded" data-reveal style="--i: 1">
+            <strong class="bento-word" [countUp]="t().home.founded"></strong>
+            <span>{{ t().home.foundedText }}</span>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="rail-scene" scrollScene aria-labelledby="field-title">
+      <div class="rail-stage">
+        <div class="container rail-head">
+          <h2 id="field-title" class="rail-title">{{ t().home.fieldTitle }}</h2>
+          <div class="rail-side">
+            <p class="lead">{{ t().home.fieldLead }}</p>
+            <a class="link" routerLink="/campaigns">
+              {{ t().pages.campaignsLink }}
+              <app-icon class="arrow" name="arrow-right" aria-hidden="true"></app-icon>
+            </a>
+          </div>
+        </div>
+        <ul class="rail-track" data-track>
+          @for (c of field; track c.id; let i = $index) {
+            <li>
+              <a class="rail-card" routerLink="/campaigns" [fragment]="c.id" [class.rail-card--wide]="i % 3 === 0">
+                <img [src]="c.media[0].src + '.webp'" [style.object-position]="c.focus" alt="" [width]="c.media[0].w" [height]="c.media[0].h" loading="lazy" decoding="async" />
+                <span class="rail-card-body">
+                  <time [attr.datetime]="c.date">{{ date(c.date) }}</time>
+                  <strong>{{ text(c.title) }}</strong>
+                  <span class="rail-card-place">{{ text(c.place) }}</span>
+                </span>
+              </a>
+            </li>
           }
-        </dl>
+        </ul>
+        <div class="rail-progress" aria-hidden="true"><i></i></div>
       </div>
     </section>
 
@@ -107,40 +202,6 @@ import { Site } from '../site.service';
                 <span class="tile-cta">
                   {{ item.cta }}
                   <app-icon class="arrow" name="arrow-up-right" aria-hidden="true"></app-icon>
-                </span>
-              </a>
-            </li>
-          }
-        </ul>
-      </div>
-    </section>
-
-    <section class="section" aria-labelledby="home-campaigns-title">
-      <div class="container">
-        <div class="head head--split" data-reveal>
-          <div>
-            <h2 id="home-campaigns-title">{{ t().campaigns.homeTitle }}</h2>
-            <p class="lead">{{ t().campaigns.homeLead }}</p>
-          </div>
-          <a class="link" routerLink="/campaigns">
-            {{ t().pages.campaignsLink }}
-            <app-icon class="arrow" name="arrow-right" aria-hidden="true"></app-icon>
-          </a>
-        </div>
-        <ul class="field-cards">
-          @for (c of featured; track c.id; let i = $index) {
-            <li data-reveal [style.--i]="i">
-              <a class="field-card" routerLink="/campaigns" [fragment]="c.id">
-                <span class="field-card-media">
-                  <img [src]="c.media[0].src + '-sm.webp'" [style.object-position]="c.focus" alt="" [width]="c.media[0].w" [height]="c.media[0].h" loading="lazy" decoding="async" />
-                </span>
-                <span class="field-card-body">
-                  <time [attr.datetime]="c.date">{{ date(c.date) }}</time>
-                  <h3>{{ text(c.title) }}</h3>
-                  <span class="field-card-place">
-                    <app-icon name="map-pin" aria-hidden="true"></app-icon>
-                    {{ text(c.place) }}
-                  </span>
                 </span>
               </a>
             </li>
@@ -195,7 +256,28 @@ import { Site } from '../site.service';
 export class HomePage {
   protected readonly site = inject(Site);
   protected readonly t = this.site.data;
-  protected readonly featured = FIELD_CAMPAIGNS.slice(0, 3);
+  protected readonly field = FIELD_CAMPAIGNS;
+  protected readonly sessions = ONLINE_SESSIONS;
+  protected readonly volunteerDots = Array.from({ length: 140 });
+
+  /** Each session placed along July to October 2026, as a percentage. */
+  private readonly span = [Date.parse('2026-07-01'), Date.parse('2026-11-01')] as const;
+  protected readonly sessionMarks = ONLINE_SESSIONS.map((s) => ({
+    date: s.date,
+    x: `${(((Date.parse(s.date) - this.span[0]) / (this.span[1] - this.span[0])) * 100).toFixed(1)}%`,
+  }));
+  protected readonly months = computed(() =>
+    ['2026-07', '2026-08', '2026-09', '2026-10'].map((m, i) => ({
+      label: new Intl.DateTimeFormat(this.site.language() === 'ar' ? 'ar' : 'en-US', { month: 'short' }).format(new Date(`${m}-15T12:00:00`)),
+      x: `${i * 25}%`,
+    })),
+  );
+
+  protected readonly missionWords = computed(() => this.t().mission.body.split(' '));
+  private readonly keyWords = /^(free|culturally|sensitive|safely|alone|المجاني|المراعية|للثقافة|بأمان|وحدهم)/i;
+  protected isKey(word: string): boolean {
+    return this.keyWords.test(word.replace(/[.,،]/g, ''));
+  }
   protected text(value: { en: string; ar: string }): string {
     return value[this.site.language()];
   }

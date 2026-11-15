@@ -82,6 +82,33 @@ export interface Translation {
     rolesLabel: string;
     notFoundTitle: string;
     notFoundText: string;
+    heroGallery: string;
+    heroSee: string;
+    pause: string;
+    play: string;
+  };
+
+  home: {
+    networkLegend: string;
+    networkHint: string;
+    numbersTitle: string;
+    numbersLead: string;
+    volunteers: string;
+    campaigns: string;
+    sessions: string;
+    themesLabel: string;
+    themes: string[];
+    sessionFormat: string;
+    learning: string;
+    questions: string;
+    minutes: string;
+    free: string;
+    freeText: string;
+    founded: string;
+    foundedText: string;
+    fieldTitle: string;
+    fieldLead: string;
+    scrollHint: string;
   };
 
   campaigns: {
