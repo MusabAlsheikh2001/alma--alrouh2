@@ -85,7 +85,7 @@ export class Parallax implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (typeof window !== 'undefined') window.removeEventListener('scroll', this.onScroll);
-    cancelAnimationFrame(this.frame);
+    if (this.frame) cancelAnimationFrame(this.frame);
   }
 
   private update(): void {
@@ -139,7 +139,7 @@ export class ScrollScene implements OnInit, OnDestroy {
     window.removeEventListener('scroll', this.onScroll);
     window.removeEventListener('resize', this.onScroll);
     this.resizeObserver?.disconnect();
-    cancelAnimationFrame(this.frame);
+    if (this.frame) cancelAnimationFrame(this.frame);
   }
 
   private update(): void {
@@ -213,7 +213,7 @@ export class CountUp implements OnInit, OnChanges, OnDestroy {
 
   ngOnDestroy(): void {
     this.observer?.disconnect();
-    cancelAnimationFrame(this.frame);
+    if (this.frame) cancelAnimationFrame(this.frame);
   }
 
   private parse(raw: string): { prefix: string; target: number; suffix: string } | null {

@@ -109,6 +109,7 @@ export class VolunteerNetworkComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    if (typeof window === 'undefined' || !this.ctx) return;
     cancelAnimationFrame(this.frame);
     this.resizeObserver?.disconnect();
     this.io?.disconnect();

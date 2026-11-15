@@ -31,6 +31,8 @@ export interface LegalPage {
   }>;
 }
 
+export type SeoKey = 'home' | 'about' | 'programs' | 'campaigns' | 'involved' | 'contact' | 'faqs' | 'terms' | 'privacy' | 'notFound';
+
 export interface Translation {
   /** Short switcher label, e.g. "EN". */
   code: string;
@@ -87,6 +89,9 @@ export interface Translation {
     pause: string;
     play: string;
   };
+
+  /** Search and social text for each page. */
+  seo: Record<SeoKey, { title: string; description: string }> & { siteName: string; locale: string; imageAlt: string };
 
   home: {
     networkLegend: string;

@@ -32,7 +32,7 @@ import { VolunteerNetworkComponent } from './volunteer-network.component';
             </a>
           </div>
           <ul class="trust enter" style="--d: 760ms" [attr.aria-label]="t().tagline">
-            @for (item of t().hero.trust; track item; let i = $index) {
+            @for (item of t().hero.trust; track $index; let i = $index) {
               <li>
                 <app-icon [name]="trustIcons[i]" aria-hidden="true"></app-icon>
                 {{ item }}
@@ -126,7 +126,7 @@ import { VolunteerNetworkComponent } from './volunteer-network.component';
               <span>{{ t().home.themesLabel }}</span>
             </div>
             <ul class="theme-chips">
-              @for (theme of t().home.themes; track theme; let i = $index) {
+              @for (theme of t().home.themes; track $index; let i = $index) {
                 <li [style.--d]="i">{{ theme }}</li>
               }
             </ul>

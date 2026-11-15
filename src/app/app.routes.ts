@@ -1,60 +1,58 @@
 import type { Routes } from '@angular/router';
 
-const SITE = 'Alma Alrouh';
+// Titles, descriptions and structured data come from Seo (src/app/seo.service.ts),
+// keyed by `data.seo`, in the visitor's language.
 
 export const routes: Routes = [
   {
     path: '',
+    data: { seo: 'home' },
     pathMatch: 'full',
-    title: `${SITE}: Free Mental Health Support in Peshawar`,
     loadComponent: () => import('./pages/home.page').then((m) => m.HomePage),
   },
   {
     path: 'about',
-    title: `About | ${SITE}`,
+    data: { seo: 'about' },
     loadComponent: () => import('./pages/about.page').then((m) => m.AboutPage),
   },
   {
     path: 'programs',
-    title: `Programs | ${SITE}`,
+    data: { seo: 'programs' },
     loadComponent: () => import('./pages/programs.page').then((m) => m.ProgramsPage),
   },
   {
     path: 'campaigns',
-    title: `Campaigns | ${SITE}`,
+    data: { seo: 'campaigns' },
     loadComponent: () => import('./pages/campaigns.page').then((m) => m.CampaignsPage),
   },
   {
     path: 'get-involved',
-    title: `Get involved | ${SITE}`,
+    data: { seo: 'involved' },
     loadComponent: () => import('./pages/involved.page').then((m) => m.InvolvedPage),
   },
   {
     path: 'contact',
-    title: `Contact | ${SITE}`,
+    data: { seo: 'contact' },
     loadComponent: () => import('./pages/contact.page').then((m) => m.ContactPage),
   },
   {
     path: 'faqs',
-    title: `FAQs | ${SITE}`,
-    data: { key: 'faqs' },
+    data: { seo: 'faqs', key: 'faqs' },
     loadComponent: () => import('./pages/legal.page').then((m) => m.LegalPageComponent),
   },
   {
     path: 'terms',
-    title: `Terms and Conditions | ${SITE}`,
-    data: { key: 'terms' },
+    data: { seo: 'terms', key: 'terms' },
     loadComponent: () => import('./pages/legal.page').then((m) => m.LegalPageComponent),
   },
   {
     path: 'privacy',
-    title: `Privacy Policy | ${SITE}`,
-    data: { key: 'privacy' },
+    data: { seo: 'privacy', key: 'privacy' },
     loadComponent: () => import('./pages/legal.page').then((m) => m.LegalPageComponent),
   },
   {
     path: '**',
-    title: `Page not found | ${SITE}`,
+    data: { seo: 'notFound' },
     loadComponent: () => import('./pages/not-found.page').then((m) => m.NotFoundPage),
   },
 ];

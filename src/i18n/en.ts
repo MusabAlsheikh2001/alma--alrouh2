@@ -52,6 +52,52 @@ export const en: Translation = {
     play: 'Play slideshow',
   },
 
+  seo: {
+    siteName: 'Alma Alrouh',
+    locale: 'en_US',
+    imageAlt: 'Alma Alrouh: No one should carry it alone. Free mental-health support in Peshawar.',
+    home: {
+      title: 'Alma Alrouh: Free Mental Health Support in Peshawar',
+      description: 'Alma Alrouh is a volunteer-led nonprofit in Peshawar offering free, confidential, culturally sensitive mental-health support, awareness campaigns and online sessions.',
+    },
+    about: {
+      title: 'About Alma Alrouh: Mission, Founder and Volunteers',
+      description: 'Founded in 2025 by Dr. Manar Altayyar, Alma Alrouh brings 140+ volunteers, psychologists and mental-health professionals together to make support reachable and dignified.',
+    },
+    programs: {
+      title: 'Programs: Free Consultations, Campus Outreach and Camps',
+      description: 'Free consultations, awareness campaigns, campus outreach, mental-health camps and referrals. See how a request for support works, step by step.',
+    },
+    campaigns: {
+      title: 'Campaigns: Awareness Sessions, Outreach and Online Sessions',
+      description: 'Awareness sessions in schools and orphanages, visits to welfare organizations, a TEDx community partnership and free online sessions, documented with photos and videos.',
+    },
+    involved: {
+      title: 'Get Involved: Volunteer, Donate or Partner',
+      description: 'Volunteer as a psychologist, counselor, student or advocate, donate to keep care free, or bring Alma Alrouh to your school, campus or organization.',
+    },
+    contact: {
+      title: 'Contact Alma Alrouh',
+      description: 'Reach Alma Alrouh by email, phone or the support form. Based in Peshawar, Khyber Pakhtunkhwa, Pakistan. Not an emergency service.',
+    },
+    faqs: {
+      title: 'Frequently Asked Questions',
+      description: 'Is support free? How do I ask for help, volunteer or partner? Is my request confidential? Answers to common questions about Alma Alrouh.',
+    },
+    terms: {
+      title: 'Terms and Conditions',
+      description: 'The terms for using the Alma Alrouh website, forms and public channels.',
+    },
+    privacy: {
+      title: 'Privacy Policy',
+      description: 'What information Alma Alrouh may collect through its website and forms, and how it is used and protected.',
+    },
+    notFound: {
+      title: 'Page Not Found',
+      description: 'This page is not here. Start again from the Alma Alrouh home page.',
+    },
+  },
+
   home: {
     networkLegend: 'Each point of light is one of our 140+ volunteers.',
     networkHint: 'Move through the network',

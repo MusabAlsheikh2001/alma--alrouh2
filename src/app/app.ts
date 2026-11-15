@@ -1,8 +1,10 @@
 import { Component, HostListener, NgZone, effect, inject, signal } from '@angular/core';
-import { NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
 import { IconComponent } from './icon.component';
+import { Seo } from './seo.service';
 import { Site } from './site.service';
+import type { SeoKey } from '../i18n/types';
 import type { LanguageCode } from '../i18n';
 
 /** The shell every page shares: header, routed page, footer. */
@@ -23,6 +25,9 @@ export class App {
   private lastY = 0;
   private frame = 0;
   private readonly zone = inject(NgZone);
+  private readonly seo = inject(Seo);
+  private readonly route = inject(ActivatedRoute);
+  private readonly seoKey = signal<SeoKey>('home');
 
   constructor() {
     effect(() => {
@@ -35,8 +40,15 @@ export class App {
       if (event instanceof NavigationEnd) {
         this.mobileNavOpen.set(false);
         this.headerHidden.set(false);
+        let r = this.route.snapshot;
+        while (r.firstChild) r = r.firstChild;
+        this.seoKey.set((r.data['seo'] as SeoKey) ?? 'home');
+        this.trackPageView(event.urlAfterRedirects);
       }
     });
+
+    // Re-apply search and social tags whenever the page or the language changes.
+    effect(() => this.seo.apply(this.seoKey()));
 
     if (typeof window !== 'undefined') {
       this.zone.runOutsideAngular(() =>
@@ -59,6 +71,30 @@ export class App {
         });
       }
       if (Math.abs(y - this.lastY) > 4) this.lastY = y;
+    });
+  }
+
+  /**
+   * Google Tag Manager sees the first page load on its own. Later page changes
+   * happen inside the app, so each one is pushed as a `virtual_page_view` event
+   * (after the new title is set) for a GTM trigger to pick up.
+   */
+  private firstView = true;
+  private trackPageView(path: string): void {
+    if (typeof window === 'undefined') return;
+    if (this.firstView) {
+      this.firstView = false;
+      return;
+    }
+    setTimeout(() => {
+      const w = window as unknown as { dataLayer?: unknown[] };
+      (w.dataLayer ??= []).push({
+        event: 'virtual_page_view',
+        page_path: path,
+        page_location: location.href,
+        page_title: document.title,
+        language: this.site.language(),
+      });
     });
   }
 

@@ -117,7 +117,7 @@ interface Viewer {
                       <img
                         [src]="m.src + (j === 0 ? '.webp' : '-sm.webp')"
                         [style.object-position]="j === 0 ? c.focus : null"
-                        alt=""
+                        [alt]="j === 0 ? text(c.title) + ', ' + text(c.place) : ''"
                         [width]="m.w"
                         [height]="m.h"
                         loading="lazy"
