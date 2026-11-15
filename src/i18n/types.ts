@@ -61,6 +61,61 @@ export interface Translation {
     programs: string;
     contact: string;
     donate: string;
+    about: string;
+    campaigns: string;
+    involved: string;
+  };
+
+  /** Headings and labels that only exist on the multi-page site. */
+  pages: {
+    programsLead: string;
+    involvedTitle: string;
+    involvedLead: string;
+    aboutLink: string;
+    founderLink: string;
+    programsLink: string;
+    campaignsLink: string;
+    emailLabel: string;
+    phoneLabel: string;
+    locationLabel: string;
+    toggleTheme: string;
+    rolesLabel: string;
+    notFoundTitle: string;
+    notFoundText: string;
+  };
+
+  campaigns: {
+    title: string;
+    lead: string;
+    filterLabel: string;
+    all: string;
+    kinds: { awareness: string; outreach: string; online: string };
+    statCampaigns: string;
+    statSessions: string;
+    statPartners: string;
+    fieldTitle: string;
+    fieldLead: string;
+    photos: string;
+    videos: string;
+    openGallery: string;
+    morePhotos: string;
+    sessionsTitle: string;
+    sessionsLead: string;
+    formatLearning: string;
+    formatQuestions: string;
+    formatPlatform: string;
+    formatPlatformText: string;
+    viewPoster: string;
+    partnersTitle: string;
+    partnersLead: string;
+    hostTitle: string;
+    hostText: string;
+    hostCta: string;
+    homeTitle: string;
+    homeLead: string;
+    close: string;
+    prev: string;
+    next: string;
   };
 
   hero: {

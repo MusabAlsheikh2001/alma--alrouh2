@@ -55,6 +55,50 @@ export class RevealOnScroll implements OnInit, OnDestroy {
 }
 
 /**
+ * Drifts the host slowly against the scroll (`--parallax` in px), for a sense
+ * of depth on large photographs. Off under reduced motion.
+ */
+@Directive({
+  selector: '[parallax]',
+})
+export class Parallax implements OnInit, OnDestroy {
+  @Input() parallax: number | '' = 0.08;
+
+  private readonly host = inject<ElementRef<HTMLElement>>(ElementRef);
+  private readonly zone = inject(NgZone);
+  private frame = 0;
+  private readonly onScroll = () => {
+    if (this.frame) return;
+    this.frame = requestAnimationFrame(() => {
+      this.frame = 0;
+      this.update();
+    });
+  };
+
+  ngOnInit(): void {
+    if (prefersReducedMotion() || typeof window === 'undefined') return;
+    this.zone.runOutsideAngular(() => {
+      window.addEventListener('scroll', this.onScroll, { passive: true });
+      this.update();
+    });
+  }
+
+  ngOnDestroy(): void {
+    if (typeof window !== 'undefined') window.removeEventListener('scroll', this.onScroll);
+    cancelAnimationFrame(this.frame);
+  }
+
+  private update(): void {
+    const el = this.host.nativeElement;
+    const rect = el.getBoundingClientRect();
+    if (rect.bottom < 0 || rect.top > window.innerHeight) return;
+    const speed = typeof this.parallax === 'number' ? this.parallax : 0.08;
+    const offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * -speed;
+    el.style.setProperty('--parallax', `${offset.toFixed(1)}px`);
+  }
+}
+
+/**
  * Animates a numeric value embedded in a label (e.g. "140+", "2025") from
  * zero up to its target the first time it scrolls into view, preserving any
  * non-numeric prefix/suffix. Non-numeric labels render as-is.

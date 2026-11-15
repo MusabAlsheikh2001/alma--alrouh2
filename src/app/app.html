@@ -1,83 +1,81 @@
 <div
   class="page-shell"
-  [attr.dir]="pageDir()"
-  [class.is-rtl]="isRtl()"
-  [attr.data-lang]="language()"
-  [attr.data-theme]="theme()"
+  [attr.dir]="t().dir"
+  [class.is-rtl]="site.isRtl()"
+  [attr.data-lang]="site.language()"
+  [attr.data-theme]="site.theme()"
 >
-  <a class="skip-link" href="#main">{{ data().a11y.skipToContent }}</a>
+  <a class="skip" href="#main">{{ t().a11y.skipToContent }}</a>
 
-  <header class="site-header" [class.is-scrolled]="scrolled()">
-    <div class="header-inner">
-      <a class="brand" href="#top" (click)="closeMobileNav()" [attr.aria-label]="data().a11y.home">
+  <header class="site-header" [class.is-scrolled]="scrolled()" [class.is-hidden]="headerHidden() && !mobileNavOpen()" [class.is-open]="mobileNavOpen()">
+    <div class="scroll-progress" aria-hidden="true"></div>
+    <div class="container header-in">
+      <a class="brand" routerLink="/" [attr.aria-label]="t().a11y.home">
         <img
-          [src]="logoUrl()"
-          [attr.srcset]="logoSrcset()"
-          sizes="(max-width: 760px) 72px, (max-width: 1220px) 94px, 108px"
-          [alt]="data().logoAlt"
-          width="108"
-          height="108"
+          [src]="site.logoUrl()"
+          [attr.srcset]="site.logoSrcset()"
+          sizes="64px"
+          [alt]="t().logoAlt"
+          width="64"
+          height="64"
           decoding="async"
         />
       </a>
 
-      <nav class="desktop-nav" [attr.aria-label]="data().a11y.primaryNav">
-        <a href="#top" [class.active]="activeSection() === ''">{{ data().nav.home }}</a>
-        <a href="#forms" [class.active]="activeSection() === 'forms'">{{ data().nav.forms }}</a>
-        <a href="#mission" [class.active]="activeSection() === 'mission'">{{ data().nav.mission }}</a>
-        <a href="#founder" [class.active]="activeSection() === 'founder'">{{ data().nav.founder }}</a>
-        <a href="#care" [class.active]="activeSection() === 'care'">{{ data().nav.care }}</a>
-        <a href="#programs" [class.active]="activeSection() === 'programs'">{{ data().nav.programs }}</a>
-        <a href="#volunteers" [class.active]="activeSection() === 'volunteers'">{{ data().nav.volunteers }}</a>
-        <a href="#contact" [class.active]="activeSection() === 'contact'">{{ data().nav.contact }}</a>
+      <nav class="nav" [attr.aria-label]="t().a11y.primaryNav">
+        <a routerLink="/about" routerLinkActive="is-active">{{ t().nav.about }}</a>
+        <a routerLink="/programs" routerLinkActive="is-active">{{ t().nav.programs }}</a>
+        <a routerLink="/campaigns" routerLinkActive="is-active">{{ t().nav.campaigns }}</a>
+        <a routerLink="/get-involved" routerLinkActive="is-active">{{ t().nav.involved }}</a>
+        <a routerLink="/contact" routerLinkActive="is-active">{{ t().nav.contact }}</a>
       </nav>
 
       <div class="header-actions">
-        <a class="support-button" [href]="supportFormUrl" target="_blank" rel="noreferrer">
-          {{ data().hero.primary }}
-          <app-icon name="arrow-up-right" aria-hidden="true"></app-icon>
-        </a>
-
-        <div class="lang-switch" role="group" [attr.aria-label]="data().a11y.chooseLanguage">
-          @for (lang of languages; track lang) {
-            @if (language() !== lang) {
+        <div class="lang-switch" role="group" [attr.aria-label]="t().a11y.chooseLanguage">
+          @for (lang of site.languages; track lang) {
+            @if (site.language() !== lang) {
               <button
-                class="language-choice"
+                class="icon-btn"
                 type="button"
-                [attr.aria-label]="translationName(lang)"
+                [attr.aria-label]="site.translationName(lang)"
                 (click)="setLanguage(lang)"
               >
-                {{ languageCode(lang) }}
+                {{ site.languageCode(lang) }}
               </button>
             }
           }
         </div>
 
         <button
-          class="icon-button"
+          class="icon-btn"
           type="button"
-          (click)="toggleTheme()"
-          [attr.aria-label]="language() === 'ar' ? 'تبديل المظهر' : 'Toggle color theme'"
-          [attr.title]="theme() === 'light' ? 'Dark mode' : 'Light mode'"
+          (click)="site.toggleTheme()"
+          [attr.aria-label]="t().pages.toggleTheme"
         >
-          @if (theme() === 'light') {
+          @if (site.theme() === 'light') {
             <app-icon name="moon" aria-hidden="true"></app-icon>
           } @else {
             <app-icon name="sun" aria-hidden="true"></app-icon>
           }
         </button>
 
-        <a class="donate-button" [href]="donationFormUrl" target="_blank" rel="noreferrer">
-          {{ data().nav.donate }}
+        <a class="btn btn--quiet header-donate" [href]="site.donationFormUrl" target="_blank" rel="noreferrer">
           <app-icon name="heart" aria-hidden="true"></app-icon>
+          {{ t().nav.donate }}
+        </a>
+
+        <a class="btn btn--primary header-support" [href]="site.supportFormUrl" target="_blank" rel="noreferrer">
+          {{ t().hero.primary }}
+          <app-icon class="arrow" name="arrow-right" aria-hidden="true"></app-icon>
         </a>
 
         <button
-          class="menu-button"
+          class="icon-btn menu-btn"
           type="button"
           (click)="toggleMobileNav()"
-          [attr.aria-label]="data().a11y.openMenu"
+          [attr.aria-label]="mobileNavOpen() ? t().a11y.closeMenu : t().a11y.openMenu"
           [attr.aria-expanded]="mobileNavOpen()"
+          aria-controls="mobile-nav"
         >
           @if (mobileNavOpen()) {
             <app-icon name="x" aria-hidden="true"></app-icon>
@@ -87,478 +85,88 @@
         </button>
       </div>
     </div>
-  </header>
 
-  @if (langMenuOpen()) {
-    <button class="page-scrim lang-scrim" type="button" (click)="closeLangMenu()" tabindex="-1" aria-hidden="true"></button>
-  }
-
-  @if (mobileNavOpen()) {
-    <div class="mobile-nav-wrap">
-      <button class="page-scrim" type="button" (click)="closeMobileNav()" tabindex="-1" aria-hidden="true"></button>
-      <nav class="mobile-nav" [attr.aria-label]="data().a11y.primaryNav">
-        <span class="mobile-nav-kicker">Alma Alrouh</span>
-        <a href="#top" (click)="closeMobileNav()">{{ data().nav.home }}</a>
-        <a href="#forms" (click)="closeMobileNav()">{{ data().nav.forms }}</a>
-        <a href="#mission" (click)="closeMobileNav()">{{ data().nav.mission }}</a>
-        <a href="#founder" (click)="closeMobileNav()">{{ data().nav.founder }}</a>
-        <a href="#care" (click)="closeMobileNav()">{{ data().nav.care }}</a>
-        <a href="#programs" (click)="closeMobileNav()">{{ data().nav.programs }}</a>
-        <a href="#volunteers" (click)="closeMobileNav()">{{ data().nav.volunteers }}</a>
-        <a href="#contact" (click)="closeMobileNav()">{{ data().nav.contact }}</a>
-        <div class="mobile-nav-actions">
-          <a class="button button-primary" [href]="supportFormUrl" target="_blank" rel="noreferrer" (click)="closeMobileNav()">
-            {{ data().hero.primary }}
-            <app-icon name="arrow-up-right" aria-hidden="true"></app-icon>
-          </a>
-          <a class="button button-dark" [href]="donationFormUrl" target="_blank" rel="noreferrer" (click)="closeMobileNav()">
-            {{ data().nav.donate }}
-            <app-icon name="heart" aria-hidden="true"></app-icon>
-          </a>
+    @if (mobileNavOpen()) {
+      <nav id="mobile-nav" class="mobile-nav" [attr.aria-label]="t().a11y.primaryNav">
+        <div class="container">
+          <a routerLink="/" routerLinkActive="is-active" [routerLinkActiveOptions]="{ exact: true }" style="--i: 0">{{ t().nav.home }}</a>
+          <a routerLink="/about" routerLinkActive="is-active" style="--i: 1">{{ t().nav.about }}</a>
+          <a routerLink="/programs" routerLinkActive="is-active" style="--i: 2">{{ t().nav.programs }}</a>
+          <a routerLink="/campaigns" routerLinkActive="is-active" style="--i: 3">{{ t().nav.campaigns }}</a>
+          <a routerLink="/get-involved" routerLinkActive="is-active" style="--i: 4">{{ t().nav.involved }}</a>
+          <a routerLink="/contact" routerLinkActive="is-active" style="--i: 5">{{ t().nav.contact }}</a>
+          <div class="mobile-nav-actions">
+            <a class="btn btn--primary" [href]="site.supportFormUrl" target="_blank" rel="noreferrer" (click)="closeMobileNav()">
+              {{ t().hero.primary }}
+              <app-icon class="arrow" name="arrow-right" aria-hidden="true"></app-icon>
+            </a>
+            <a class="btn btn--quiet" [href]="site.donationFormUrl" target="_blank" rel="noreferrer" (click)="closeMobileNav()">
+              <app-icon name="heart" aria-hidden="true"></app-icon>
+              {{ t().nav.donate }}
+            </a>
+          </div>
         </div>
       </nav>
-    </div>
-  }
+    }
+  </header>
 
-  <main id="main">
-    <span id="top" aria-hidden="true"></span>
-
-    <section class="hero" aria-labelledby="hero-title">
-      <div class="hero-inner">
-        <div class="hero-content">
-          <img
-            class="hero-logo"
-            [src]="logoUrl()"
-            [attr.srcset]="logoSrcset()"
-            sizes="(max-width: 760px) 168px, 280px"
-            [alt]="data().logoAlt"
-            width="280"
-            height="280"
-            loading="eager"
-            fetchpriority="high"
-            decoding="async"
-            data-reveal
-          />
-          <p class="hero-kicker" data-reveal>{{ data().hero.eyebrow }}</p>
-          <h1 id="hero-title" data-reveal style="--reveal-delay: 80ms">
-            {{ data().hero.title }}
-          </h1>
-          <p class="hero-intro" data-reveal style="--reveal-delay: 150ms">{{ data().hero.copy }}</p>
-          <div class="hero-actions" data-reveal style="--reveal-delay: 220ms">
-            <a class="button button-light" [href]="supportFormUrl" target="_blank" rel="noreferrer">
-              {{ data().hero.primary }}
-              <app-icon name="arrow-up-right" aria-hidden="true"></app-icon>
-            </a>
-            <a class="button button-glass" [href]="volunteerFormUrl" target="_blank" rel="noreferrer">
-              {{ data().hero.tertiary }}
-              <app-icon name="users-round" aria-hidden="true"></app-icon>
-            </a>
-          </div>
-
-          <ul class="hero-trust" [attr.aria-label]="data().hero.eyebrow">
-            @for (item of data().hero.trust; track item; let i = $index) {
-              <li data-reveal [style.--reveal-delay]="i * 70 + 280 + 'ms'">
-                @if (i === 0) { <app-icon name="shield-check" aria-hidden="true"></app-icon> }
-                @else if (i === 1) { <app-icon name="heart-pulse" aria-hidden="true"></app-icon> }
-                @else if (i === 2) { <app-icon name="users-round" aria-hidden="true"></app-icon> }
-                @else { <app-icon name="globe" aria-hidden="true"></app-icon> }
-                {{ item }}
-              </li>
-            }
-          </ul>
-        </div>
-      </div>
-    </section>
-
-    <section id="forms" class="forms section-pad" aria-labelledby="forms-title">
-      <div class="forms-lead" data-reveal>
-        <p class="eyebrow">{{ data().forms.eyebrow }}</p>
-        <h2 id="forms-title">{{ data().forms.title }}</h2>
-        <p>{{ data().forms.intro }}</p>
-      </div>
-      <div class="forms-grid">
-        @for (item of data().forms.items; track item.id; let i = $index) {
-          <a
-            class="form-card"
-            [href]="formHref(item.id)"
-            target="_blank"
-            rel="noreferrer"
-            data-reveal
-            [style.--reveal-delay]="i * 70 + 'ms'"
-          >
-            <span class="form-icon">
-              @switch (item.id) {
-                @case ('support') { <app-icon name="life-buoy" aria-hidden="true"></app-icon> }
-                @case ('volunteer') { <app-icon name="hand-heart" aria-hidden="true"></app-icon> }
-                @case ('donation') { <app-icon name="hand-coins" aria-hidden="true"></app-icon> }
-                @case ('partnership') { <app-icon name="handshake" aria-hidden="true"></app-icon> }
-              }
-            </span>
-            <span class="card-index">0{{ i + 1 }}</span>
-            <strong>{{ item.title }}</strong>
-            <p>{{ item.text }}</p>
-            <span class="form-link">
-              {{ item.cta }}
-              <app-icon name="arrow-up-right" aria-hidden="true"></app-icon>
-            </span>
-          </a>
-        }
-      </div>
-    </section>
-
-    <section class="impact" aria-labelledby="stats-title">
-      <div class="impact-intro" data-reveal>
-        <p class="eyebrow">{{ data().stats.eyebrow }}</p>
-        <h2 id="stats-title">{{ data().stats.title }}</h2>
-        <p>{{ data().mission.body }}</p>
-        <ul class="impact-points" [attr.aria-label]="data().stats.eyebrow">
-          @for (item of data().hero.trust; track item; let i = $index) {
-            <li>
-              @if (i === 0) { <app-icon name="shield-check" aria-hidden="true"></app-icon> }
-              @else if (i === 1) { <app-icon name="heart-pulse" aria-hidden="true"></app-icon> }
-              @else if (i === 2) { <app-icon name="users-round" aria-hidden="true"></app-icon> }
-              @else { <app-icon name="globe" aria-hidden="true"></app-icon> }
-              {{ item }}
-            </li>
-          }
-        </ul>
-      </div>
-      <div class="impact-stats">
-        @for (stat of data().stats.items; track stat[1]; let i = $index) {
-          <article
-            class="impact-card"
-            [class.primary-stat]="i === 0"
-            [class.word-stat]="stat[0].length > 5"
-            data-reveal
-            [style.--reveal-delay]="i * 80 + 'ms'"
-          >
-            <span class="stat-number" [countUp]="stat[0]"></span>
-            <p>{{ stat[1] }}</p>
-          </article>
-        }
-      </div>
-    </section>
-
-    <section id="mission" class="mission section-pad" aria-labelledby="mission-title">
-      <div class="mission-lead" data-reveal>
-        <p class="eyebrow">{{ data().mission.eyebrow }}</p>
-        <h2 id="mission-title">{{ data().mission.title }}</h2>
-      </div>
-      <div class="mission-body" data-reveal style="--reveal-delay: 100ms">
-        <p>{{ data().mission.body }}</p>
-        <a class="text-link prominent" href="#care">
-          {{ data().mission.cta }}
-          <app-icon name="arrow-up-right" aria-hidden="true"></app-icon>
-        </a>
-      </div>
-      <div class="pillar-grid">
-        @for (pillar of data().mission.pillars; track pillar.title; let i = $index) {
-          <article data-reveal [style.--reveal-delay]="i * 90 + 'ms'">
-            <span class="pillar-number">0{{ i + 1 }}</span>
-            <h3>{{ pillar.title }}</h3>
-            <p>{{ pillar.text }}</p>
-          </article>
-        }
-      </div>
-    </section>
-
-    <section id="founder" class="founder section-pad" aria-labelledby="founder-title">
-      <figure class="founder-media" data-reveal>
-        <img
-          [src]="founderImageUrl"
-          [alt]="data().founder.imageAlt"
-          width="920"
-          height="1150"
-          loading="lazy"
-          fetchpriority="low"
-          decoding="async"
-        />
-      </figure>
-      <div class="founder-copy" data-reveal style="--reveal-delay: 90ms">
-        <p class="eyebrow">{{ data().founder.eyebrow }}</p>
-        <h2 id="founder-title">{{ data().founder.title }}</h2>
-        <div class="founder-statement">
-          @for (paragraph of data().founder.quote; track paragraph) {
-            <p>{{ paragraph }}</p>
-          }
-        </div>
-        <p class="founder-signature">
-          <strong>{{ data().founder.name }}</strong>
-          <span>{{ data().founder.role }}</span>
-        </p>
-      </div>
-    </section>
-
-    <section id="care" class="care section-pad" aria-labelledby="care-title">
-      <div class="care-shell">
-        <div class="section-heading" data-reveal>
-          <p class="eyebrow">{{ data().care.eyebrow }}</p>
-          <h2 id="care-title">{{ data().care.title }}</h2>
-          <p class="section-intro">{{ data().care.intro }}</p>
-        </div>
-        <ol class="care-steps">
-          @for (step of data().care.steps; track step[0]; let i = $index) {
-            <li data-reveal [style.--reveal-delay]="i * 80 + 'ms'">
-              <span class="step-number">0{{ i + 1 }}</span>
-              <div>
-                <h3>{{ step[0] }}</h3>
-                <p>{{ step[1] }}</p>
-              </div>
-            </li>
-          }
-        </ol>
-        <a class="button button-primary care-cta" [href]="supportFormUrl" target="_blank" rel="noreferrer" data-reveal>
-          {{ data().hero.primary }}
-          <app-icon name="arrow-up-right" aria-hidden="true"></app-icon>
-        </a>
-      </div>
-    </section>
-
-    <section id="programs" class="programs section-pad" aria-labelledby="programs-title">
-      <div class="section-heading programs-heading" data-reveal>
-        <p class="eyebrow">{{ data().programs.eyebrow }}</p>
-        <h2 id="programs-title">{{ data().programs.title }}</h2>
-      </div>
-      <div class="program-grid">
-        @for (program of data().programs.items; track program[0]; let i = $index) {
-          <article data-reveal [style.--reveal-delay]="i * 65 + 'ms'">
-            <span class="program-icon">
-              @switch (i) {
-                @case (0) { <app-icon name="message-circle-heart" aria-hidden="true"></app-icon> }
-                @case (1) { <app-icon name="megaphone" aria-hidden="true"></app-icon> }
-                @case (2) { <app-icon name="graduation-cap" aria-hidden="true"></app-icon> }
-                @case (3) { <app-icon name="tent" aria-hidden="true"></app-icon> }
-                @case (4) { <app-icon name="speech" aria-hidden="true"></app-icon> }
-                @default { <app-icon name="route" aria-hidden="true"></app-icon> }
-              }
-            </span>
-            <span class="card-index">0{{ i + 1 }}</span>
-            <h3>{{ program[0] }}</h3>
-            <p>{{ program[1] }}</p>
-          </article>
-        }
-      </div>
-    </section>
-
-    <section id="volunteers" class="volunteers" aria-labelledby="volunteers-title">
-      <div class="volunteer-copy" data-reveal>
-        <p class="eyebrow">{{ data().volunteers.eyebrow }}</p>
-        <h2 id="volunteers-title">{{ data().volunteers.title }}</h2>
-        <p>{{ data().volunteers.text }}</p>
-        <a class="button button-light" [href]="volunteerFormUrl" target="_blank" rel="noreferrer">
-          {{ data().hero.tertiary }}
-          <app-icon name="arrow-up-right" aria-hidden="true"></app-icon>
-        </a>
-      </div>
-      <div class="volunteer-network" data-reveal="scale" style="--reveal-delay: 100ms">
-        <span class="network-label">140+</span>
-        <p>{{ data().stats.items[0][1] }}</p>
-        <div class="role-cloud">
-          @for (role of data().volunteers.roles; track role) {
-            <span>{{ role }}</span>
-          }
-        </div>
-      </div>
-    </section>
-
-    <section id="contact" class="contact" aria-labelledby="contact-title">
-      <div class="contact-copy" data-reveal>
-        <p class="eyebrow">{{ data().contact.eyebrow }}</p>
-        <h2 id="contact-title">{{ data().contact.title }}</h2>
-        <p>{{ data().contact.text }}</p>
-      </div>
-      <div class="contact-actions" data-reveal style="--reveal-delay: 100ms">
-        <a [href]="contactMailto">
-          <span class="contact-icon"><app-icon name="mail" aria-hidden="true"></app-icon></span>
-          <span><small>{{ language() === 'ar' ? 'البريد الإلكتروني' : 'Email' }}</small><strong>{{ data().contact.email }}</strong></span>
-          <app-icon name="arrow-up-right" aria-hidden="true"></app-icon>
-        </a>
-        <a [href]="'tel:' + data().contact.phone.replaceAll(' ', '')">
-          <span class="contact-icon"><app-icon name="phone" aria-hidden="true"></app-icon></span>
-          <span><small>{{ language() === 'ar' ? 'الهاتف' : 'Phone' }}</small><strong>{{ data().contact.phone }}</strong></span>
-          <app-icon name="arrow-up-right" aria-hidden="true"></app-icon>
-        </a>
-        <div class="location-row">
-          <span class="contact-icon"><app-icon name="map-pin" aria-hidden="true"></app-icon></span>
-          <span><small>{{ language() === 'ar' ? 'الموقع' : 'Location' }}</small><strong>{{ data().contact.location }}</strong></span>
-        </div>
-      </div>
-      <p class="safety-note">
-        <app-icon name="triangle-alert" aria-hidden="true"></app-icon>
-        {{ data().contact.safety }}
-      </p>
-    </section>
-
-    <section
-      id="terms"
-      class="legal-page section-pad"
-      [class.is-open]="isLegalOpen('terms')"
-      aria-labelledby="terms-title"
-    >
-      <button
-        class="legal-toggle"
-        type="button"
-        (click)="toggleLegal('terms')"
-        [attr.aria-expanded]="isLegalOpen('terms')"
-        aria-controls="terms-panel"
-        data-reveal
-      >
-        <span class="legal-toggle-spacer" aria-hidden="true"></span>
-        <span class="legal-header">
-          <span class="eyebrow">{{ data().legal.terms.eyebrow }}</span>
-          <span id="terms-title" class="legal-title">{{ data().legal.terms.title }}</span>
-          <span class="legal-intro">{{ data().legal.terms.intro }}</span>
-          <span class="legal-updated">{{ data().legal.terms.updated }}</span>
-        </span>
-        <span class="legal-toggle-icon" aria-hidden="true">
-          <app-icon name="chevron-right"></app-icon>
-        </span>
-      </button>
-      <div id="terms-panel" class="legal-content" [attr.aria-hidden]="!isLegalOpen('terms')">
-        <div class="legal-content-inner">
-          <div class="legal-content-grid">
-            @for (section of data().legal.terms.sections; track section.title; let i = $index) {
-              <article data-reveal [style.--reveal-delay]="i * 45 + 'ms'">
-                <h3>{{ section.title }}</h3>
-                <p>{{ section.body }}</p>
-              </article>
-            }
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section
-      id="faqs"
-      class="legal-page section-pad"
-      [class.is-open]="isLegalOpen('faqs')"
-      aria-labelledby="faqs-title"
-    >
-      <button
-        class="legal-toggle"
-        type="button"
-        (click)="toggleLegal('faqs')"
-        [attr.aria-expanded]="isLegalOpen('faqs')"
-        aria-controls="faqs-panel"
-        data-reveal
-      >
-        <span class="legal-toggle-spacer" aria-hidden="true"></span>
-        <span class="legal-header">
-          <span class="eyebrow">{{ data().legal.faqs.eyebrow }}</span>
-          <span id="faqs-title" class="legal-title">{{ data().legal.faqs.title }}</span>
-          <span class="legal-intro">{{ data().legal.faqs.intro }}</span>
-          <span class="legal-updated">{{ data().legal.faqs.updated }}</span>
-        </span>
-        <span class="legal-toggle-icon" aria-hidden="true">
-          <app-icon name="chevron-right"></app-icon>
-        </span>
-      </button>
-      <div id="faqs-panel" class="legal-content faq-content" [attr.aria-hidden]="!isLegalOpen('faqs')">
-        <div class="legal-content-inner">
-          <div class="legal-content-grid">
-            @for (section of data().legal.faqs.sections; track section.title; let i = $index) {
-              <article data-reveal [style.--reveal-delay]="i * 45 + 'ms'">
-                <h3>{{ section.title }}</h3>
-                <p>{{ section.body }}</p>
-              </article>
-            }
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section
-      id="privacy"
-      class="legal-page section-pad"
-      [class.is-open]="isLegalOpen('privacy')"
-      aria-labelledby="privacy-title"
-    >
-      <button
-        class="legal-toggle"
-        type="button"
-        (click)="toggleLegal('privacy')"
-        [attr.aria-expanded]="isLegalOpen('privacy')"
-        aria-controls="privacy-panel"
-        data-reveal
-      >
-        <span class="legal-toggle-spacer" aria-hidden="true"></span>
-        <span class="legal-header">
-          <span class="eyebrow">{{ data().legal.privacy.eyebrow }}</span>
-          <span id="privacy-title" class="legal-title">{{ data().legal.privacy.title }}</span>
-          <span class="legal-intro">{{ data().legal.privacy.intro }}</span>
-          <span class="legal-updated">{{ data().legal.privacy.updated }}</span>
-        </span>
-        <span class="legal-toggle-icon" aria-hidden="true">
-          <app-icon name="chevron-right"></app-icon>
-        </span>
-      </button>
-      <div id="privacy-panel" class="legal-content" [attr.aria-hidden]="!isLegalOpen('privacy')">
-        <div class="legal-content-inner">
-          <div class="legal-content-grid">
-            @for (section of data().legal.privacy.sections; track section.title; let i = $index) {
-              <article data-reveal [style.--reveal-delay]="i * 45 + 'ms'">
-                <h3>{{ section.title }}</h3>
-                <p>{{ section.body }}</p>
-              </article>
-            }
-          </div>
-        </div>
-      </div>
-    </section>
+  <main id="main" tabindex="-1">
+    <router-outlet />
   </main>
 
-  <footer class="site-footer">
-    <div class="footer-main">
-      <div class="footer-brand">
-        <a class="brand brand-on-dark" href="#top">
+  <footer class="site-footer board">
+    <div class="container">
+      <div class="footer-mast">
+        <a class="brand" routerLink="/" [attr.aria-label]="t().a11y.home">
           <img
-            [src]="logoUrl()"
-            [attr.srcset]="logoSrcset()"
-            sizes="(max-width: 760px) 104px, 118px"
-            [alt]="data().logoAlt"
+            [src]="site.logoDarkUrl"
+            [attr.srcset]="site.logoDarkSrcset"
+            sizes="144px"
+            [alt]="t().logoAlt"
             width="144"
             height="144"
             loading="lazy"
-            fetchpriority="low"
             decoding="async"
           />
         </a>
-        <p>{{ data().footer.mission }}</p>
+        <p class="footer-line">{{ t().footer.mission }}</p>
+        <div class="footer-cta">
+          <p>{{ t().hero.secondary }}</p>
+          <a class="btn btn--gold" [href]="site.donationFormUrl" target="_blank" rel="noreferrer">
+            <app-icon name="heart" aria-hidden="true"></app-icon>
+            {{ t().nav.donate }}
+          </a>
+        </div>
       </div>
-      <nav class="footer-links" [attr.aria-label]="data().footer.quickLinksLabel">
-        <span>{{ data().footer.quickLinksLabel }}</span>
-        <a href="#mission">{{ data().nav.mission }}</a>
-        <a href="#founder">{{ data().nav.founder }}</a>
-        <a href="#forms">{{ data().nav.forms }}</a>
-        <a href="#care">{{ data().nav.care }}</a>
-        <a href="#programs">{{ data().nav.programs }}</a>
-        <a href="#volunteers">{{ data().nav.volunteers }}</a>
-        <a href="#contact">{{ data().nav.contact }}</a>
-      </nav>
-      <nav class="footer-links" [attr.aria-label]="data().footer.legalLinksLabel">
-        <span>{{ data().footer.legalLinksLabel }}</span>
-        <a href="#terms" (click)="openLegal('terms')">{{ data().legal.terms.title }}</a>
-        <a href="#faqs" (click)="openLegal('faqs')">{{ data().legal.faqs.title }}</a>
-        <a href="#privacy" (click)="openLegal('privacy')">{{ data().legal.privacy.title }}</a>
-      </nav>
-      <div class="footer-links">
-        <span>{{ data().footer.connectLabel }}</span>
-        <a [href]="instagramUrl" target="_blank" rel="noreferrer">Instagram</a>
-        <a [href]="linkedinUrl" target="_blank" rel="noreferrer">LinkedIn</a>
-        <a [href]="contactMailto">{{ data().contact.email }}</a>
+
+      <div class="footer-cols">
+        <nav class="footer-links" [attr.aria-label]="t().footer.quickLinksLabel">
+          <h3>{{ t().footer.quickLinksLabel }}</h3>
+          <a routerLink="/about">{{ t().nav.about }}</a>
+          <a routerLink="/programs">{{ t().nav.programs }}</a>
+          <a routerLink="/campaigns">{{ t().nav.campaigns }}</a>
+          <a routerLink="/get-involved">{{ t().nav.involved }}</a>
+          <a routerLink="/contact">{{ t().nav.contact }}</a>
+        </nav>
+        <nav class="footer-links" [attr.aria-label]="t().footer.legalLinksLabel">
+          <h3>{{ t().footer.legalLinksLabel }}</h3>
+          <a routerLink="/faqs">{{ t().legal.faqs.title }}</a>
+          <a routerLink="/terms">{{ t().legal.terms.title }}</a>
+          <a routerLink="/privacy">{{ t().legal.privacy.title }}</a>
+        </nav>
+        <div class="footer-links">
+          <h3>{{ t().footer.connectLabel }}</h3>
+          <a [href]="site.instagramUrl" target="_blank" rel="noreferrer">Instagram</a>
+          <a [href]="site.linkedinUrl" target="_blank" rel="noreferrer">LinkedIn</a>
+          <a [href]="site.contactMailto">{{ t().contact.email }}</a>
+        </div>
+        <p class="footer-note">{{ t().footer.disclaimer }}</p>
       </div>
-      <div class="footer-cta">
-        <p>{{ data().hero.secondary }}</p>
-        <a class="button button-light" [href]="donationFormUrl" target="_blank" rel="noreferrer">
-          {{ data().nav.donate }}
-          <app-icon name="heart" aria-hidden="true"></app-icon>
-        </a>
+
+      <div class="footer-bottom">
+        <span>{{ t().footer.rights }}</span>
+        <a [href]="site.velouraUrl" target="_blank" rel="noreferrer">{{ t().footer.website }}</a>
       </div>
-    </div>
-    <div class="footer-bottom">
-      <span>{{ data().footer.rights }}</span>
-      <a [href]="velouraUrl" target="_blank" rel="noreferrer">{{ data().footer.website }}</a>
     </div>
   </footer>
-
 </div>
