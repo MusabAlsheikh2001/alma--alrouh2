@@ -1,0 +1,5 @@
+# Alma Alrouh: https://alma-alrouh.com
+User-agent: *
+Allow: /
+
+Sitemap: https://alma-alrouh.com/sitemap.xml

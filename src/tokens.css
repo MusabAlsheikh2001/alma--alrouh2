@@ -1,0 +1,61 @@
+/* Mukta Malar (SIL Open Font License, public/fonts/MuktaMalar-OFL.txt), subset to Latin. */
+@font-face { font-family: "Mukta Malar"; src: url("/fonts/MuktaMalar-Light.woff2") format("woff2"); font-weight: 300; font-style: normal; font-display: swap; }
+@font-face { font-family: "Mukta Malar"; src: url("/fonts/MuktaMalar-Regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Mukta Malar"; src: url("/fonts/MuktaMalar-Medium.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: "Mukta Malar"; src: url("/fonts/MuktaMalar-SemiBold.woff2") format("woff2"); font-weight: 600; font-style: normal; font-display: swap; }
+@font-face { font-family: "Mukta Malar"; src: url("/fonts/MuktaMalar-Bold.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Mukta Malar"; src: url("/fonts/MuktaMalar-ExtraBold.woff2") format("woff2"); font-weight: 800; font-style: normal; font-display: swap; }
+
+:root {
+  --space-3xs: 2px; --space-2xs: 4px; --space-xs: 8px; --space-sm: 12px; --space-md: 16px; --space-lg: 24px; --space-xl: 40px; --space-2xl: 64px; --space-3xl: 96px; --space-4xl: 144px;
+  --text-xs: 0.8125rem; --text-sm: 0.9375rem; --text-md: 1.0625rem; --text-lg: 1.25rem; --text-xl: 1.5625rem; --text-2xl: 1.953rem; --text-3xl: 2.441rem;
+  --text-display-s: clamp(2.375rem, 4vw + 0.5rem, 4rem); --text-display: clamp(2.875rem, 5.2vw + 1rem, 5.75rem);
+  --text-section: clamp(2.125rem, 2.6vw + 1rem, 3.625rem); --text-title: clamp(1.3125rem, 0.75vw + 0.9rem, 1.6875rem); --text-lead: clamp(1.1875rem, 0.4vw + 1rem, 1.4375rem);
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); --ease-in: cubic-bezier(0.7, 0, 0.84, 0); --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1); --ease-spring: cubic-bezier(0.34, 1.4, 0.64, 1);
+  --dur-micro: 140ms; --dur-short: 260ms; --dur-long: 700ms; --dur-xl: 1100ms;
+  --color-error: oklch(52% 0.19 27); --color-success: oklch(50% 0.12 150);
+  --container: 1440px; --gutter: 64px; --gap-columns: 32px; --section-gap-s: 120px; --section-gap: 144px; --section-gap-l: 176px;
+  --z-base: 1; --z-raised: 10; --z-dropdown: 100; --z-sticky: 200; --z-sticky-nav: 300; --z-modal: 400; --z-toast: 500; --z-tooltip: 600;
+
+  /* Brand: the teal and gold of the Alma Alrouh mark, softened onto a calm stone ground. */
+  --color-paper: #f3f1ec; --color-paper-2: #eae7df; --color-paper-3: #ded9ce;
+  --color-ink: #1d2b2b; --color-ink-2: #2a3a39; --color-muted: #5d6a68;
+  --color-rule: #dad5ca; --color-rule-2: #c8c1b2;
+  --color-teal: #2f625d; --color-teal-deep: #224a46; --color-teal-bright: #4f8a82; --color-teal-tint: #e0e9e5;
+  --color-gold: #a27b35; --color-gold-bright: #d6b26c; --color-gold-tint: #efe5cf;
+  --color-clay: #a86a4f; --color-clay-tint: #f0e2d8;
+  --color-accent: var(--color-gold); --color-accent-ink: #1d2b2b; --color-focus: #2f625d;
+  --color-surface: #faf9f6;
+  --color-board: #243f3d; --color-board-2: #1a302e; --color-board-type: #f6f2e9; --color-board-muted: #b7c6c2; --color-board-rule: rgb(255 255 255 / 0.12); --color-board-accent: #dcbd7f;
+  --shadow-sm: 0 1px 2px rgb(29 43 43 / 0.05), 0 2px 10px rgb(29 43 43 / 0.04);
+  --shadow-md: 0 2px 4px rgb(29 43 43 / 0.04), 0 14px 34px -10px rgb(29 43 43 / 0.14);
+  --shadow-lg: 0 4px 10px rgb(29 43 43 / 0.04), 0 30px 60px -18px rgb(29 43 43 / 0.24);
+  --glow-teal: rgb(79 138 130 / 0.14); --glow-gold: rgb(214 178 108 / 0.2); --glow-clay: rgb(168 106 79 / 0.1);
+  --color-overlay: rgb(14 22 22 / 0.94); --color-glass: rgb(255 255 255 / 0.18); --color-glass-weak: rgb(255 255 255 / 0.07); --color-glass-strong: rgb(255 255 255 / 0.16); --color-shade: rgb(0 0 0 / 0.4); --color-shade-weak: rgb(0 0 0 / 0.3); --color-shade-deep: rgb(0 0 0 / 0.6); --color-hairline: rgb(0 0 0 / 0.06); --color-black: #050909; --color-overlay-type: #f6f2e9; --color-scrim: rgb(14 22 22 / 0.55);
+
+  --font-display: "Mukta Malar", "Tajawal", ui-sans-serif, system-ui, sans-serif; --font-body: "Mukta Malar", "Tajawal", ui-sans-serif, system-ui, sans-serif; --font-outlier: var(--font-body);
+  --display-weight: 700; --header-h: 80px;
+  --radius-card: 18px; --radius-input: 999px; --radius-pill: 999px; --radius-media: 28px; --rule-hair: 1px; --shadow-card: var(--shadow-sm);
+  --tracking-display: -0.03em;
+}
+
+:root[data-theme="dark"] {
+  --color-paper: #121a1a; --color-paper-2: #172221; --color-paper-3: #1f2d2c;
+  --color-ink: #ebe7de; --color-ink-2: #f4f1ea; --color-muted: #a0adaa;
+  --color-rule: #283837; --color-rule-2: #354a49;
+  --color-teal: #7fb4ab; --color-teal-deep: #1c3533; --color-teal-bright: #9ac8bf; --color-teal-tint: #1c302e;
+  --color-gold: #d6b46f; --color-gold-bright: #e2c58a; --color-gold-tint: #2b2719;
+  --color-clay: #d39678; --color-clay-tint: #33251e;
+  --color-accent: var(--color-gold); --color-focus: #d6b46f;
+  --color-surface: #192625;
+  --color-board: #1a2e2c; --color-board-2: #0f1c1b; --color-board-rule: rgb(255 255 255 / 0.09);
+  --shadow-sm: 0 1px 2px rgb(0 0 0 / 0.25), 0 2px 10px rgb(0 0 0 / 0.18);
+  --shadow-md: 0 2px 4px rgb(0 0 0 / 0.22), 0 14px 34px -10px rgb(0 0 0 / 0.45);
+  --shadow-lg: 0 4px 10px rgb(0 0 0 / 0.22), 0 30px 60px -18px rgb(0 0 0 / 0.6);
+  --glow-teal: rgb(127 180 171 / 0.1); --glow-gold: rgb(214 180 111 / 0.08); --glow-clay: rgb(211 150 120 / 0.06);
+}
+
+:root[lang="ar"] {
+  --font-display: "Tajawal", Tahoma, Arial, sans-serif; --font-body: "Tajawal", Tahoma, Arial, sans-serif;
+  --tracking-display: 0; --display-weight: 700;
+}

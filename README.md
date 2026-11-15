@@ -36,6 +36,17 @@ ng build
 
 This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
 
+## SEO and deployment
+
+`npm run build` regenerates the sitemap, then prerenders every page to static HTML in `dist/alma-alrouh/browser/` (for example `about/index.html`). Upload that folder to any static host.
+
+- **Domain:** `https://alma-alrouh.com`. It is set in `src/app/seo.service.ts` (`SITE_URL`), `src/index.html`, `public/robots.txt` and `scripts/generate-sitemap.mjs`.
+- **Page titles, descriptions and social text:** the `seo` block in `src/i18n/en.ts` and `ar.ts`.
+- **Structured data:** the sitewide NGO schema is in `src/index.html`. Per-page schema (WebPage, BreadcrumbList, FAQPage, AboutPage, Events for campaigns and online sessions) comes from `src/app/seo.service.ts`.
+- **Sitemap:** `scripts/generate-sitemap.mjs` writes `public/sitemap.xml`, listing every page and every campaign photo. Run it on its own with `npm run sitemap`. Add new pages to its `PAGES` list.
+- **Unknown URLs:** configure the host to serve `index.csr.html` with a 404 status for paths that have no prerendered page, so the app's "page not found" view shows.
+- **After deploying:** submit `https://alma-alrouh.com/sitemap.xml` in Google Search Console and Bing Webmaster Tools.
+
 ## Running unit tests
 
 To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:

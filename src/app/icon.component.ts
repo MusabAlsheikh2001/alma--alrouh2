@@ -1,6 +1,15 @@
 import { Component, Input, computed } from '@angular/core';
 import {
+  LucideArrowRight,
   LucideArrowUpRight,
+  LucideCalendarHeart,
+  LucideSearch,
+  LucidePlay,
+  LucidePause,
+  LucideImages,
+  LucideVideo,
+  LucideCalendar,
+  LucideMonitorPlay,
   LucideAtSign,
   LucideBuilding2,
   LucideCheck,
@@ -38,7 +47,16 @@ import {
 } from '@lucide/angular';
 
 const ICONS = {
+  'arrow-right': LucideArrowRight.icon,
   'arrow-up-right': LucideArrowUpRight.icon,
+  'calendar-heart': LucideCalendarHeart.icon,
+  search: LucideSearch.icon,
+  play: LucidePlay.icon,
+  pause: LucidePause.icon,
+  images: LucideImages.icon,
+  video: LucideVideo.icon,
+  calendar: LucideCalendar.icon,
+  'monitor-play': LucideMonitorPlay.icon,
   'at-sign': LucideAtSign.icon,
   'building-2': LucideBuilding2.icon,
   check: LucideCheck.icon,
