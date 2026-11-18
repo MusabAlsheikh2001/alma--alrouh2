@@ -153,7 +153,7 @@ import { VolunteerNetworkComponent } from './volunteer-network.component';
                 <span>{{ t().home.sessions }}</span>
               </div>
               <div class="session-line" aria-hidden="true">
-                @for (s of sessionMarks; track s.date; let i = $index) {
+                @for (s of sessionMarks; track s.key; let i = $index) {
                   <i [style.--x]="s.x" [style.--d]="i"></i>
                 }
                 @for (m of months(); track m.label) {
@@ -354,6 +354,7 @@ export class HomePage {
   protected get sessionMarks() {
     const [start, end] = this.span;
     return this.sessions.map((s) => ({
+      key: s.slug || s.date + s.title.en,
       date: s.date,
       x: `${(((Date.parse(s.date) - start) / (end - start)) * 100).toFixed(1)}%`,
     }));

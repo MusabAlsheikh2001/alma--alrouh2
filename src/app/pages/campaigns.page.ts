@@ -135,7 +135,7 @@ interface Viewer {
                 >
                   @for (
                     m of tiles(c, i === 0 ? 5 : 3);
-                    track m.src;
+                    track $index;
                     let j = $index;
                     let last = $last
                   ) {
@@ -248,7 +248,7 @@ interface Viewer {
 
           <div class="cp-sessions-grid">
             <ul class="posters">
-              @for (s of withPosters; track s.date; let i = $index) {
+              @for (s of withPosters; track s.slug || s.date + s.title.en; let i = $index) {
                 <li data-reveal [style.--i]="i">
                   <button
                     type="button"
@@ -270,7 +270,11 @@ interface Viewer {
             </ul>
 
             <ol class="timeline">
-              @for (s of sessions; track s.date + s.speaker; let i = $index) {
+              @for (
+                s of sessions;
+                track s.slug || s.date + s.speaker + s.title.en;
+                let i = $index
+              ) {
                 <li data-reveal [style.--i]="i">
                   <time [attr.datetime]="s.date">{{ date(s.date) }}</time>
                   <div>
@@ -304,7 +308,7 @@ interface Viewer {
             <p class="lead">{{ t().campaigns.partnersLead }}</p>
           </div>
           <ul class="partner-list">
-            @for (p of partners; track p.en; let i = $index) {
+            @for (p of partners; track $index; let i = $index) {
               <li data-reveal [style.--i]="i">{{ text(p) }}</li>
             }
           </ul>

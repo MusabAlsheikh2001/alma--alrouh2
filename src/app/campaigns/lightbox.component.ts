@@ -112,7 +112,7 @@ import { type Media, mediaImage, mediaVideo, mediaSrcset } from './campaigns.dat
 
       @if (items().length > 1) {
         <div class="lb-thumbs" role="tablist" [attr.aria-label]="title()">
-          @for (item of items(); track item.src; let i = $index) {
+          @for (item of items(); track $index; let i = $index) {
             <button
               type="button"
               class="lb-thumb"

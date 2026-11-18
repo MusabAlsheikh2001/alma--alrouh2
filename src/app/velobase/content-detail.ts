@@ -37,7 +37,7 @@ import { Seo } from '../seo.service';
           <aside role="note">{{ row.disclaimer }}</aside>
         }
         <div class="published-gallery">
-          @for (media of row.media; track media.url) {
+          @for (media of row.media; track $index) {
             @if (media.type === 'image') {
               <figure>
                 <img [src]="media.url" [alt]="media.alt" loading="lazy" />
@@ -60,7 +60,7 @@ import { Seo } from '../seo.service';
         @if (row.sources.length) {
           <h2>{{ ar ? 'المصادر' : 'References' }}</h2>
           <ul>
-            @for (source of row.sources; track source.url) {
+            @for (source of row.sources; track $index) {
               <li>
                 <a [href]="source.url" target="_blank" rel="noopener noreferrer">{{
                   source.title
