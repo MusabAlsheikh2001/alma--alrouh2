@@ -1,33 +1,68 @@
+import { AlmaContent } from '../velobase/alma-content';
+import { ContentStatus } from '../velobase/content-status';
+import { mediaImage } from '../campaigns/campaigns.data';
 import { Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { CountUp, RevealOnScroll, ScrollScene } from '../animations.directive';
 import { IconComponent } from '../icon.component';
-import { FIELD_CAMPAIGNS, ONLINE_SESSIONS } from '../campaigns/campaigns.data';
 import { formatDate } from '../campaigns/format';
 import { Site } from '../site.service';
 import { VolunteerNetworkComponent } from './volunteer-network.component';
 
 @Component({
   selector: 'app-home-page',
-  imports: [CountUp, IconComponent, RevealOnScroll, RouterLink, ScrollScene, VolunteerNetworkComponent],
+  imports: [
+    ContentStatus,
+    CountUp,
+    IconComponent,
+    RevealOnScroll,
+    RouterLink,
+    ScrollScene,
+    VolunteerNetworkComponent,
+  ],
   template: `
+    <app-content-status />
+    @if (content.announcements().length) {
+      <section class="section container" aria-label="Announcements">
+        @for (notice of content.announcements(); track notice.id) {
+          <article>
+            <h2>
+              <a [routerLink]="['/updates', notice.slug]">{{ notice.title }}</a>
+            </h2>
+            <p>{{ notice.summary }}</p>
+          </article>
+        }
+      </section>
+    }
     <section class="hero" aria-labelledby="hero-title">
       <div class="hero-glow" aria-hidden="true"></div>
       <div class="container hero-in">
         <div class="hero-copy">
           <h1 id="hero-title" class="hero-title" [attr.aria-label]="t().hero.title">
             @for (word of titleWords(); track $index) {
-              <span class="word" aria-hidden="true" [style.--i]="$index"><span>{{ word }}</span></span>{{ ' ' }}
+              <span class="word" aria-hidden="true" [style.--i]="$index"
+                ><span>{{ word }}</span></span
+              >{{ ' ' }}
             }
           </h1>
           <p class="lead enter" style="--d: 520ms">{{ t().hero.copy }}</p>
           <div class="actions enter" style="--d: 640ms">
-            <a class="btn btn--primary" [href]="site.supportFormUrl" target="_blank" rel="noreferrer">
+            <a
+              class="btn btn--primary"
+              [href]="site.supportFormUrl"
+              target="_blank"
+              rel="noreferrer"
+            >
               {{ t().hero.primary }}
               <app-icon class="arrow" name="arrow-right" aria-hidden="true"></app-icon>
             </a>
-            <a class="btn btn--quiet" [href]="site.volunteerFormUrl" target="_blank" rel="noreferrer">
+            <a
+              class="btn btn--quiet"
+              [href]="site.volunteerFormUrl"
+              target="_blank"
+              rel="noreferrer"
+            >
               {{ t().hero.tertiary }}
             </a>
           </div>
@@ -58,7 +93,8 @@ import { VolunteerNetworkComponent } from './volunteer-network.component';
           <h2 id="mission-title" class="lit-kicker">{{ t().mission.title }}</h2>
           <p class="lit-text" [style.--n]="missionWords().length">
             @for (word of missionWords(); track $index) {
-              <span [style.--i]="$index" [class.is-key]="isKey(word)">{{ word }}</span>{{ ' ' }}
+              <span [style.--i]="$index" [class.is-key]="isKey(word)">{{ word }}</span
+              >{{ ' ' }}
             }
           </p>
           <a class="btn btn--gold lit-cta" routerLink="/about">
@@ -97,7 +133,14 @@ import { VolunteerNetworkComponent } from './volunteer-network.component';
               </div>
               <div class="photo-stack" aria-hidden="true">
                 @for (c of field.slice(0, 3); track c.id; let i = $index) {
-                  <img [src]="c.media[0].src + '-sm.webp'" alt="" [style.--k]="i" loading="lazy" decoding="async" />
+                  <img
+                    [hidden]="!c.media.length"
+                    [attr.src]="image(c.media[0], true) || null"
+                    alt=""
+                    [style.--k]="i"
+                    loading="lazy"
+                    decoding="async"
+                  />
                 }
               </div>
             </a>
@@ -110,7 +153,7 @@ import { VolunteerNetworkComponent } from './volunteer-network.component';
                 <span>{{ t().home.sessions }}</span>
               </div>
               <div class="session-line" aria-hidden="true">
-                @for (s of sessionMarks; track s.date; let i = $index) {
+                @for (s of sessionMarks; track s.key; let i = $index) {
                   <i [style.--x]="s.x" [style.--d]="i"></i>
                 }
                 @for (m of months(); track m.label) {
@@ -138,8 +181,14 @@ import { VolunteerNetworkComponent } from './volunteer-network.component';
               <i class="format-learning"></i><i class="format-questions"></i>
             </div>
             <dl class="format-legend">
-              <div><dt>25–30 {{ t().home.minutes }}</dt><dd>{{ t().home.learning }}</dd></div>
-              <div><dt>10–15 {{ t().home.minutes }}</dt><dd>{{ t().home.questions }}</dd></div>
+              <div>
+                <dt>25–30 {{ t().home.minutes }}</dt>
+                <dd>{{ t().home.learning }}</dd>
+              </div>
+              <div>
+                <dt>10–15 {{ t().home.minutes }}</dt>
+                <dd>{{ t().home.questions }}</dd>
+              </div>
             </dl>
           </li>
 
@@ -171,8 +220,22 @@ import { VolunteerNetworkComponent } from './volunteer-network.component';
         <ul class="rail-track" data-track>
           @for (c of field; track c.id; let i = $index) {
             <li>
-              <a class="rail-card" routerLink="/campaigns" [fragment]="c.id" [class.rail-card--wide]="i % 3 === 0">
-                <img [src]="c.media[0].src + '.webp'" [style.object-position]="c.focus" alt="" [width]="c.media[0].w" [height]="c.media[0].h" loading="lazy" decoding="async" />
+              <a
+                class="rail-card"
+                routerLink="/campaigns"
+                [fragment]="c.id"
+                [class.rail-card--wide]="i % 3 === 0"
+              >
+                <img
+                  [hidden]="!c.media.length"
+                  [attr.src]="image(c.media[0]) || null"
+                  [style.object-position]="c.focus"
+                  alt=""
+                  [attr.width]="c.media[0]?.w"
+                  [attr.height]="c.media[0]?.h"
+                  loading="lazy"
+                  decoding="async"
+                />
                 <span class="rail-card-body">
                   <time [attr.datetime]="c.date">{{ date(c.date) }}</time>
                   <strong>{{ text(c.title) }}</strong>
@@ -195,8 +258,16 @@ import { VolunteerNetworkComponent } from './volunteer-network.component';
         <ul class="tiles">
           @for (item of t().forms.items; track item.id; let i = $index) {
             <li data-reveal [style.--i]="i">
-              <a class="tile" [class.tile--lead]="i === 0" [href]="site.formHref(item.id)" target="_blank" rel="noreferrer">
-                <span class="tile-icon"><app-icon [name]="formIcons[item.id]" aria-hidden="true"></app-icon></span>
+              <a
+                class="tile"
+                [class.tile--lead]="i === 0"
+                [href]="site.formHref(item.id)"
+                target="_blank"
+                rel="noreferrer"
+              >
+                <span class="tile-icon"
+                  ><app-icon [name]="formIcons[item.id]" aria-hidden="true"></app-icon
+                ></span>
                 <h3>{{ item.title }}</h3>
                 <p>{{ item.text }}</p>
                 <span class="tile-cta">
@@ -255,26 +326,66 @@ import { VolunteerNetworkComponent } from './volunteer-network.component';
 })
 export class HomePage {
   protected readonly site = inject(Site);
+  protected readonly content = inject(AlmaContent);
+  protected readonly image = mediaImage;
   protected readonly t = this.site.data;
-  protected readonly field = FIELD_CAMPAIGNS;
-  protected readonly sessions = ONLINE_SESSIONS;
+  protected get field() {
+    return this.content.campaigns();
+  }
+  protected get sessions() {
+    return this.content.sessions();
+  }
   protected readonly volunteerDots = Array.from({ length: 140 });
 
-  /** Each session placed along July to October 2026, as a percentage. */
-  private readonly span = [Date.parse('2026-07-01'), Date.parse('2026-11-01')] as const;
-  protected readonly sessionMarks = ONLINE_SESSIONS.map((s) => ({
-    date: s.date,
-    x: `${(((Date.parse(s.date) - this.span[0]) / (this.span[1] - this.span[0])) * 100).toFixed(1)}%`,
-  }));
-  protected readonly months = computed(() =>
-    ['2026-07', '2026-08', '2026-09', '2026-10'].map((m, i) => ({
-      label: new Intl.DateTimeFormat(this.site.language() === 'ar' ? 'ar' : 'en-US', { month: 'short' }).format(new Date(`${m}-15T12:00:00`)),
-      x: `${i * 25}%`,
-    })),
-  );
+  /** Keep the original timeline presentation while accommodating newly published dates. */
+  private get span(): readonly [number, number] {
+    const times = this.sessions
+      .map((s) => Date.parse(s.date))
+      .filter(Number.isFinite)
+      .sort((a, b) => a - b);
+    if (!times.length) return [0, 1];
+    const first = new Date(times[0]),
+      last = new Date(times[times.length - 1]);
+    return [
+      Date.UTC(first.getUTCFullYear(), first.getUTCMonth(), 1),
+      Date.UTC(last.getUTCFullYear(), last.getUTCMonth() + 1, 1),
+    ];
+  }
+  protected get sessionMarks() {
+    const [start, end] = this.span;
+    return this.sessions.map((s) => ({
+      key: s.slug || s.date + s.title.en,
+      date: s.date,
+      x: `${(((Date.parse(s.date) - start) / (end - start)) * 100).toFixed(1)}%`,
+    }));
+  }
+  protected readonly months = computed(() => {
+    if (!this.sessions.length) return [];
+    const [start, end] = this.span,
+      first = new Date(start),
+      last = new Date(end);
+    const months =
+      (last.getUTCFullYear() - first.getUTCFullYear()) * 12 +
+      last.getUTCMonth() -
+      first.getUTCMonth();
+    const count = Math.min(4, months);
+    return Array.from({ length: count }, (_, i) => {
+      const date = new Date(
+        Date.UTC(first.getUTCFullYear(), first.getUTCMonth() + Math.floor((i * months) / count), 1),
+      );
+      return {
+        label: new Intl.DateTimeFormat(this.site.language() === 'ar' ? 'ar' : 'en-US', {
+          month: 'short',
+          timeZone: 'UTC',
+        }).format(date),
+        x: `${((date.getTime() - start) / (end - start)) * 100}%`,
+      };
+    });
+  });
 
   protected readonly missionWords = computed(() => this.t().mission.body.split(' '));
-  private readonly keyWords = /^(free|culturally|sensitive|safely|alone|المجاني|المراعية|للثقافة|بأمان|وحدهم)/i;
+  private readonly keyWords =
+    /^(free|culturally|sensitive|safely|alone|المجاني|المراعية|للثقافة|بأمان|وحدهم)/i;
   protected isKey(word: string): boolean {
     return this.keyWords.test(word.replace(/[.,،]/g, ''));
   }

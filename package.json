@@ -7,8 +7,12 @@
     "prebuild": "node scripts/generate-sitemap.mjs",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "sitemap": "node scripts/generate-sitemap.mjs"
+    "test": "npm run test:unit",
+    "sitemap": "node scripts/generate-sitemap.mjs",
+    "typecheck": "tsc --noEmit -p tsconfig.app.json",
+    "lint": "eslint src",
+    "test:unit": "ng test --watch=false",
+    "test:browser": "playwright test"
   },
   "private": true,
   "packageManager": "npm@11.3.0",
@@ -32,8 +36,13 @@
     "@angular/build": "^21.2.8",
     "@angular/cli": "^21.2.8",
     "@angular/compiler-cli": "^21.2.26",
+    "@playwright/test": "1.65.1",
     "@types/node": "^20.17.19",
+    "eslint": "9.39.5",
+    "jsdom": "28.1.0",
     "prettier": "^3.8.1",
-    "typescript": "~5.9.2"
+    "typescript": "~5.9.2",
+    "typescript-eslint": "8.73.0",
+    "vitest": "4.1.12"
   }
 }

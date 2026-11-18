@@ -1,16 +1,19 @@
+import { AlmaContent } from '../velobase/alma-content';
+import { ContentStatus } from '../velobase/content-status';
+import { mediaImage } from '../campaigns/campaigns.data';
 import { Component, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 import { RevealOnScroll } from '../animations.directive';
 import { IconComponent } from '../icon.component';
-import { FIELD_CAMPAIGNS } from '../campaigns/campaigns.data';
 import { formatDate } from '../campaigns/format';
 import { Site } from '../site.service';
 
 @Component({
   selector: 'app-programs-page',
-  imports: [IconComponent, RevealOnScroll, RouterLink],
+  imports: [ContentStatus, IconComponent, RevealOnScroll, RouterLink],
   template: `
+    <app-content-status />
     <section class="page-head" aria-labelledby="programs-title">
       <div class="container">
         <h1 id="programs-title" class="display-s enter">{{ t().programs.title }}</h1>
@@ -22,11 +25,21 @@ import { Site } from '../site.service';
       <div class="container">
         <h2 id="programs-list-title" class="visually-hidden">{{ t().programs.eyebrow }}</h2>
         <ul class="cards">
-          @for (program of t().programs.items; track program[0]; let i = $index) {
+          @for (program of content.programs(); track program.slug; let i = $index) {
             <li class="card" data-reveal [style.--i]="i">
-              <span class="tile-icon"><app-icon [name]="programIcons[i]" aria-hidden="true"></app-icon></span>
-              <h3>{{ program[0] }}</h3>
-              <p>{{ program[1] }}</p>
+              <span class="tile-icon"
+                ><app-icon
+                  [name]="programIcons[i % programIcons.length]"
+                  aria-hidden="true"
+                ></app-icon
+              ></span>
+              <h3>{{ program.title }}</h3>
+              <p>{{ program.summary }}</p>
+              @if (program.managed) {
+                <a class="link" [routerLink]="['/programs', program.slug]">{{
+                  site.language() === 'ar' ? 'اقرأ المزيد' : 'Read more'
+                }}</a>
+              }
             </li>
           }
         </ul>
@@ -73,7 +86,16 @@ import { Site } from '../site.service';
             <li data-reveal [style.--i]="i">
               <a class="field-card" routerLink="/campaigns" [fragment]="c.id">
                 <span class="field-card-media">
-                  <img [src]="c.media[0].src + '-sm.webp'" [style.object-position]="c.focus" alt="" [width]="c.media[0].w" [height]="c.media[0].h" loading="lazy" decoding="async" />
+                  <img
+                    [hidden]="!c.media.length"
+                    [attr.src]="image(c.media[0], true) || null"
+                    [style.object-position]="c.focus"
+                    alt=""
+                    [attr.width]="c.media[0]?.w"
+                    [attr.height]="c.media[0]?.h"
+                    loading="lazy"
+                    decoding="async"
+                  />
                 </span>
                 <span class="field-card-body">
                   <time [attr.datetime]="c.date">{{ date(c.date) }}</time>
@@ -93,13 +115,24 @@ import { Site } from '../site.service';
 })
 export class ProgramsPage {
   protected readonly site = inject(Site);
+  protected readonly content = inject(AlmaContent);
+  protected readonly image = mediaImage;
   protected readonly t = this.site.data;
-  protected readonly featured = FIELD_CAMPAIGNS.slice(0, 3);
+  protected get featured() {
+    return this.content.campaigns().slice(0, 3);
+  }
   protected text(value: { en: string; ar: string }): string {
     return value[this.site.language()];
   }
   protected date(iso: string): string {
     return formatDate(iso, this.site.language());
   }
-  protected readonly programIcons = ['message-circle-heart', 'megaphone', 'graduation-cap', 'tent', 'speech', 'route'] as const;
+  protected readonly programIcons = [
+    'message-circle-heart',
+    'megaphone',
+    'graduation-cap',
+    'tent',
+    'speech',
+    'route',
+  ] as const;
 }

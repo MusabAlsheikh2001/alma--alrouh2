@@ -92,6 +92,15 @@
             }
           },
           "defaultConfiguration": "development"
+        },
+        "test": {
+          "builder": "@angular/build:unit-test",
+          "options": {
+            "include": [
+              "src/app/velobase/**/*.spec.ts"
+            ],
+            "watch": false
+          }
         }
       }
     }

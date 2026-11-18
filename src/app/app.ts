@@ -1,5 +1,12 @@
 import { Component, HostListener, NgZone, effect, inject, signal } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import {
+  ActivatedRoute,
+  NavigationEnd,
+  Router,
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet,
+} from '@angular/router';
 
 import { IconComponent } from './icon.component';
 import { Seo } from './seo.service';
@@ -27,7 +34,7 @@ export class App {
   private readonly zone = inject(NgZone);
   private readonly seo = inject(Seo);
   private readonly route = inject(ActivatedRoute);
-  private readonly seoKey = signal<SeoKey>('home');
+  private readonly seoKey = signal<SeoKey | null>('home');
 
   constructor() {
     effect(() => {
@@ -42,13 +49,16 @@ export class App {
         this.headerHidden.set(false);
         let r = this.route.snapshot;
         while (r.firstChild) r = r.firstChild;
-        this.seoKey.set((r.data['seo'] as SeoKey) ?? 'home');
+        this.seoKey.set(r.data['contentKind'] ? null : ((r.data['seo'] as SeoKey) ?? 'home'));
         this.trackPageView(event.urlAfterRedirects);
       }
     });
 
     // Re-apply search and social tags whenever the page or the language changes.
-    effect(() => this.seo.apply(this.seoKey()));
+    effect(() => {
+      const key = this.seoKey();
+      if (key) this.seo.apply(key);
+    });
 
     if (typeof window !== 'undefined') {
       this.zone.runOutsideAngular(() =>
