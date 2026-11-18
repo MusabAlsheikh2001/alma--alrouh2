@@ -2,7 +2,9 @@ import { DOCUMENT } from '@angular/common';
 import { Injectable, inject } from '@angular/core';
 import { Meta, Title } from '@angular/platform-browser';
 
-import { FIELD_CAMPAIGNS, ONLINE_SESSIONS } from './campaigns/campaigns.data';
+import { mediaImage } from './campaigns/campaigns.data';
+import type { PublicContent, ContentKind } from './velobase/public-content';
+import { AlmaContent } from './velobase/alma-content';
 import { Site } from './site.service';
 import type { SeoKey } from '../i18n/types';
 
@@ -40,17 +42,24 @@ export class Seo {
   private readonly meta = inject(Meta);
   private readonly title = inject(Title);
   private readonly site = inject(Site);
+  private readonly content = inject(AlmaContent);
 
   apply(key: SeoKey): void {
     const t = this.site.data();
     const seo = t.seo[key];
     const path = key === 'notFound' ? null : SEO_PATHS[key];
     const url = path ? SITE_URL + (path === '/' ? '/' : path) : null;
-    const fullTitle = seo.title.includes(t.seo.siteName) ? seo.title : `${seo.title} | ${t.seo.siteName}`;
+    const fullTitle = seo.title.includes(t.seo.siteName)
+      ? seo.title
+      : `${seo.title} | ${t.seo.siteName}`;
 
     this.title.setTitle(fullTitle);
     this.tag('name', 'description', seo.description);
-    this.tag('name', 'robots', key === 'notFound' ? 'noindex, follow' : 'index, follow, max-image-preview:large');
+    this.tag(
+      'name',
+      'robots',
+      key === 'notFound' ? 'noindex, follow' : 'index, follow, max-image-preview:large',
+    );
 
     this.tag('property', 'og:type', 'website');
     this.tag('property', 'og:site_name', t.seo.siteName);
@@ -75,7 +84,57 @@ export class Seo {
       this.doc.head.querySelector('link[rel="canonical"]')?.remove();
     }
 
-    this.jsonLd(key === 'notFound' || !url ? null : this.schema(key, url, fullTitle, seo.description));
+    this.jsonLd(
+      key === 'notFound' || !url ? null : this.schema(key, url, fullTitle, seo.description),
+    );
+  }
+
+  applyPublished(row: PublicContent | undefined, kind: ContentKind, slug: string): void {
+    const lang = this.site.language();
+    const title =
+      row?.seoTitle || row?.title || (lang === 'ar' ? 'المحتوى غير متاح' : 'Content unavailable');
+    const description = row?.seoDescription || row?.summary || '';
+    const section =
+      kind === 'program'
+        ? 'programs'
+        : kind === 'event'
+          ? 'sessions'
+          : kind === 'page'
+            ? 'updates'
+            : 'campaigns';
+    const url = SITE_URL + '/' + section + '/' + encodeURIComponent(slug);
+    this.title.setTitle(title + ' | ' + this.site.data().seo.siteName);
+    this.tag('name', 'description', description);
+    this.tag('name', 'robots', row ? 'index, follow, max-image-preview:large' : 'noindex, follow');
+    this.canonical(url);
+    for (const [key, value] of Object.entries({
+      'og:title': title,
+      'og:description': description,
+      'og:url': url,
+      'og:type': 'article',
+      'og:image': row?.imageUrl || OG_IMAGE.url,
+    }))
+      this.tag('property', key, value);
+    for (const [key, value] of Object.entries({
+      'twitter:title': title,
+      'twitter:description': description,
+      'twitter:image': row?.imageUrl || OG_IMAGE.url,
+    }))
+      this.tag('name', key, value);
+    this.jsonLd(
+      row
+        ? {
+            '@context': 'https://schema.org',
+            '@type': 'Article',
+            headline: row.title,
+            description,
+            inLanguage: row.locale,
+            url,
+            datePublished: row.publishedAt,
+            ...(row.imageUrl ? { image: row.imageUrl } : {}),
+          }
+        : null,
+    );
   }
 
   private tag(attr: 'name' | 'property', key: string, content: string): void {
@@ -103,7 +162,12 @@ export class Seo {
     this.doc.head.appendChild(script);
   }
 
-  private schema(key: Exclude<SeoKey, 'notFound'>, url: string, name: string, description: string): Json {
+  private schema(
+    key: Exclude<SeoKey, 'notFound'>,
+    url: string,
+    name: string,
+    description: string,
+  ): Json {
     const t = this.site.data();
     const lang = this.site.language();
     const text = (v: { en: string; ar: string }) => v[lang];
@@ -116,7 +180,12 @@ export class Seo {
       inLanguage: lang,
       isPartOf: { '@id': SITE_ID },
       about: { '@id': ORG_ID },
-      primaryImageOfPage: { '@type': 'ImageObject', url: OG_IMAGE.url, width: OG_IMAGE.width, height: OG_IMAGE.height },
+      primaryImageOfPage: {
+        '@type': 'ImageObject',
+        url: OG_IMAGE.url,
+        width: OG_IMAGE.width,
+        height: OG_IMAGE.height,
+      },
     };
     const graph: Json[] = [page];
 
@@ -157,7 +226,7 @@ export class Seo {
     if (key === 'programs') {
       page['mainEntity'] = {
         '@type': 'ItemList',
-        itemListElement: t.programs.items.map(([title, body], i) => ({
+        itemListElement: this.content.programs().map(({ title, summary: body }, i) => ({
           '@type': 'ListItem',
           position: i + 1,
           item: {
@@ -182,7 +251,7 @@ export class Seo {
     }
 
     if (key === 'campaigns') {
-      const field = FIELD_CAMPAIGNS.map((c) => ({
+      const field = this.content.campaigns().map((c) => ({
         '@type': 'Event',
         name: text(c.title),
         description: text(c.summary),
@@ -190,12 +259,19 @@ export class Seo {
         eventStatus: 'https://schema.org/EventScheduled',
         eventAttendanceMode: 'https://schema.org/OfflineEventAttendanceMode',
         isAccessibleForFree: true,
-        location: { '@type': 'Place', name: text(c.place), address: { '@type': 'PostalAddress', addressCountry: 'PK' } },
-        image: c.media.filter((m) => m.type === 'image').slice(0, 3).map((m) => `${SITE_URL}/${m.src}.webp`),
+        location: {
+          '@type': 'Place',
+          name: text(c.place),
+          address: { '@type': 'PostalAddress', addressCountry: 'PK' },
+        },
+        image: c.media
+          .filter((m) => m.type === 'image')
+          .slice(0, 3)
+          .map((m) => new URL(mediaImage(m), SITE_URL).href),
         organizer: { '@id': ORG_ID },
         url: `${SITE_URL}/campaigns#${c.id}`,
       }));
-      const online = ONLINE_SESSIONS.map((s) => ({
+      const online = this.content.sessions().map((s) => ({
         '@type': 'EducationEvent',
         name: text(s.title),
         startDate: s.date,
@@ -205,11 +281,15 @@ export class Seo {
         location: { '@type': 'VirtualLocation', url: `${SITE_URL}/campaigns` },
         performer: { '@type': 'Person', name: s.speaker },
         organizer: { '@id': ORG_ID },
-        ...(s.poster ? { image: `${SITE_URL}/${s.poster.src}.webp` } : {}),
+        ...(s.poster ? { image: new URL(mediaImage(s.poster), SITE_URL).href } : {}),
       }));
       page['mainEntity'] = {
         '@type': 'ItemList',
-        itemListElement: [...field, ...online].map((item, i) => ({ '@type': 'ListItem', position: i + 1, item })),
+        itemListElement: [...field, ...online].map((item, i) => ({
+          '@type': 'ListItem',
+          position: i + 1,
+          item,
+        })),
       };
     }
 

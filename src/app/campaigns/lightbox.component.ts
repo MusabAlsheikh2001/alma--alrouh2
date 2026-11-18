@@ -11,7 +11,7 @@ import {
 } from '@angular/core';
 
 import { IconComponent } from '../icon.component';
-import type { Media } from './campaigns.data';
+import { type Media, mediaImage, mediaVideo, mediaSrcset } from './campaigns.data';
 
 /**
  * Full-screen viewer for a campaign's photos and videos.
@@ -30,41 +30,63 @@ import type { Media } from './campaigns.data';
       (touchend)="onTouchEnd($event)"
       #root
     >
-      <button class="lb-scrim" type="button" tabindex="-1" aria-hidden="true" (click)="close.emit()"></button>
+      <button
+        class="lb-scrim"
+        type="button"
+        tabindex="-1"
+        aria-hidden="true"
+        (click)="close.emit()"
+      ></button>
 
       <header class="lb-bar">
         <div class="lb-title">
           <strong>{{ title() }}</strong>
           <span class="lb-count">{{ index() + 1 }} / {{ items().length }}</span>
         </div>
-        <button class="lb-btn" type="button" (click)="close.emit()" [attr.aria-label]="labels().close" #closeBtn>
+        <button
+          class="lb-btn"
+          type="button"
+          (click)="close.emit()"
+          [attr.aria-label]="labels().close"
+          #closeBtn
+        >
           <app-icon name="x" aria-hidden="true"></app-icon>
         </button>
       </header>
 
       <div class="lb-stage">
         @if (items().length > 1) {
-          <button class="lb-btn lb-nav lb-prev" type="button" (click)="step(-1)" [attr.aria-label]="labels().prev">
+          <button
+            class="lb-btn lb-nav lb-prev"
+            type="button"
+            (click)="step(-1)"
+            [attr.aria-label]="labels().prev"
+          >
             <app-icon name="arrow-right" aria-hidden="true"></app-icon>
           </button>
         }
 
         @for (item of [current()]; track index()) {
-          <figure class="lb-frame" [class.is-video]="item.type === 'video'" [attr.data-dir]="direction()">
+          <figure
+            class="lb-frame"
+            [class.is-video]="item.type === 'video'"
+            [attr.data-dir]="direction()"
+          >
             @if (item.type === 'image') {
               <img
-                [src]="item.src + '.webp'"
-                [attr.srcset]="item.src + '-sm.webp 720w, ' + item.src + '.webp 1600w'"
+                [attr.src]="image(item) || null"
+                [attr.srcset]="srcset(item)"
                 sizes="(max-width: 60rem) 100vw, 80vw"
                 [width]="item.w"
                 [height]="item.h"
-                [alt]="title() + ', ' + (index() + 1)"
+                [alt]="item.alt || title() + ', ' + (index() + 1)"
                 decoding="async"
               />
             } @else {
               <video
-                [src]="item.src + '.mp4'"
-                [poster]="item.src + '.webp'"
+                [src]="video(item)"
+                [attr.aria-label]="item.alt || title()"
+                [poster]="image(item)"
                 [width]="item.w"
                 [height]="item.h"
                 controls
@@ -77,7 +99,12 @@ import type { Media } from './campaigns.data';
         }
 
         @if (items().length > 1) {
-          <button class="lb-btn lb-nav lb-next" type="button" (click)="step(1)" [attr.aria-label]="labels().next">
+          <button
+            class="lb-btn lb-nav lb-next"
+            type="button"
+            (click)="step(1)"
+            [attr.aria-label]="labels().next"
+          >
             <app-icon name="arrow-right" aria-hidden="true"></app-icon>
           </button>
         }
@@ -91,12 +118,14 @@ import type { Media } from './campaigns.data';
               class="lb-thumb"
               role="tab"
               [attr.aria-selected]="i === index()"
-              [attr.aria-label]="(i + 1) + ' / ' + items().length"
+              [attr.aria-label]="i + 1 + ' / ' + items().length"
               (click)="go(i)"
             >
-              <img [src]="item.src + '-sm.webp'" alt="" loading="lazy" decoding="async" />
+              <img [attr.src]="image(item, true) || null" alt="" loading="lazy" decoding="async" />
               @if (item.type === 'video') {
-                <span class="lb-play" aria-hidden="true"><app-icon name="play" aria-hidden="true"></app-icon></span>
+                <span class="lb-play" aria-hidden="true"
+                  ><app-icon name="play" aria-hidden="true"></app-icon
+                ></span>
               }
             </button>
           }
@@ -106,6 +135,9 @@ import type { Media } from './campaigns.data';
   `,
 })
 export class LightboxComponent {
+  protected readonly image = mediaImage;
+  protected readonly video = mediaVideo;
+  protected readonly srcset = mediaSrcset;
   readonly items = input.required<Media[]>();
   readonly start = input(0);
   readonly title = input('');
@@ -119,7 +151,8 @@ export class LightboxComponent {
   private readonly root = viewChild.required<ElementRef<HTMLElement>>('root');
   private readonly closeBtn = viewChild.required<ElementRef<HTMLButtonElement>>('closeBtn');
   private touchX = 0;
-  private readonly returnFocus = typeof document !== 'undefined' ? (document.activeElement as HTMLElement | null) : null;
+  private readonly returnFocus =
+    typeof document !== 'undefined' ? (document.activeElement as HTMLElement | null) : null;
 
   constructor() {
     let first = true;
@@ -181,12 +214,14 @@ export class LightboxComponent {
     const dx = event.changedTouches[0].clientX - this.touchX;
     if (Math.abs(dx) < 48) return;
     const rtl = document.documentElement.dir === 'rtl';
-    this.step((dx < 0) !== rtl ? 1 : -1);
+    this.step(dx < 0 !== rtl ? 1 : -1);
   }
 
   private trapFocus(event: KeyboardEvent): void {
     const focusable = Array.from(
-      this.root().nativeElement.querySelectorAll<HTMLElement>('button:not([tabindex="-1"]), video, [href]'),
+      this.root().nativeElement.querySelectorAll<HTMLElement>(
+        'button:not([tabindex="-1"]), video, [href]',
+      ),
     );
     if (!focusable.length) return;
     const first = focusable[0];

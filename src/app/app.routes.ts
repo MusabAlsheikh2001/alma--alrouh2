@@ -50,6 +50,15 @@ export const routes: Routes = [
     data: { seo: 'privacy', key: 'privacy' },
     loadComponent: () => import('./pages/legal.page').then((m) => m.LegalPageComponent),
   },
+  ...(['campaigns', 'programs', 'sessions', 'updates'] as const).map((section) => ({
+    path: section + '/:slug',
+    data: {
+      contentKind: (
+        { campaigns: 'campaign', programs: 'program', sessions: 'event', updates: 'page' } as const
+      )[section],
+    },
+    loadComponent: () => import('./velobase/content-detail').then((m) => m.ContentDetail),
+  })),
   {
     path: '**',
     data: { seo: 'notFound' },

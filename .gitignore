@@ -45,3 +45,8 @@ Thumbs.db
 
 # Hallmark working files
 .hallmark/
+
+# Local integration evidence and browser artifacts
+/work/
+/test-results/
+/playwright-report/

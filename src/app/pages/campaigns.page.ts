@@ -1,10 +1,11 @@
-import { Component, computed, inject, signal } from '@angular/core';
+import { AlmaContent } from '../velobase/alma-content';
+import { ContentStatus } from '../velobase/content-status';
+import { mediaImage } from '../campaigns/campaigns.data';
+import { Component, computed, effect, inject, signal } from '@angular/core';
 
+import { RouterLink } from '@angular/router';
 import { Parallax, RevealOnScroll } from '../animations.directive';
 import {
-  FIELD_CAMPAIGNS,
-  ONLINE_SESSIONS,
-  PARTNERS,
   photoCount,
   videoCount,
   type CampaignKind,
@@ -29,8 +30,9 @@ interface Viewer {
  */
 @Component({
   selector: 'app-campaigns-page',
-  imports: [IconComponent, LightboxComponent, Parallax, RevealOnScroll],
+  imports: [ContentStatus, RouterLink, IconComponent, LightboxComponent, Parallax, RevealOnScroll],
   template: `
+    <app-content-status />
     <section class="cp-hero" aria-labelledby="campaigns-title">
       <div class="container cp-hero-in">
         <div class="cp-hero-copy">
@@ -53,15 +55,19 @@ interface Viewer {
         </div>
 
         <div class="cp-mosaic" aria-hidden="true">
-          <figure class="cp-tile cp-tile--a" [parallax]="0.05">
-            <img src="campaigns/government-school/01-sm.webp" alt="" width="720" height="1280" fetchpriority="high" />
-          </figure>
-          <figure class="cp-tile cp-tile--b" [parallax]="0.1">
-            <img src="campaigns/parwarish-orphanage/01.webp" alt="" width="1280" height="960" fetchpriority="high" />
-          </figure>
-          <figure class="cp-tile cp-tile--c" [parallax]="0.02">
-            <img src="campaigns/rising-star-school/01-sm.webp" alt="" width="720" height="323" />
-          </figure>
+          @for (c of field.slice(0, 3); track c.id; let i = $index) {
+            @if (c.media[0]; as m) {
+              <figure
+                class="cp-tile"
+                [class.cp-tile--a]="i === 0"
+                [class.cp-tile--b]="i === 1"
+                [class.cp-tile--c]="i === 2"
+                [parallax]="0.05"
+              >
+                <img [attr.src]="image(m, true) || null" alt="" [width]="m.w" [height]="m.h" />
+              </figure>
+            }
+          }
           <div class="cp-mosaic-card">
             <app-icon name="images" aria-hidden="true"></app-icon>
             <span>
@@ -74,12 +80,28 @@ interface Viewer {
     </section>
 
     <div class="container">
-      <div class="filters cp-filters enter" style="--d: 320ms" role="group" [attr.aria-label]="t().campaigns.filterLabel">
-        <button type="button" class="chip" [attr.aria-pressed]="filter() === 'all'" (click)="filter.set('all')">
+      <div
+        class="filters cp-filters enter"
+        style="--d: 320ms"
+        role="group"
+        [attr.aria-label]="t().campaigns.filterLabel"
+      >
+        <button
+          type="button"
+          class="chip"
+          [attr.aria-pressed]="filter() === 'all'"
+          (click)="filter.set('all')"
+        >
           {{ t().campaigns.all }}
         </button>
         @for (kind of kinds; track kind) {
-          <button type="button" class="chip" [attr.data-kind]="kind" [attr.aria-pressed]="filter() === kind" (click)="filter.set(kind)">
+          <button
+            type="button"
+            class="chip"
+            [attr.data-kind]="kind"
+            [attr.aria-pressed]="filter() === kind"
+            (click)="filter.set(kind)"
+          >
             {{ t().campaigns.kinds[kind] }}
             <span class="chip-count">{{ countOf(kind) }}</span>
           </button>
@@ -105,17 +127,29 @@ interface Viewer {
                 [attr.data-kind]="c.kind"
                 [attr.aria-labelledby]="c.id + '-title'"
               >
-                <div class="story-media" [class.story-media--five]="i === 0" [class.story-media--two]="c.media.length === 2" data-reveal="image">
-                  @for (m of tiles(c, i === 0 ? 5 : 3); track m.src; let j = $index; let last = $last) {
+                <div
+                  class="story-media"
+                  [class.story-media--five]="i === 0"
+                  [class.story-media--two]="c.media.length === 2"
+                  data-reveal="image"
+                >
+                  @for (
+                    m of tiles(c, i === 0 ? 5 : 3);
+                    track m.src;
+                    let j = $index;
+                    let last = $last
+                  ) {
                     <button
                       type="button"
                       class="story-tile"
                       [class.story-tile--cover]="j === 0"
                       (click)="open(c, j)"
-                      [attr.aria-label]="t().campaigns.openGallery + ': ' + text(c.title) + ', ' + (j + 1)"
+                      [attr.aria-label]="
+                        t().campaigns.openGallery + ': ' + text(c.title) + ', ' + (j + 1)
+                      "
                     >
                       <img
-                        [src]="m.src + (j === 0 ? '.webp' : '-sm.webp')"
+                        [attr.src]="image(m, j !== 0) || null"
                         [style.object-position]="j === 0 ? c.focus : null"
                         [alt]="j === 0 ? text(c.title) + ', ' + text(c.place) : ''"
                         [width]="m.w"
@@ -124,7 +158,9 @@ interface Viewer {
                         decoding="async"
                       />
                       @if (m.type === 'video') {
-                        <span class="story-play" aria-hidden="true"><app-icon name="play"></app-icon></span>
+                        <span class="story-play" aria-hidden="true"
+                          ><app-icon name="play"></app-icon
+                        ></span>
                       }
                       @if (last && c.media.length > (i === 0 ? 5 : 3)) {
                         <span class="story-more" aria-hidden="true">
@@ -148,7 +184,9 @@ interface Viewer {
                   </p>
                   <p class="story-summary">{{ text(c.summary) }}</p>
                   <ul class="story-meta">
-                    <li><span class="tag">{{ t().campaigns.kinds[c.kind] }}</span></li>
+                    <li>
+                      <span class="tag">{{ t().campaigns.kinds[c.kind] }}</span>
+                    </li>
                     <li>
                       <app-icon name="images" aria-hidden="true"></app-icon>
                       {{ photos(c) }} {{ t().campaigns.photos }}
@@ -160,10 +198,23 @@ interface Viewer {
                       </li>
                     }
                   </ul>
-                  <button type="button" class="btn" [class.btn--primary]="i === 0" [class.btn--quiet]="i !== 0" (click)="open(c, 0)">
-                    {{ t().campaigns.openGallery }}
-                    <app-icon class="arrow" name="arrow-right" aria-hidden="true"></app-icon>
-                  </button>
+                  @if (c.managed) {
+                    <a class="link" [routerLink]="['/campaigns', c.id]">{{
+                      site.language() === 'ar' ? 'اقرأ المزيد' : 'Read more'
+                    }}</a>
+                  }
+                  @if (c.media.length) {
+                    <button
+                      type="button"
+                      class="btn"
+                      [class.btn--primary]="i === 0"
+                      [class.btn--quiet]="i !== 0"
+                      (click)="open(c, 0)"
+                    >
+                      {{ t().campaigns.openGallery }}
+                      <app-icon class="arrow" name="arrow-right" aria-hidden="true"></app-icon>
+                    </button>
+                  }
                 </div>
               </article>
             }
@@ -199,8 +250,20 @@ interface Viewer {
             <ul class="posters">
               @for (s of withPosters; track s.date; let i = $index) {
                 <li data-reveal [style.--i]="i">
-                  <button type="button" class="poster" (click)="openPoster(i)" [attr.aria-label]="t().campaigns.viewPoster + ': ' + text(s.title)">
-                    <img [src]="s.poster!.src + '-sm.webp'" alt="" [width]="s.poster!.w" [height]="s.poster!.h" loading="lazy" decoding="async" />
+                  <button
+                    type="button"
+                    class="poster"
+                    (click)="openPoster(i)"
+                    [attr.aria-label]="t().campaigns.viewPoster + ': ' + text(s.title)"
+                  >
+                    <img
+                      [attr.src]="image(s.poster, true) || null"
+                      alt=""
+                      [width]="s.poster!.w"
+                      [height]="s.poster!.h"
+                      loading="lazy"
+                      decoding="async"
+                    />
                   </button>
                 </li>
               }
@@ -211,7 +274,13 @@ interface Viewer {
                 <li data-reveal [style.--i]="i">
                   <time [attr.datetime]="s.date">{{ date(s.date) }}</time>
                   <div>
-                    <h3>{{ text(s.title) }}</h3>
+                    <h3>
+                      @if (s.slug) {
+                        <a [routerLink]="['/sessions', s.slug]">{{ text(s.title) }}</a>
+                      } @else {
+                        {{ text(s.title) }}
+                      }
+                    </h3>
                     <p>
                       {{ s.speaker }}
                       @if (s.note) {
@@ -248,7 +317,12 @@ interface Viewer {
         <h2 id="host-title" class="statement-text" data-reveal>{{ t().campaigns.hostTitle }}</h2>
         <div class="statement-side" data-reveal style="--i: 2">
           <p class="lead">{{ t().campaigns.hostText }}</p>
-          <a class="btn btn--gold" [href]="site.partnershipFormUrl" target="_blank" rel="noreferrer">
+          <a
+            class="btn btn--gold"
+            [href]="site.partnershipFormUrl"
+            target="_blank"
+            rel="noreferrer"
+          >
             {{ t().campaigns.hostCta }}
             <app-icon class="arrow" name="arrow-up-right" aria-hidden="true"></app-icon>
           </a>
@@ -261,7 +335,11 @@ interface Viewer {
         [items]="v.items"
         [start]="v.start"
         [title]="v.title"
-        [labels]="{ close: t().campaigns.close, prev: t().campaigns.prev, next: t().campaigns.next }"
+        [labels]="{
+          close: t().campaigns.close,
+          prev: t().campaigns.prev,
+          next: t().campaigns.next,
+        }"
         (close)="viewer.set(null)"
       />
     }
@@ -269,21 +347,41 @@ interface Viewer {
 })
 export class CampaignsPage {
   protected readonly site = inject(Site);
+  protected readonly content = inject(AlmaContent);
+  protected readonly image = mediaImage;
   protected readonly t = this.site.data;
-  protected readonly field = FIELD_CAMPAIGNS;
-  protected readonly sessions = ONLINE_SESSIONS;
-  protected readonly withPosters = ONLINE_SESSIONS.filter((s) => s.poster);
-  protected readonly partners = PARTNERS;
+  protected get field() {
+    return this.content.campaigns();
+  }
+  protected get sessions() {
+    return this.content.sessions();
+  }
+  protected get withPosters() {
+    return this.sessions.filter((s) => s.poster);
+  }
+  protected get partners() {
+    return this.content.partners();
+  }
   protected readonly kinds: CampaignKind[] = ['awareness', 'outreach', 'online'];
-  protected readonly mediaTotal = FIELD_CAMPAIGNS.reduce((n, c) => n + c.media.length, 0);
+  protected get mediaTotal() {
+    return this.field.reduce((n, c) => n + c.media.length, 0);
+  }
 
+  constructor() {
+    effect(() => {
+      this.content.api.documents();
+      this.content.api.status();
+      this.content.api.contentAuthority();
+      this.viewer.set(null);
+    });
+  }
   protected readonly filter = signal<CampaignKind | 'all'>('all');
   protected readonly viewer = signal<Viewer | null>(null);
 
   protected readonly visibleField = computed(() => {
     const f = this.filter();
     if (f === 'online') return [];
-    return f === 'all' ? FIELD_CAMPAIGNS : FIELD_CAMPAIGNS.filter((c) => c.kind === f);
+    return f === 'all' ? this.field : this.field.filter((c) => c.kind === f);
   });
 
   protected text(value: { en: string; ar: string }): string {
@@ -295,7 +393,9 @@ export class CampaignsPage {
   }
 
   protected countOf(kind: CampaignKind): number {
-    return kind === 'online' ? ONLINE_SESSIONS.length : FIELD_CAMPAIGNS.filter((c) => c.kind === kind).length;
+    return kind === 'online'
+      ? this.sessions.length
+      : this.field.filter((c) => c.kind === kind).length;
   }
 
   protected photos(c: FieldCampaign): number {
